@@ -16,5 +16,5 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
     }
-
+ KimYuDi is BaBo and MeongChungEE
 }
