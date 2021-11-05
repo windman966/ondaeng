@@ -11,6 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Ondaeng">
         <activity
+            android:name=".WalkActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -22,11 +25,7 @@
 
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
-            android:value="an0uh3krxd"/>
-
+            android:value="an0uh3krxd" />
     </application>
-
-    <activity android:name=".CommunityActivity"
-        tools:ignore="WrongManifestParent" />
 
 </manifest>
