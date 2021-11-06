@@ -12,12 +12,13 @@
         android:theme="@style/Theme.Ondaeng" >
         <activity
             android:name=".CommunityActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".WalkActivity"
             android:exported="false" />
         <activity android:name=".SplashActivity"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/SplashTheme"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
