@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="카테고리">
+        <item>전체</item>
+        <item>내 동네</item>
+        <item>양육 꿀팁</item>
+        <item>나눔</item>
+    </string-array>
+</resources>
