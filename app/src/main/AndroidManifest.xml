@@ -11,6 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Ondaeng">
         <activity
+            android:name=".myPage"
+            android:exported="false" />
+        <activity
             android:name=".item_viewpager"
             android:exported="false" />
         <activity
