@@ -8,31 +8,44 @@
     android:id="@+id/drawer"
     android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btn_close"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="메뉴닫기"/>
-
     <TextView
+        android:id="@+id/testText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="온댕메뉴"/>
+        android:text="온댕메뉴" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:background="#223ffc"
+
         android:orientation="vertical">
 
-        <TextView
+        <Button
+            android:id="@+id/goToMyPage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="테스트메뉴"/>
+            android:text="마이페이지" />
+        <Button
+            android:id="@+id/goToCare"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="케어탭" />
+        <Button
+            android:id="@+id/goToComm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="커뮤니티" />
+        <Button
+            android:id="@+id/goToWalk"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="산책페이지" />
 
 
     </LinearLayout>

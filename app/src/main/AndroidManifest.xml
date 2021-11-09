@@ -25,6 +25,8 @@
         <activity
             android:name=".WalkActivity"
             android:exported="false" />
+        <activity android:name=".CareActivity"
+            android:exported="false"/>
         <activity
             android:name=".SplashActivity"
             android:exported="true"

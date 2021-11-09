@@ -2,10 +2,13 @@ package com.fourth.ondaeng;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -46,15 +49,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button btn_close = (Button)findViewById(R.id.btn_close);
-        btn_close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawerLayout.closeDrawers();
-            }
-        });
 
-        drawerLayout.setDrawerListener(listener);
+
         drawerView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -78,10 +74,58 @@ public class MainActivity extends AppCompatActivity {
         mIndicator.setViewPager(viewPager2);
         mIndicator.createIndicators(list.size(),0);
 
+        //메뉴 이동 코드
+        Intent myPageIntent = new Intent(this, myPage.class);
+        Intent careIntent = new Intent(this, CareActivity.class);
+        Intent commIntent = new Intent(this, CommunityActivity.class);
+        Intent walkIntent = new Intent(this, WalkActivity.class);
+        //마이페이지 이동
+        findViewById(R.id.goToMyPage).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.closeDrawer(GravityCompat.START);
+                startActivity(myPageIntent);
+                overridePendingTransition(R.anim.horizon_enter,R.anim.none);
+            }
+        });
+
+        findViewById(R.id.goToCare).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.closeDrawer(GravityCompat.START);
+                startActivity(careIntent);
+                overridePendingTransition(R.anim.horizon_enter,R.anim.none);
+            }
+        });
+        findViewById(R.id.goToComm).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.closeDrawer(GravityCompat.START);
+                startActivity(commIntent);
+                overridePendingTransition(R.anim.horizon_enter,R.anim.none);
+            }
+        });
+        findViewById(R.id.goToWalk).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.closeDrawer(GravityCompat.START);
+                startActivity(walkIntent);
+                overridePendingTransition(R.anim.horizon_enter,R.anim.none);
+            }
+        });
+
 
     }
-
-
+    //뒤로가기 키 눌렀을 때
+    @Override
+    public void onBackPressed() {
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+    //drawer액티비티
     DrawerLayout.DrawerListener listener = new DrawerLayout.DrawerListener() {
         @Override
         public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
