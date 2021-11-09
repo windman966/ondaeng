@@ -18,6 +18,7 @@ public class SplashActivity extends AppCompatActivity {
     //Handler handler = new Handler();
 
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
