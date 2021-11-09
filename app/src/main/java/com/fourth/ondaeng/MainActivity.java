@@ -12,9 +12,10 @@ import android.widget.Button;
 
 import com.fourth.ondaeng.databinding.ActivityMainBinding;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
-import me.relex.circleindicator.CircleIndicator;
 import me.relex.circleindicator.CircleIndicator3;
 
 public class MainActivity extends AppCompatActivity {
@@ -65,6 +66,10 @@ public class MainActivity extends AppCompatActivity {
        ArrayList<dogIdCardData> list = new ArrayList<>();
         list.add(new dogIdCardData("댕댕이","010-2432-1677","199-500-500","포메라니안"));
         list.add(new dogIdCardData("댕댕이2","010-2432-16772","199-500-5002","포메라니안2"));
+        // 강아지 데이터 쿼리
+        String url = "http://14.55.65.181/ondaeng/getDogById?id=test?";
+        JSONObject dogJson = new JSONObject();
+
 
         viewPager2.setAdapter(new item_viewpager(list));
 
