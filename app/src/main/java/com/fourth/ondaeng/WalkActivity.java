@@ -9,7 +9,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
+import android.content.Context;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,14 +26,12 @@ import com.naver.maps.map.NaverMap;
 import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.UiSettings;
 import com.naver.maps.map.overlay.Marker;
-import com.naver.maps.map.overlay.PathOverlay;
 import com.naver.maps.map.util.FusedLocationSource;
-
-import java.util.List;
 
 public class WalkActivity extends AppCompatActivity implements OnMapReadyCallback {
     private static String TAG = "WalkActivity";
     private ActivityWalkBinding binding;
+    private LocationManager locationManager;
 
 //    walkingFragment walkingFragment;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
@@ -59,6 +59,15 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                 binding.startWalk.setVisibility(View.GONE);
                 binding.finishWalk.setVisibility(View.VISIBLE);
                 binding.walkInfo.setVisibility(View.VISIBLE);
+
+                binding.walkTime.setText("테스트시간");
+                binding.walkLength.setText("테스트거리");
+
+                //현재위치 경로선 나타내기
+
+                //스톱워치, 경로선 거리 나타내기
+                //timeThread = new Thread(new timeThread());
+                //timeThread.start();
 
                 //편의점 위치 좌표 불러오기
                 //뼈다구 마커 추가
@@ -113,6 +122,36 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
         // onMapReady에서 NaverMap 객체를 받음
         mapFragment.getMapAsync(this);
 
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        Location userLocation = getMyLocation();
+        if(userLocation!=null) {
+            double latitude = userLocation.getLatitude();
+            double longitude = userLocation.getLongitude();
+            /*userVO.setLat(latitude);
+            userVO.setLon(longitude);*/
+
+        }
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG,"onStart");
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,  @NonNull int[] grantResults) {
+        if (locationSource.onRequestPermissionsResult(requestCode, permissions, grantResults)) {
+            if (!locationSource.isActivated()) { // 권한 거부됨
+                naverMap.setLocationTrackingMode(LocationTrackingMode.None);
+                return;
+            }else {
+                naverMap.setLocationTrackingMode(LocationTrackingMode.Follow);
+            }
+
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override
@@ -134,34 +173,18 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
         CameraPosition cameraPosition = new CameraPosition(new LatLng(37.5158,127.0350),15);
         naverMap.setCameraPosition(cameraPosition);
 
-        PathOverlay path = new PathOverlay();
-        path.setCoords((List<LatLng>) locationSource);
-        path.setMap(naverMap);
+//        PathOverlay path = new PathOverlay();
+//        path.setCoords((List<LatLng>) locationSource);
+//        path.setMap(naverMap);
 
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,  @NonNull int[] grantResults) {
-        if (locationSource.onRequestPermissionsResult(requestCode, permissions, grantResults)) {
-            if (!locationSource.isActivated()) { // 권한 거부됨
-                naverMap.setLocationTrackingMode(LocationTrackingMode.None);
-                return;
-            }else {
-                naverMap.setLocationTrackingMode(LocationTrackingMode.Follow);
-            }
-
-        }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    private Location getMyLocation() {
+        return null;
     }
 
     public void showCurrentLocation(Location location) {
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.d(TAG,"onStart");
+        LatLng curPoint = new LatLng(location.getLatitude(), location.getLongitude());
     }
 
     @Override
