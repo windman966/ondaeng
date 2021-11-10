@@ -3,11 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.fourth.ondaeng">
 
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <uses-permission android:name="android.permission.INTERNET" />
-
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -15,9 +14,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Ondaeng">
-        <activity
-            android:name=".HospitalActivity"
-            android:exported="true" />
         <activity
             android:name=".myPage"
             android:exported="false" />
@@ -33,9 +29,8 @@
         <activity
             android:name=".WalkActivity"
             android:exported="false" />
-        <activity
-            android:name=".CareActivity"
-            android:exported="false" />
+        <activity android:name=".CareActivity"
+            android:exported="false"/>
         <activity
             android:name=".SplashActivity"
             android:exported="true"
