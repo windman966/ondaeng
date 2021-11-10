@@ -2,7 +2,7 @@ package com.fourth.ondaeng;
 
 import java.util.Date;
 
-public class Community_listitem {
+class community_listitems {
     private String nickname;
     private String title;
     private Date date;
@@ -31,7 +31,7 @@ public class Community_listitem {
         this.date = date;
     }
 
-    public Community_listitem(String nickname, String title, Date date) {
+    public community_listitems(String nickname, String title, Date date) {
         this.nickname = nickname;
         this.title = title;
         this.date = date;

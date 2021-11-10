@@ -4,13 +4,28 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Administrator/AndroidStudioProjects/ondaeng/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/Users/Jinny/AndroidStudioProjects/ondaeng/app/src/main/res/layout/activity_community.xml" value="0.18333333333333332" />
+        <entry key="..\:/Users/Jinny/AndroidStudioProjects/ondaeng/app/src/main/res/layout/activity_community_writing.xml" value="0.18333333333333332" />
+        <entry key="..\:/Users/Jinny/AndroidStudioProjects/ondaeng/app/src/main/res/layout/item_community.xml" value="0.18333333333333332" />
+        <entry key="..\:/Users/KJS/AndroidStudioProjects/OnDaeng/app/src/main/res/layout/activity_hospital.xml" value="0.3605128205128205" />
+        <entry key="..\:/Users/Administrator/StudioProjects/ondaeng/app/src/main/res/drawable/bgline_search.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/Administrator/StudioProjects/ondaeng/app/src/main/res/drawable/bgline_textview.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/Administrator/StudioProjects/ondaeng/app/src/main/res/drawable/bgline_textview2.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/Administrator/StudioProjects/ondaeng/app/src/main/res/drawable/black_indicator.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/Administrator/StudioProjects/ondaeng/app/src/main/res/drawable/gray_indicator.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/Administrator/StudioProjects/ondaeng/app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/Administrator/StudioProjects/ondaeng/app/src/main/res/drawable/ic_launcher_background.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/Administrator/StudioProjects/ondaeng/app/src/main/res/drawable/selector_indicator.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/Administrator/StudioProjects/ondaeng/app/src/main/res/drawable/splash_background.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/Administrator/StudioProjects/ondaeng/app/src/main/res/drawable/splash_base.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/Administrator/StudioProjects/ondaeng/app/src/main/res/font/custom_font_family.xml" value="0.23489583333333333" />
         <entry key="..\:/Users/Administrator/StudioProjects/ondaeng/app/src/main/res/layout/activity_care.xml" value="0.21458333333333332" />
         <entry key="..\:/Users/Administrator/StudioProjects/ondaeng/app/src/main/res/layout/activity_community.xml" value="0.21458333333333332" />
         <entry key="..\:/Users/Administrator/StudioProjects/ondaeng/app/src/main/res/layout/activity_drawer.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/Administrator/StudioProjects/ondaeng/app/src/main/res/layout/activity_item_viewpager.xml" value="0.2046875" />
         <entry key="..\:/Users/Administrator/StudioProjects/ondaeng/app/src/main/res/layout/activity_main.xml" value="0.25" />
-        <entry key="..\:/Users/Administrator/StudioProjects/ondaeng/app/src/main/res/layout/activity_my_page.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/Administrator/StudioProjects/ondaeng/app/src/main/res/layout/activity_my_page.xml" value="0.22" />
         <entry key="..\:/Users/Administrator/StudioProjects/ondaeng/app/src/main/res/layout/item_community.xml" value="0.21822916666666667" />
-        <entry key="..\:/Users/KJS/AndroidStudioProjects/OnDaeng/app/src/main/res/layout/activity_hospital.xml" value="0.3605128205128205" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/ondaeng/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.13055555555555556" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/ondaeng/app/src/main/res/drawable/bgline_search.xml" value="0.13055555555555556" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/ondaeng/app/src/main/res/drawable/bgline_textview.xml" value="0.13055555555555556" />
