@@ -33,14 +33,15 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/bwrite"
+                android:id="@+id/bwriting"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="30dp"
-                android:backgroundTint="#b5deff "
+                android:backgroundTint="#b5deff"
                 android:text="글쓰기"
-                android:textColor="#000000" />
+                android:textColor="#000000"
+                android:textSize="18sp" />
 
             <Spinner
                 android:id="@+id/spinner"
@@ -78,6 +79,7 @@
                     android:gravity="center"
                     android:text="작성자"
                     android:textColor="#245A6F"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -87,6 +89,7 @@
                     android:gravity="center"
                     android:text="제목"
                     android:textColor="#245A6F"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -96,6 +99,7 @@
                     android:gravity="center"
                     android:text="작성일시"
                     android:textColor="#245A6F"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -110,7 +114,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="50dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/bgline_search"
