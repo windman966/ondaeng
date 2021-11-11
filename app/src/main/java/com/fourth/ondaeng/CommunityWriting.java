@@ -11,7 +11,7 @@ public class CommunityWriting extends AppCompatActivity {
     EditText edit_title;
     EditText edit_content;
     Button bpost;
-    String user_id = ""; //로그인에서 유저 id 가져오기
+    String userid = ""; //로그인에서 유저 id 가져오기
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +19,7 @@ public class CommunityWriting extends AppCompatActivity {
         setContentView(R.layout.activity_community_writing);
 
         //listActivity 가 무슨 activity인지 체크
-        user_id = getIntent().getStringExtra("user_id");
+        userid = getIntent().getStringExtra("user_id");
 
         //컴포넌트 초기화
 

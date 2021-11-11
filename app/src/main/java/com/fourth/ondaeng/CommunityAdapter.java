@@ -10,10 +10,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class CommunityAdapter extends BaseAdapter {
-    Context context;
-    ArrayList<community_listitems> list_community_items;
+    private Context context;
+    private ArrayList<community_listitems> list_community_items;
 
-    TextView textView_nickname;
+    TextView textView_userid;
     TextView textView_title;
     TextView textView_date;
 
@@ -44,15 +44,16 @@ public class CommunityAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         if(convertView == null){
             convertView = LayoutInflater.from(context).inflate(R.layout.item_community ,null);
-            textView_nickname = (TextView)convertView.findViewById(R.id.textView_nickname);
+            textView_userid = (TextView)convertView.findViewById(R.id.textView_userid);
             textView_title = (TextView)convertView.findViewById(R.id.textView_title);
             textView_date = (TextView)convertView.findViewById(R.id.textView_date);
         }
 
-        textView_nickname.setText(list_community_items.get(position).getNickname());
+        textView_userid.setText(list_community_items.get(position).getUserid());
         textView_title.setText(list_community_items.get(position).getTitle());
         textView_date.setText(list_community_items.get(position).getDate().toString());
 
+        convertView.setTag(list_community_items.get(position).getTitle());
         return convertView;
     }
 }
