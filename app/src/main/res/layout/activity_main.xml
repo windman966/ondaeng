@@ -63,13 +63,13 @@
                 android:orientation="vertical" >
 
 
-
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/dogIdCardPager"
                     android:layout_width="match_parent"
                     android:layout_height="220dp"
                     android:clipChildren="false"
                     android:clipToPadding="false" />
+
                 <me.relex.circleindicator.CircleIndicator3
                     android:id="@+id/indicator"
                     android:layout_width="match_parent"

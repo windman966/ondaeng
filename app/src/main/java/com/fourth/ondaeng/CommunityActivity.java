@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Spinner;
 
 public class CommunityActivity extends AppCompatActivity {
@@ -15,6 +14,11 @@ public class CommunityActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_community);
 
+        //게시판 리스트뷰
+
+
+
+        //스피너
         Spinner spinner = findViewById(R.id.spinner);
         /*spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
