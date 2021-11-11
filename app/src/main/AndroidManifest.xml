@@ -32,6 +32,9 @@
         <activity android:name=".CareActivity"
             android:exported="false"/>
         <activity
+            android:name=".HospitalActivity"
+            android:exported="false"/>
+        <activity
             android:name=".SplashActivity"
             android:exported="true"
             android:theme="@style/SplashTheme">

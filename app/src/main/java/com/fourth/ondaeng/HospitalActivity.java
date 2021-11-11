@@ -132,9 +132,9 @@ public class HospitalActivity extends AppCompatActivity implements OnMapReadyCal
         CameraPosition cameraPosition = new CameraPosition(new LatLng(37.5158,127.0350),15);
         naverMap.setCameraPosition(cameraPosition);
 
-        PathOverlay path = new PathOverlay();
-        path.setCoords((List<LatLng>) locationSource);
-        path.setMap(naverMap);
+//        PathOverlay path = new PathOverlay();
+//        path.setCoords((List<LatLng>) locationSource);
+//        path.setMap(naverMap);
 
     }
 

@@ -89,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
         Intent careIntent = new Intent(this, CareActivity.class);
         Intent commIntent = new Intent(this, CommunityActivity.class);
         Intent walkIntent = new Intent(this, WalkActivity.class);
+        Intent hospIntent = new Intent(this, HospitalActivity.class);
         //마이페이지 이동
         findViewById(R.id.goToMyPage).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,6 +124,14 @@ public class MainActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.horizon_enter,R.anim.none);
             }
         });
+        findViewById(R.id.goToHosp).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.closeDrawer(GravityCompat.START);
+                startActivity(hospIntent);
+                overridePendingTransition(R.anim.horizon_enter,R.anim.none);
+            }
+        });
 
 
         //커뮤니티 리스트뷰, 어댑터
@@ -130,16 +139,16 @@ public class MainActivity extends AppCompatActivity {
         list_community_items = new ArrayList<community_listitems>();
 
         //커뮤니티 게시물(일단 인앱)
-        community_listitems.add(new community_listitems("닉네임1","강아지 간식 추천해주세요", new Date(System.currentTimeMillis())));
-        community_listitems.add(new community_listitems("닉네임2", "우리집 강아지 겨울이", new Date(System.currentTimeMillis())));
-        community_listitems.add(new community_listitems("닉네임3","미용 잘 하는 곳 추천해주세요", new Date(System.currentTimeMillis())));
-        community_listitems.add(new community_listitems("닉네임4","강아지 사료 새로 샀어요!", new Date(System.currentTimeMillis())));
-        community_listitems.add(new community_listitems("닉네임5","강아지 간식 추천해주세요", new Date(System.currentTimeMillis())));
+//        community_listitems.add(new community_listitems("닉네임1","강아지 간식 추천해주세요", new Date(System.currentTimeMillis())));
+//        community_listitems.add(new community_listitems("닉네임2", "우리집 강아지 겨울이", new Date(System.currentTimeMillis())));
+//        community_listitems.add(new community_listitems("닉네임3","미용 잘 하는 곳 추천해주세요", new Date(System.currentTimeMillis())));
+//        community_listitems.add(new community_listitems("닉네임4","강아지 사료 새로 샀어요!", new Date(System.currentTimeMillis())));
+//        community_listitems.add(new community_listitems("닉네임5","강아지 간식 추천해주세요", new Date(System.currentTimeMillis())));
 
 
         //어댑터 연결, 객체생성
-        communityAdapter = new CommunityAdapter(MainActivity.this, (ArrayList<com.fourth.ondaeng.community_listitems>) list_community_items);
-        listView.setAdapter(communityAdapter);
+//        communityAdapter = new CommunityAdapter(MainActivity.this, (ArrayList<com.fourth.ondaeng.community_listitems>) list_community_items);
+//        listView.setAdapter(communityAdapter);
 
 
     }

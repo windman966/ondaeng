@@ -10,7 +10,9 @@ import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -26,14 +28,20 @@ import com.naver.maps.map.NaverMap;
 import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.UiSettings;
 import com.naver.maps.map.overlay.Marker;
+import com.naver.maps.map.overlay.PathOverlay;
 import com.naver.maps.map.util.FusedLocationSource;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class WalkActivity extends AppCompatActivity implements OnMapReadyCallback {
     private static String TAG = "WalkActivity";
     private ActivityWalkBinding binding;
     private LocationManager locationManager;
+    private LocationListener locationListener;
 
-//    walkingFragment walkingFragment;
+    //    walkingFragment walkingFragment;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
     private static final String[] PERMISSIONS = {
             Manifest.permission.ACCESS_FINE_LOCATION,
@@ -63,6 +71,17 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                 binding.walkTime.setText("테스트시간");
                 binding.walkLength.setText("테스트거리");
 
+
+                //사용자의 위치 수신을 위한 세팅
+                settingGPS();
+                // 사용자 현재 위치
+                Location userLocation = getMyLocation();
+
+                if(userLocation!=null) {
+                    double latitude = userLocation.getLatitude();
+                    double longitude = userLocation.getLongitude();
+                }
+
                 //현재위치 경로선 나타내기
 
                 //스톱워치, 경로선 거리 나타내기
@@ -83,6 +102,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                 binding.walkInfo.setVisibility(View.GONE);
 
                 //뼈다구 마커 없애기
+                //산책기록 데이터 저
 
             }
         });
@@ -122,16 +142,6 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
         // onMapReady에서 NaverMap 객체를 받음
         mapFragment.getMapAsync(this);
 
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        Location userLocation = getMyLocation();
-        if(userLocation!=null) {
-            double latitude = userLocation.getLatitude();
-            double longitude = userLocation.getLongitude();
-            /*userVO.setLat(latitude);
-            userVO.setLon(longitude);*/
-
-        }
-
     }
 
     @Override
@@ -149,7 +159,6 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
             }else {
                 naverMap.setLocationTrackingMode(LocationTrackingMode.Follow);
             }
-
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
@@ -173,14 +182,71 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
         CameraPosition cameraPosition = new CameraPosition(new LatLng(37.5158,127.0350),15);
         naverMap.setCameraPosition(cameraPosition);
 
-//        PathOverlay path = new PathOverlay();
-//        path.setCoords((List<LatLng>) locationSource);
-//        path.setMap(naverMap);
-
     }
 
+    int rqCode = 1004;
+    //사용자 위치 수신
     private Location getMyLocation() {
-        return null;
+        Location currentLocation = null;
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)!=
+                PackageManager.PERMISSION_GRANTED&&ActivityCompat.checkSelfPermission(
+                        this,Manifest.permission.ACCESS_COARSE_LOCATION)!=PackageManager.PERMISSION_GRANTED){
+            //사용자 권한 요청
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    rqCode);
+        }else{
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0,0,locationListener);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,locationListener);
+
+            //수동으로 위치 구하기
+            String locationProvider = LocationManager.GPS_PROVIDER;
+            currentLocation = locationManager.getLastKnownLocation(locationProvider);
+            if(currentLocation!=null) {
+                double lng = currentLocation.getLongitude();
+                double lat = currentLocation.getLatitude();
+                Log.d("Walk", "longitude="+lng+",latitude="+lat);
+            }
+        }
+        return currentLocation;
+    }
+
+    /**
+     * GPS 를 받기 위한 매니저와 리스너 설정
+     * LocationManager는 디바이스의 위치를 가져오는데 사용하는 매니저
+     * LocationListener는 위치가 변할때 마다 또는 상태가 변할 때마다 위치를 가져오는 리스너
+     */
+    private void settingGPS() {
+        // Acquire a reference to the system Location Manager
+        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
+        List<LatLng> latLngList;
+        latLngList = new ArrayList<>();
+
+        locationListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+                double latitude = location.getLatitude();
+                double longitude = location.getLongitude();
+                // TODO 위도, 경도로 하고 싶은 것
+                Log.d("Walk", "latitude="+latitude+",longitude="+longitude);
+
+                LatLng temp = new LatLng(latitude,longitude);
+                latLngList.add(temp);
+                PathOverlay path = new PathOverlay();
+                if(latLngList.size()>1) {
+                    path.setCoords(latLngList);
+                    path.setMap(naverMap);
+                }
+            }
+
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+            }
+
+            public void onProviderEnabled(String provider) {
+            }
+
+            public void onProviderDisabled(String provider) {
+            }
+        };
     }
 
     public void showCurrentLocation(Location location) {
