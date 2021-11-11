@@ -13,7 +13,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Ondaeng">
+        android:theme="@style/Theme.Ondaeng"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".myPage"
             android:exported="false" />
@@ -31,6 +32,7 @@
             android:exported="false" />
         <activity android:name=".CareActivity"
             android:exported="false"/>
+
         <activity
             android:name=".SplashActivity"
             android:exported="true"
@@ -40,6 +42,12 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true">
+
         </activity>
         <activity
             android:name=".MainActivity"
