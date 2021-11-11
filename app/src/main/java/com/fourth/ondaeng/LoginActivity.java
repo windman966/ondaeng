@@ -1,5 +1,6 @@
 package com.fourth.ondaeng;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -34,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
                 String pw = binding.memPwInput.getText().toString();
                 String id = binding.memIdInput.getText().toString();
 
-                easyToast("로그인 버튼 눌림");
+//                easyToast("로그인 버튼 눌림");
                 if(id.isEmpty()||pw.isEmpty()){
                     easyToast("아이디와 비밀번호를 모두 입력해주세요");
                 }
@@ -52,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
     public void getPwById(String id,String pw){
-        easyToast("getPwById 실행됨");
+//        easyToast("getPwById 실행됨");
         String url = "http://14.55.65.181/ondaeng/getMemberId?";
         //JSON형식으로 데이터 통신을 진행합니다!
         JSONObject testjson = new JSONObject();
@@ -64,25 +65,28 @@ public class LoginActivity extends AppCompatActivity {
             //이제 전송
             final RequestQueue requestQueue = Volley.newRequestQueue(LoginActivity.this);
 
-            easyToast(url);
+//            easyToast(url);
             final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,null, new Response.Listener<JSONObject>() {
 
                 //데이터 전달을 끝내고 이제 그 응답을 받을 차례입니다.
                 @Override
                 public void onResponse(JSONObject response) {
                     try {
-                        easyToast("응답");
+//                        easyToast("응답");
                         //받은 json형식의 응답을 받아
                         //key값에 따라 value값을 쪼개 받아옵니다.
                         JSONObject jsonObject = new JSONObject(response.toString());
                         JSONObject data = new JSONObject(jsonObject.getJSONArray("data").get(0).toString());
                         String dbpw =data.get("password").toString();
-                        easyToast("dbpw : "+dbpw+" , pw : "+pw);
+//                        easyToast("dbpw : "+dbpw+" , pw : "+pw);
                         if(pw.equals(dbpw)){
-                            easyToast("로그인 성공");
+
+                            LoginActivity.this.startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            LoginActivity.this.finish();
+                            
                         }
                         else{
-                            easyToast("로그인 실패");
+                            easyToast("ID혹은 password가 잘못되었습니다");
                         }
 
                     } catch (Exception e) {
