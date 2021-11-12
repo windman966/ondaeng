@@ -34,7 +34,7 @@ public class CommunityDetailActivity extends AppCompatActivity {
     Button b_back;
 
     String board_seq = ""; //선택한 게시물의 번호
-    String userid = "";
+    String userid = "";//
 
 
     @Override
