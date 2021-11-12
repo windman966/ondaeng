@@ -3,16 +3,12 @@ package com.fourth.ondaeng;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -23,43 +19,22 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.fourth.ondaeng.databinding.ActivityCommunityBinding;
-import com.fourth.ondaeng.databinding.ActivityDrawerBinding;
-import com.fourth.ondaeng.databinding.ActivityLoginBinding;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
-
-import javax.net.ssl.HttpsURLConnection;
 
 public class CommunityActivity extends AppCompatActivity {
 
     ActivityCommunityBinding binding;
 
-    private ListView listView;
+    ListView listView;
+    CommunityAdapter communityAdapter;
+    ArrayList<community_listitems> community_listitems;
+    //ArrayList<String> community_listitems;
     Button b_writing;
     String userid = "";
-
-
-    // 리스트뷰에 사용할 제목 배열
-    ArrayList<String> titleList = new ArrayList<>();
-    // 클릭했을 때 어떤 게시물을 클릭했는지 게시물 번호를 담기 위한 배열
-    ArrayList<String> seqList = new ArrayList<>();
-    //커뮤니티 어댑터
-
-    private CommunityAdapter communityAdapter;
-    private ArrayList<community_listitems> community_listitems;
-    private Object list_community_items;
+    Object CommunityAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +43,27 @@ public class CommunityActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         String id = (String)appData.id;
-
         int postLength = getPostLength(null);
+
+        /*community_listitems = new ArrayList<community_listitems>();
+        communityAdapter = new CommunityAdapter(this, R.layout.item_community, community_listitems);
+        
+        listView = binding.communityListView;
+        //listView = (ListView) findViewById(R.id.community_listView);
+        listView.setAdapter((ListAdapter) CommunityAdapter);
+
+        for(int i = 0; i < community_listitems.size(); i++) {
+            community_listitems.add(); //게시물 하나
+        }
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(CommunityActivity.this, position + "번째 글", Toast.LENGTH_SHORT).show();
+            }
+        });*/
+
+
 
         /*
 //        list_community_items = new ArrayList<community_listitems>();
@@ -117,7 +111,6 @@ public class CommunityActivity extends AppCompatActivity {
         binding.bWriting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // userid를 갖고 CommunityWriting으로 이동
                 Intent intent = new Intent(getApplicationContext(), CommunityWritingActivity.class);
                 startActivity(intent);
             }
