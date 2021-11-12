@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="건강체크">
+        <item>눈이 튀어나옴</item>
+        <item>눈동자 중앙이 하얗게 탁해짐</item>
+        <item>빨갛게 충혈된 눈</item>
+        <item>눈 주변 살이 처짐</item>
+        <item>투명하지 않은 과도한 눈물</item>
+        <item>노란색 또는 녹색 눈곱</item>
+    </string-array>
+
+</resources>
