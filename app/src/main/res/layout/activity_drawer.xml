@@ -70,11 +70,25 @@
             />
 
         <Button
-            android:id="@+id/goToCare"
+            android:id="@+id/goToCareVaccin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="케어탭" />
+            android:text="케어탭예방접종" />
+
+        <Button
+            android:id="@+id/goToCareHealth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="케어탭건강체크" />
+
+        <Button
+            android:id="@+id/goToCareDaily"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="케어탭 daily기록" />
 
         <Button
             android:id="@+id/goToComm"
