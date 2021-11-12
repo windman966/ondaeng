@@ -32,7 +32,6 @@ import com.naver.maps.map.overlay.PathOverlay;
 import com.naver.maps.map.util.FusedLocationSource;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class WalkActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -101,8 +100,13 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                 binding.finishWalk.setVisibility(View.GONE);
                 binding.walkInfo.setVisibility(View.GONE);
 
+                //스톱워치, 거리 중지
+
+                //위치 좌표 불러오기 중지지
+               System.exit(settingGPS());
+
                 //뼈다구 마커 없애기
-                //산책기록 데이터 저
+                //산책기록 데이터 저장
 
             }
         });
@@ -204,7 +208,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
             if(currentLocation!=null) {
                 double lng = currentLocation.getLongitude();
                 double lat = currentLocation.getLatitude();
-                Log.d("Walk", "longitude="+lng+",latitude="+lat);
+                Log.d("Walk", "latitude="+lat+", longitude="+lng);
             }
         }
         return currentLocation;
@@ -214,8 +218,9 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
      * GPS 를 받기 위한 매니저와 리스너 설정
      * LocationManager는 디바이스의 위치를 가져오는데 사용하는 매니저
      * LocationListener는 위치가 변할때 마다 또는 상태가 변할 때마다 위치를 가져오는 리스너
+     * @return
      */
-    private void settingGPS() {
+    private int settingGPS() {
         // Acquire a reference to the system Location Manager
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
@@ -227,7 +232,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                 double latitude = location.getLatitude();
                 double longitude = location.getLongitude();
                 // TODO 위도, 경도로 하고 싶은 것
-                Log.d("Walk", "latitude="+latitude+",longitude="+longitude);
+                Log.d("좌표", "latitude="+latitude+",longitude="+longitude);
 
                 LatLng temp = new LatLng(latitude,longitude);
                 latLngList.add(temp);
@@ -247,6 +252,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onProviderDisabled(String provider) {
             }
         };
+        return 0;
     }
 
     public void showCurrentLocation(Location location) {
