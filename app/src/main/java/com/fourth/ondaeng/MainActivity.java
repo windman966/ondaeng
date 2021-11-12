@@ -93,10 +93,12 @@ public class MainActivity extends AppCompatActivity {
 
         //메뉴 이동 코드
         Intent myPageIntent = new Intent(this, myPage.class);
-        Intent careIntent = new Intent(this, CareActivity.class);
+        Intent careIntent = new Intent(this, Vaccination1Activity.class);
         Intent commIntent = new Intent(this, CommunityActivity.class);
         Intent walkIntent = new Intent(this, WalkActivity.class);
         Intent hospIntent = new Intent(this, HospitalActivity.class);
+        Intent dailyCareIntent = new Intent(this,DailyActivity.class);
+        Intent healthCareIntent = new Intent(this,HealthCheck1Activity.class);
         //마이페이지 이동
 
         findViewById(R.id.goToMyPage).setOnClickListener(new View.OnClickListener() {
@@ -113,6 +115,22 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 drawerLayout.closeDrawer(GravityCompat.START);
                 startActivity(careIntent);
+                overridePendingTransition(R.anim.horizon_enter,R.anim.none);
+            }
+        });
+        findViewById(R.id.goToCareDaily).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.closeDrawer(GravityCompat.START);
+                startActivity(dailyCareIntent);
+                overridePendingTransition(R.anim.horizon_enter,R.anim.none);
+            }
+        });
+        findViewById(R.id.goToCareHealth).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.closeDrawer(GravityCompat.START);
+                startActivity(healthCareIntent);
                 overridePendingTransition(R.anim.horizon_enter,R.anim.none);
             }
         });
