@@ -6,14 +6,24 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.fourth.ondaeng.databinding.ActivityCommunityBinding;
+import com.fourth.ondaeng.databinding.ActivityDrawerBinding;
 import com.fourth.ondaeng.databinding.ActivityLoginBinding;
 
 import org.json.JSONArray;
@@ -40,6 +50,7 @@ public class CommunityActivity extends AppCompatActivity {
     Button b_writing;
     String userid = "";
 
+
     // 리스트뷰에 사용할 제목 배열
     ArrayList<String> titleList = new ArrayList<>();
     // 클릭했을 때 어떤 게시물을 클릭했는지 게시물 번호를 담기 위한 배열
@@ -58,6 +69,9 @@ public class CommunityActivity extends AppCompatActivity {
 
         String id = (String)appData.id;
 
+        getPost(null);
+
+        /*
         list_community_items = new ArrayList<community_listitems>();
 
         //커뮤니티 게시물(인앱)
@@ -77,6 +91,8 @@ public class CommunityActivity extends AppCompatActivity {
         communityAdapter = new CommunityAdapter(getApplicationContext(), community_listitems);
         //communityAdapter = new CommunityAdapter(MainActivity.this, (ArrayList<com.fourth.ondaeng.community_listitems>) list_community_items);
         binding.communityListView.setAdapter(communityAdapter);
+
+         */
 
         /*
         // listView 를 클릭했을 때
@@ -98,133 +114,15 @@ public class CommunityActivity extends AppCompatActivity {
          */
 
         //글쓰기 버튼 클릭 시
-
         binding.bWriting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // userid를 갖고 CommunityWriting으로 이동
                 Intent intent = new Intent(getApplicationContext(), CommunityWritingActivity.class);
-                intent.putExtra("userid", userid);
                 startActivity(intent);
             }
         });
     }
-
-
-    // onResume() 해당 액티비티가 화면에 나타날 때 호출됨
-    @Override
-    protected void onResume() {
-        super.onResume();
-        // 해당 액티비티가 활성화되면 게시물 리스트를 불러오는 함수 호출
-        GetBoard getBoard = new GetBoard();
-        getBoard.execute();
-    }
-
-
-    // 게시물 리스트를 읽어오는 함수
-    class GetBoard extends AsyncTask<String, Void, String> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-
-            // 배열 초기화
-            titleList.clear();
-            seqList.clear();
-
-            try {
-
-                // 결과물이 JSONArray 형태로 넘어오기 때문에 파싱
-                JSONArray jsonArray = new JSONArray(result);
-
-                for(int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-                    String title = jsonObject.optString("title");
-                    String seq = jsonObject.optString("seq");
-
-                    // title, seq 값을 변수로 받아서 배열에 추가
-                    titleList.add(title);
-                    seqList.add(seq);
-
-                }
-
-                // ListView 에서 사용할 arrayAdapter를 생성하고, ListView 와 연결
-                ArrayAdapter arrayAdapter = new ArrayAdapter<String>(CommunityActivity.this, R.layout.item_community, titleList);
-                listView.setAdapter(arrayAdapter);
-
-                // arrayAdapter의 데이터가 변경되었을때 새로고침
-                arrayAdapter.notifyDataSetChanged();
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-
-        }
-
-
-        @Override
-        protected String doInBackground(String... params) {
-
-            // String userid = params[0];
-            // String passwd = params[1];
-
-            String server_url = "http://14.55.65.181/ondaeng/getMemberId?"; // ?? 여기 url 확인하기
-
-
-            URL url;
-            String response = "";
-            try {
-                url = new URL(server_url);
-
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setReadTimeout(15000);
-                conn.setConnectTimeout(15000);
-                conn.setRequestMethod("POST");
-                conn.setDoInput(true);
-                conn.setDoOutput(true);
-                Uri.Builder builder = new Uri.Builder()
-                        .appendQueryParameter("userid", "");
-                // .appendQueryParameter("passwd", passwd);
-                String query = builder.build().getEncodedQuery();
-
-                OutputStream os = conn.getOutputStream();
-                BufferedWriter writer = new BufferedWriter(
-                        new OutputStreamWriter(os, "UTF-8"));
-                writer.write(query);
-                writer.flush();
-                writer.close();
-                os.close();
-
-                conn.connect();
-                int responseCode=conn.getResponseCode();
-
-                if (responseCode == HttpsURLConnection.HTTP_OK) {
-                    String line;
-                    BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                    while ((line=br.readLine()) != null) {
-                        response += line;
-                    }
-                }
-                else {
-                    response = "";
-
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            return response;
-        }
-    }
-
-
 
 
 
@@ -245,4 +143,62 @@ public class CommunityActivity extends AppCompatActivity {
             }
         });*/
 
+    public void getPost(String category) {//1
+        easyToast("getPost 실행됨");
+        String url = "http://14.55.65.181/ondaeng/getPost";//2
+        //JSON형식으로 데이터 통신을 진행합니다!
+        JSONObject testjson = new JSONObject();
+        try {
+            //입력해둔 edittext의 id와 pw값을 받아와 put해줍니다 : 데이터를 json형식으로 바꿔 넣어주었습니다.
+
+            //url = url +"id="+id;//3
+
+            //이제 전송
+            final RequestQueue requestQueue = Volley.newRequestQueue(CommunityActivity.this);
+
+            easyToast(url);
+            final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,null, new Response.Listener<JSONObject>() {
+
+                //데이터 전달을 끝내고 이제 그 응답을 받을 차례입니다.
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        easyToast("응답");
+                        //받은 json형식의 응답을 받아
+                        //key값에 따라 value값을 쪼개 받아옵니다.
+                        JSONObject jsonObject = new JSONObject(response.toString());
+                        easyToast("test");
+                        int length = Integer.valueOf(jsonObject.getJSONArray("data").length());
+                        Toast.makeText(getApplicationContext(),length,Toast.LENGTH_SHORT).show();
+
+//                        Log.i("length", String.valueOf(jsonObject.getJSONArray("data").length()));
+
+
+//                            JSONObject data = new JSONObject(jsonObject.getJSONArray("data").get(0).toString());
+//                            String dbpw =data.get("password").toString();//4
+//                        easyToast("dbpw : "+dbpw+" , pw : "+pw);
+
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                //서버로 데이터 전달 및 응답 받기에 실패한 경우 아래 코드가 실행됩니다.
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                }
+            });
+            jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            requestQueue.add(jsonObjectRequest);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
+    void easyToast(String str){
+        Toast.makeText(getApplicationContext(),str,Toast.LENGTH_SHORT).show();
+    }
+}
