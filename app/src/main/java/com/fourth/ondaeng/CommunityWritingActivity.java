@@ -1,17 +1,18 @@
 package com.fourth.ondaeng;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.loader.content.AsyncTaskLoader;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.fourth.ondaeng.databinding.ActivityCommunityBinding;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -23,37 +24,46 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class CommunityWriting extends AppCompatActivity {
+public class CommunityWritingActivity extends AppCompatActivity {
+
+    ActivityCommunityBinding binding;
 
     EditText edit_title;
     EditText edit_content;
-    Button bpost;
-    String userid = ""; //로그인에서 유저 id 가져오기
+    Button b_post;
+    String category ="양육 꿀팁";
 
-    final private String TAG = getClass().getSimpleName();
 
     @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_community_writing);
+        binding = ActivityCommunityBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        String id = (String)appData.id;
 
         //넘어온 userid를 변수로 받음 -> login 에서 id 확인하기
-        userid = getIntent().getStringExtra("userid");
+        //userid = getIntent().getStringExtra("userid");
 
         //컴포넌트 초기화
         edit_title = findViewById(R.id.edit_title);
         edit_content = findViewById(R.id.edit_content);
-        bpost = findViewById(R.id.bpost);
+        b_post = findViewById(R.id.b_post);
 
         //글쓰기 버튼
-        bpost.setOnClickListener(new View.OnClickListener() {
+        b_post.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 RegBoard regBoard = new RegBoard();
                 regBoard.execute(userid, edit_title.getText().toString(), edit_content.getText().toString());
+
+                Intent intent = new Intent(getApplicationContext(), CommunityActivity.class);
+                intent.putExtra("userid", userid);
+                startActivity(intent);
             }
         });
+
 
     }
 
@@ -71,10 +81,10 @@ public class CommunityWriting extends AppCompatActivity {
             if (result.equals("success")) {
                 // 결과값이 success 면 이전 액티비티로 이동
                 //CommunityActivity onResume() 함수 호출, 데이터 새로 고침
-                Toast.makeText(CommunityWriting.this, "등록되었습니다.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CommunityWritingActivity.this, "등록되었습니다.", Toast.LENGTH_SHORT).show();
                 finish();
             } else {
-                Toast.makeText(CommunityWriting.this, result, Toast.LENGTH_SHORT).show();
+                Toast.makeText(CommunityWritingActivity.this, result, Toast.LENGTH_SHORT).show();
             }
 
         }
@@ -85,8 +95,9 @@ public class CommunityWriting extends AppCompatActivity {
             String title = params[1];
             String content = params[2];
             String category = params[3];
+            //String date = params[4];
 
-            String server_url = ""; //여기도 어떤 url ??
+            String server_url = "http://14.55.65.181/ondaeng/getMemberId?"; //?? url 확인하기
 
 
             URL url;

@@ -283,7 +283,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     //DB에서 뼈다구 좌표 받아오기
-    public LatLng getWalkSpot(int spot_no){
+    public void getWalkSpot(int spot_no){
 //        easyToast("getWalkSpot 실행됨");
         String url = "http://14.55.65.181/ondaeng/getWalkSpot?";
         //JSON형식으로 데이터 통신을 진행
@@ -304,9 +304,9 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                         //key값에 따라 value값을 쪼개 받아옵니다.
                         JSONObject jsonObject = new JSONObject(response.toString());
                         JSONObject data = new JSONObject(jsonObject.getJSONArray("data").get(0).toString());
-                         spot_name = data.get("spot_name").toString();
-                         latitude =(double)data.get("latitude");
-                         longitude =(double)data.get("longitude");
+                         String spot_name = data.get("spot_name").toString();
+                         double latitude =(double)data.get("latitude");
+                         double longitude =(double)data.get("longitude");
                         Toast.makeText(getApplicationContext(),"spot_name : " + spot_name + " , latitude : " + latitude + " , longitude : " + longitude,Toast.LENGTH_SHORT).show();
 
                     } catch (Exception e) {

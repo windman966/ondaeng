@@ -2,20 +2,19 @@ package com.fourth.ondaeng;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ListActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.Toast;
+
+import com.fourth.ondaeng.databinding.ActivityCommunityBinding;
+import com.fourth.ondaeng.databinding.ActivityLoginBinding;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,10 +34,10 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class CommunityActivity extends AppCompatActivity {
 
-    final private String TAG = getClass().getSimpleName();
+    ActivityCommunityBinding binding;
 
-    ListView listView;
-    Button bwriting;
+    private ListView listView;
+    Button b_writing;
     String userid = "";
 
     // 리스트뷰에 사용할 제목 배열
@@ -54,13 +53,11 @@ public class CommunityActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_community);
+        binding = ActivityCommunityBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        userid = getIntent().getStringExtra("userid");
-        listView = findViewById(R.id.community_listView);
+        String id = (String)appData.id;
 
-        //커뮤니티 리스트뷰, 어댑터
-        listView = (ListView)findViewById(R.id.community_listView);
         list_community_items = new ArrayList<community_listitems>();
 
         //커뮤니티 게시물(인앱)
@@ -71,11 +68,15 @@ public class CommunityActivity extends AppCompatActivity {
         community_listitems.add(new community_listitems("닉네임4", "배변 훈련방법", "강아지 배변 훈련하는 방법 알려드려요!", "양육 꿀팁", new Date(System.currentTimeMillis())));
         community_listitems.add(new community_listitems("닉네임5", "간식 나눔", "강아지 간식 나눔합니다", "나눔", new Date(System.currentTimeMillis())));
 
+        //커뮤니티 어댑터
+        CommunityAdapter communityAdapter;
+        ArrayList<community_listitems> community_listitems = null;
+        Object list_community_items;
 
         //어댑터 연결, 객체생성
         communityAdapter = new CommunityAdapter(getApplicationContext(), community_listitems);
         //communityAdapter = new CommunityAdapter(MainActivity.this, (ArrayList<com.fourth.ondaeng.community_listitems>) list_community_items);
-        listView.setAdapter(communityAdapter);
+        binding.communityListView.setAdapter(communityAdapter);
 
         /*
         // listView 를 클릭했을 때
@@ -96,15 +97,13 @@ public class CommunityActivity extends AppCompatActivity {
 
          */
 
+        //글쓰기 버튼 클릭 시
 
-        bwriting = findViewById(R.id.bwriting);
-
-        bwriting.setOnClickListener(new View.OnClickListener() {
+        binding.bWriting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 // userid를 갖고 CommunityWriting으로 이동
-                Intent intent = new Intent(CommunityActivity.this, CommunityWriting.class);
+                Intent intent = new Intent(getApplicationContext(), CommunityWritingActivity.class);
                 intent.putExtra("userid", userid);
                 startActivity(intent);
             }
@@ -176,7 +175,7 @@ public class CommunityActivity extends AppCompatActivity {
             // String userid = params[0];
             // String passwd = params[1];
 
-            String server_url = ""; // 여기 url 확인하기
+            String server_url = "http://14.55.65.181/ondaeng/getMemberId?"; // ?? 여기 url 확인하기
 
 
             URL url;
@@ -228,25 +227,22 @@ public class CommunityActivity extends AppCompatActivity {
 
 
 
+
         //스피너
-        Spinner spinner = findViewById(R.id.spinner);
-        /*
-        spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//        Spinner spinner = findViewById(R.id.spinner);
+         /*spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //parent.getItemAtPosition(position);
             }
         });
-        */
 
-        /*
         spinner.setOnTouchListener(new View.OnTouchListener(){
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 return false;
             }
-        });
-         */
+        });*/
 
     }
