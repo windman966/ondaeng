@@ -51,8 +51,17 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+
+        binding.joinBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LoginActivity.this.startActivity(new Intent(LoginActivity.this, JoinActivity.class));
+                LoginActivity.this.finish();
+            }
+        });
     }
-    public void getPwById(String id,String pw){
+
+    public void getPwById(String id, String pw){
 //        easyToast("getPwById 실행됨");
         String url = "http://14.55.65.181/ondaeng/getMemberId?";
         //JSON형식으로 데이터 통신을 진행합니다!
@@ -80,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
                         String dbpw =data.get("password").toString();
 //                        easyToast("dbpw : "+dbpw+" , pw : "+pw);
                         if(pw.equals(dbpw)){
-
+//                        로그인 성공시
                             LoginActivity.this.startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             LoginActivity.this.finish();
                             
@@ -107,7 +116,9 @@ public class LoginActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-    void easyToast(String str){
+
+
+     void easyToast(String str){
         Toast.makeText(getApplicationContext(),str,Toast.LENGTH_SHORT).show();
     }
 }
