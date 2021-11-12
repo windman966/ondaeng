@@ -1,7 +1,5 @@
 package com.fourth.ondaeng;
 
-
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -10,11 +8,14 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.fourth.ondaeng.databinding.ActivityDrawerBinding;
 import com.fourth.ondaeng.databinding.ActivityMainBinding;
 
 import org.json.JSONObject;
@@ -27,6 +28,7 @@ import me.relex.circleindicator.CircleIndicator3;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
+    private ActivityDrawerBinding activityDrawerBinding;
     private DrawerLayout drawerLayout;
     private View drawerView;
     private ViewPager2 viewPager2;
@@ -38,7 +40,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
+        activityDrawerBinding = ActivityDrawerBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+//        아이디 값 받아오기
+        String id = (String) appData.id;
+        TextView nnOnNav = findViewById(R.id.nickNameOnNav);
+        nnOnNav.setText(id);
+
+//        Toast.makeText(getApplicationContext(),id+" appData에서 받음",Toast.LENGTH_SHORT).show();
 
         //강아지등록증 페이저
         viewPager2 = findViewById(R.id.dogIdCardPager);
@@ -46,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         //네비게이션 메뉴 코드
         drawerLayout = binding.drawerLayout;
         drawerView = (View)findViewById(R.id.drawer);
+
         Button btn_open = (Button)findViewById(R.id.btn_open);
         btn_open.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onTouch(View v, MotionEvent event) {
                 return true;
             }
+
         });
 
         //등록증 데이터 및 코드 공유유
@@ -86,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
         Intent walkIntent = new Intent(this, WalkActivity.class);
         Intent hospIntent = new Intent(this, HospitalActivity.class);
         //마이페이지 이동
+
         findViewById(R.id.goToMyPage).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

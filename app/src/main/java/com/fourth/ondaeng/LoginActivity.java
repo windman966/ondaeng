@@ -14,6 +14,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.fourth.ondaeng.databinding.ActivityDrawerBinding;
 import com.fourth.ondaeng.databinding.ActivityLoginBinding;
 
 
@@ -90,7 +91,11 @@ public class LoginActivity extends AppCompatActivity {
 //                        easyToast("dbpw : "+dbpw+" , pw : "+pw);
                         if(pw.equals(dbpw)){
 //                        로그인 성공시
-                            LoginActivity.this.startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            Intent MainIntent = new Intent(LoginActivity.this, MainActivity.class);
+
+                            appData.id = id;
+                            ActivityDrawerBinding.inflate(getLayoutInflater()).nickNameOnNav.setText(id);
+                            LoginActivity.this.startActivity(MainIntent);
                             LoginActivity.this.finish();
                             
                         }
