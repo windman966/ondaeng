@@ -21,7 +21,7 @@
         <activity
             android:name=".CommunityWritingActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".myPage"
             android:exported="false" />
