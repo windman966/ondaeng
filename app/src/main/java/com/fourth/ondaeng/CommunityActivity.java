@@ -19,6 +19,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.fourth.ondaeng.databinding.ActivityCommunityBinding;
+import com.fourth.ondaeng.databinding.ActivityDrawerBinding;
 
 import org.json.JSONObject;
 
@@ -53,7 +54,9 @@ public class CommunityActivity extends AppCompatActivity {
         binding.bWriting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent MainIntent = new Intent(CommunityActivity.this, CommunityWritingActivity.class);
+                CommunityActivity.this.startActivity(MainIntent);
+                CommunityActivity.this.finish();
             }
         });
     }
@@ -105,9 +108,8 @@ public class CommunityActivity extends AppCompatActivity {
                         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
                             @Override
                             public void onItemClick(AdapterView parent, View v, int position, long id){
-                                Toast.makeText(getApplicationContext(),
-                                        myAdapter.getItem(position).gettitle(),
-                                        Toast.LENGTH_LONG).show();
+                                easyToast(myAdapter.getItem(position).gettitle());
+
                             }
                         });
 

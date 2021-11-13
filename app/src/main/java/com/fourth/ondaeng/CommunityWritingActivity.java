@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.fourth.ondaeng.databinding.ActivityCommunityBinding;
+import com.fourth.ondaeng.databinding.ActivityCommunityWritingBinding;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -26,7 +27,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class CommunityWritingActivity extends AppCompatActivity {
 
-    ActivityCommunityBinding binding;
+    ActivityCommunityWritingBinding binding;
 
     EditText edit_title;
     EditText edit_content;
@@ -38,7 +39,7 @@ public class CommunityWritingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityCommunityBinding.inflate(getLayoutInflater());
+        binding = ActivityCommunityWritingBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         String id = (String)appData.id;
@@ -52,17 +53,17 @@ public class CommunityWritingActivity extends AppCompatActivity {
         b_post = findViewById(R.id.b_post);
 
         //글쓰기 버튼
-        b_post.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                RegBoard regBoard = new RegBoard();
-                regBoard.execute(userid, edit_title.getText().toString(), edit_content.getText().toString());
-
-                Intent intent = new Intent(getApplicationContext(), CommunityActivity.class);
-                intent.putExtra("userid", userid);
-                startActivity(intent);
-            }
-        });
+//        b_post.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                RegBoard regBoard = new RegBoard();
+//                regBoard.execute(userid, edit_title.getText().toString(), edit_content.getText().toString());
+//
+//                Intent intent = new Intent(getApplicationContext(), CommunityActivity.class);
+//                intent.putExtra("userid", userid);
+//                startActivity(intent);
+//            }
+//        });
 
 
     }
