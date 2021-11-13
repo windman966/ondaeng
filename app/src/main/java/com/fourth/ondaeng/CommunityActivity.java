@@ -43,11 +43,12 @@ public class CommunityActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         String id = (String)appData.id;
-        int postLength = getPostLength(null);
+        getPostLength(null);
+
 
         /*community_listitems = new ArrayList<community_listitems>();
         communityAdapter = new CommunityAdapter(this, R.layout.item_community, community_listitems);
-        
+
         listView = binding.communityListView;
         //listView = (ListView) findViewById(R.id.community_listView);
         listView.setAdapter((ListAdapter) CommunityAdapter);
@@ -111,6 +112,7 @@ public class CommunityActivity extends AppCompatActivity {
         binding.bWriting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // userid를 갖고 CommunityWriting으로 이동
                 Intent intent = new Intent(getApplicationContext(), CommunityWritingActivity.class);
                 startActivity(intent);
             }
@@ -136,7 +138,7 @@ public class CommunityActivity extends AppCompatActivity {
             }
         });*/
 
-    public int getPostLength(String category) {//1
+    public void getPostLength(String category) {//1
         easyToast("getPost 실행됨");
         String url = "http://14.55.65.181/ondaeng/getPostCount";//2
         //JSON형식으로 데이터 통신을 진행합니다!
@@ -187,8 +189,9 @@ public class CommunityActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        int length;
-        return length;
+
+
+
     }
 
     void easyToast(Object obj){
