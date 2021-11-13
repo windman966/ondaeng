@@ -95,8 +95,9 @@ public class CommunityActivity extends AppCompatActivity {
                             String id =data.get("user_id").toString();
                             String title =data.get("title").toString();
                             String date =data.get("date").toString();
+                            int postNo = (Integer) (data.get("post_no"));
                             date = date.substring(0,10);
-                            postDataList.add(new postData(id,title,date));
+                            postDataList.add(new postData(id,title,date,postNo));
                         }
 
                         ListView listView = (ListView)findViewById(R.id.community_listView);
@@ -105,11 +106,17 @@ public class CommunityActivity extends AppCompatActivity {
                         listView.setAdapter(myAdapter);
 
 //                        게시물 클릭시
+
                         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
                             @Override
                             public void onItemClick(AdapterView parent, View v, int position, long id){
                                 easyToast(myAdapter.getItem(position).gettitle());
-
+                                Intent CommIntent = new Intent(CommunityActivity.this, CommunityDetailActivity.class);
+                                int postNo = myAdapter.getItem(position).getpostNo();
+//                                easyToast(postNo);
+                                CommIntent.putExtra("postNo", postNo);
+                                CommunityActivity.this.startActivity(CommIntent);
+                                CommunityActivity.this.finish();
                             }
                         });
 
