@@ -6,21 +6,51 @@
     android:layout_height="match_parent"
     tools:context=".CommunityActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <LinearLayout
+        android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:background="#F9FBE7"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme" />
+        android:layout_height="50dp">
+
+        <Button
+            android:id="@+id/btn_open"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:background="#00FFFFFF"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="open"
+            app:icon="@android:drawable/ic_menu_sort_by_size"
+            app:iconTint="#000000" />
+
+        <TextView
+            android:id="@+id/appName"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="On:댕"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="40dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/dogName"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:gravity="center"
+            android:text="강아지 이름"
+            android:textAlignment="center" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/containers"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolbar"
+        android:layout_below="@id/header"
         android:orientation="vertical">
 
         <LinearLayout

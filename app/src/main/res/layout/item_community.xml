@@ -9,12 +9,21 @@
         android:id="@+id/textView_userid"
         android:layout_width="70dp"
         android:layout_height="50dp"
+        android:layout_gravity="center_vertical"
+        android:autoText="false"
+        android:gravity="center_vertical"
+        android:padding="5dp"
+        android:textAlignment="center"
         android:textSize="20sp" />
 
     <TextView
         android:id="@+id/textView_title"
         android:layout_width="180dp"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:autoText="false"
+        android:gravity="center_vertical"
+        android:padding="5dp"
         android:textSize="20sp"
         app:drawableStartCompat="@drawable/ic_baseline_pets_24" />
 
@@ -22,6 +31,11 @@
         android:id="@+id/textView_date"
         android:layout_width="80dp"
         android:layout_height="50dp"
+        android:layout_gravity="center_vertical"
+        android:autoText="false"
+        android:gravity="center_vertical"
+        android:padding="5dp"
+        android:textAlignment="center"
         android:textSize="16sp" />
 
 </LinearLayout>
