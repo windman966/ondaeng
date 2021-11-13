@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -48,6 +49,32 @@ public class CommunityActivity extends AppCompatActivity {
 //        String id = (String)appData.id;
         getPostLength();
 
+        //스피너
+        Spinner spinner = binding.spinner1;
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String text = spinner.getSelectedItem().toString();
+                easyToast(text);
+                //아이템이 선택되면 선택된 아이템의 순서에 있는 값을 가져옵니다.
+                //parent.getItemAtPosition(position);
+
+//                if(position == 1) {}
+                if(text.equals("내 동네")) {
+                    //spinner.getItemAtPosition(position);
+                } else if (text.equals("양육 꿀팁")) {
+
+                } else if (text.equals("나눔")) {
+
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
 
         //글쓰기 버튼 클릭 시
