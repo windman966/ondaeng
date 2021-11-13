@@ -49,15 +49,13 @@ public class CommunityActivity extends AppCompatActivity {
 
 
 
-        /*//글쓰기 버튼 클릭 시
+        //글쓰기 버튼 클릭 시
         binding.bWriting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // userid를 갖고 CommunityWriting으로 이동
-                Intent intent = new Intent(getApplicationContext(), CommunityWritingActivity.class);
-                startActivity(intent);
+
             }
-        });*/
+        });
     }
 
     public void getPostLength() {//1
@@ -94,7 +92,7 @@ public class CommunityActivity extends AppCompatActivity {
                             String id =data.get("user_id").toString();
                             String title =data.get("title").toString();
                             String date =data.get("date").toString();
-                            date = date.substring(9);
+                            date = date.substring(0,10);
                             postDataList.add(new postData(id,title,date));
                         }
 
