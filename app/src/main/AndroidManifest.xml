@@ -33,7 +33,8 @@
             android:exported="false" />
         <activity
             android:name=".CommunityActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".HealthCheck1Activity"
             android:exported="false" />
