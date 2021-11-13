@@ -5,55 +5,53 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.android.volley.Response;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 public class CommunityAdapter extends BaseAdapter {
-    private Context context;
-    private ArrayList<community_listitems> list_community_items;
+    Context mContext = null;
+    LayoutInflater mLayoutInflater = null;
+    ArrayList<postData> post;
 
-    TextView textView_userid;
-    TextView textView_title;
-    TextView textView_date;
-
-
-    public CommunityAdapter(Context context, ArrayList<community_listitems> list_community_items) {
-        this.context = context;
-        this.list_community_items = list_community_items;
-    }
-
-
-    @Override
-    public int getCount() {//리스트뷰가 몇 개의 아이템을 갖고 있는지
-        return this.list_community_items.size();
+    public CommunityAdapter(Context context, ArrayList<postData> data) {
+        mContext = (Context) context;
+        post = data;
+        mLayoutInflater = LayoutInflater.from(mContext);
     }
 
     @Override
-    public Object getItem(int position) {//현재 어떤 아이템인지 알려줌
-        return this.list_community_items.get(position);
+    public int getCount() {
+        return post.size();
     }
 
     @Override
-    public long getItemId(int position) {//현재 어떤 포지션
+    public long getItemId(int position) {
         return position;
     }
 
-    //리스트뷰-xml 연결, 반복문-한 칸씩 화면표시
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        if(convertView == null){
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_community ,null);
-            textView_userid = (TextView)convertView.findViewById(R.id.textView_userid);
-            textView_title = (TextView)convertView.findViewById(R.id.textView_title);
-            textView_date = (TextView)convertView.findViewById(R.id.textView_date);
-        }
+    public postData getItem(int position) {
+        return post.get(position);
+    }
 
-        textView_userid.setText(list_community_items.get(position).getUserid());
-        textView_title.setText(list_community_items.get(position).getTitle());
-        textView_date.setText(list_community_items.get(position).getDate().toString());
+    @Override
+    public View getView(int position, View converView, ViewGroup parent) {
+        View view = mLayoutInflater.inflate(R.layout.item_community, null);
 
-        convertView.setTag(list_community_items.get(position).getTitle());
-        return convertView;
+        TextView idView = (TextView)view.findViewById(R.id.textView_userid);
+        TextView titleView = (TextView)view.findViewById(R.id.textView_title);
+        TextView dateView = (TextView)view.findViewById(R.id.textView_date);
+
+        idView.setText(post.get(position).getid());
+        titleView.setText(post.get(position).gettitle());
+        dateView.setText(post.get(position).getdate());
+
+        return view;
     }
 }

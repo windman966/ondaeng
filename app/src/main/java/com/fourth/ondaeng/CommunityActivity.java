@@ -31,7 +31,9 @@ public class CommunityActivity extends AppCompatActivity {
     ListView listView;
     CommunityAdapter communityAdapter;
     ArrayList<community_listitems> community_listitems;
-    //ArrayList<String> community_listitems;
+
+    ArrayList<postData> postDataList;
+
     Button b_writing;
     String userid = "";
     Object CommunityAdapter;
@@ -42,73 +44,12 @@ public class CommunityActivity extends AppCompatActivity {
         binding = ActivityCommunityBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        String id = (String)appData.id;
-        getPostLength(null);
-
-
-        /*community_listitems = new ArrayList<community_listitems>();
-        communityAdapter = new CommunityAdapter(this, R.layout.item_community, community_listitems);
-
-        listView = binding.communityListView;
-        //listView = (ListView) findViewById(R.id.community_listView);
-        listView.setAdapter((ListAdapter) CommunityAdapter);
-
-        for(int i = 0; i < community_listitems.size(); i++) {
-            community_listitems.add(); //게시물 하나
-        }
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(CommunityActivity.this, position + "번째 글", Toast.LENGTH_SHORT).show();
-            }
-        });*/
+//        String id = (String)appData.id;
+        getPostLength();
 
 
 
-        /*
-//        list_community_items = new ArrayList<community_listitems>();
-//
-//        //커뮤니티 게시물(인앱)
-//        // userid, title, content, category, date
-//        community_listitems.add(new community_listitems("닉네임1", "간식 추천", "강아지 간식 추천해주세요", "양육 꿀팁", new Date(System.currentTimeMillis())));
-//        community_listitems.add(new community_listitems("닉네임2", "장난감 나눔해요", "강아지 장난감 무료나눔합니다", "나눔", new Date(System.currentTimeMillis())));
-//        community_listitems.add(new community_listitems("닉네임3", "샵 추천", "학동역 미용 잘 하는 곳 추천해주세요", "내 동네", new Date(System.currentTimeMillis())));
-//        community_listitems.add(new community_listitems("닉네임4", "배변 훈련방법", "강아지 배변 훈련하는 방법 알려드려요!", "양육 꿀팁", new Date(System.currentTimeMillis())));
-//        community_listitems.add(new community_listitems("닉네임5", "간식 나눔", "강아지 간식 나눔합니다", "나눔", new Date(System.currentTimeMillis())));
-//
-//        //커뮤니티 어댑터
-//        CommunityAdapter communityAdapter;
-//        ArrayList<community_listitems> community_listitems = null;
-//        Object list_community_items;
-//
-//        //어댑터 연결, 객체생성
-//        communityAdapter = new CommunityAdapter(getApplicationContext(), community_listitems);
-//        //communityAdapter = new CommunityAdapter(MainActivity.this, (ArrayList<com.fourth.ondaeng.community_listitems>) list_community_items);
-//        binding.communityListView.setAdapter(communityAdapter);
-
-         */
-
-        /*
-        // listView 를 클릭했을 때
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                // 게시물의 번호와 userid로 CommunityDetailActivity 로 이동
-                Intent intent = new Intent(CommunityActivity.this, CommunityDetailActivity.class);
-                // CommunityDetailActivity, xml 따로 추가해야 됨
-
-                intent.putExtra("board_seq", seqList.get(i));
-                intent.putExtra("userid", userid);
-                startActivity(intent);
-
-            }
-        });
-
-         */
-
-        //글쓰기 버튼 클릭 시
+        /*//글쓰기 버튼 클릭 시
         binding.bWriting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,37 +57,17 @@ public class CommunityActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), CommunityWritingActivity.class);
                 startActivity(intent);
             }
-        });
+        });*/
     }
 
-
-
-        //스피너
-//        Spinner spinner = findViewById(R.id.spinner);
-         /*spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //parent.getItemAtPosition(position);
-            }
-        });
-
-        spinner.setOnTouchListener(new View.OnTouchListener(){
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return false;
-            }
-        });*/
-
-    public void getPostLength(String category) {//1
+    public void getPostLength() {//1
         easyToast("getPost 실행됨");
-        String url = "http://14.55.65.181/ondaeng/getPostCount";//2
+        String url = "http://14.55.65.181/ondaeng/getPost";//2
+        final int[] length = {0};
         //JSON형식으로 데이터 통신을 진행합니다!
         JSONObject testjson = new JSONObject();
         try {
             //입력해둔 edittext의 id와 pw값을 받아와 put해줍니다 : 데이터를 json형식으로 바꿔 넣어주었습니다.
-
-            //url = url +"id="+id;//3
 
             //이제 전송
             final RequestQueue requestQueue = Volley.newRequestQueue(CommunityActivity.this);
@@ -163,13 +84,34 @@ public class CommunityActivity extends AppCompatActivity {
                         //key값에 따라 value값을 쪼개 받아옵니다.
                         JSONObject jsonObject = new JSONObject(response.toString());
                         easyToast("test");
-//                        easyToast(length)
-//                        Log.i("length", String.valueOf(jsonObject.getJSONArray("data").length()));
+                        postDataList = new ArrayList<postData>();
+                        int length = Integer.valueOf(jsonObject.getJSONArray("data").length());
+                        easyToast(length);
 
+                        postDataList = new ArrayList<postData>();
+                        for(int i=0;i<length;i++){
+                            JSONObject data = new JSONObject(jsonObject.getJSONArray("data").get(i).toString());
+                            String id =data.get("user_id").toString();
+                            String title =data.get("title").toString();
+                            String date =data.get("date").toString();
+                            date = date.substring(9);
+                            postDataList.add(new postData(id,title,date));
+                        }
 
-                        JSONObject data = new JSONObject(jsonObject.getJSONArray("data").get(0).toString());
-                        int length = (int) data.get("count(*)");//4
-//                        easyToast("dbpw : "+dbpw+" , pw : "+pw);
+                        ListView listView = (ListView)findViewById(R.id.community_listView);
+                        final CommunityAdapter myAdapter = new CommunityAdapter(CommunityActivity.this,postDataList);
+
+                        listView.setAdapter(myAdapter);
+
+//                        게시물 클릭시
+                        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+                            @Override
+                            public void onItemClick(AdapterView parent, View v, int position, long id){
+                                Toast.makeText(getApplicationContext(),
+                                        myAdapter.getItem(position).gettitle(),
+                                        Toast.LENGTH_LONG).show();
+                            }
+                        });
 
 
                     } catch (Exception e) {
@@ -189,8 +131,6 @@ public class CommunityActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
 
     }
 
