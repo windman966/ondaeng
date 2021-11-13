@@ -38,9 +38,6 @@ public class CommunityWritingActivity extends AppCompatActivity {
 
     ActivityCommunityWritingBinding binding;
 
-    EditText edit_title;
-    EditText edit_content;
-    Button b_post;
     String category ="양육 꿀팁";
 
 
