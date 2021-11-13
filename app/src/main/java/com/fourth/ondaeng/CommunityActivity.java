@@ -47,27 +47,24 @@ public class CommunityActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
 //        String id = (String)appData.id;
-        getPostLength();
-
+        String text ;
         //스피너
         Spinner spinner = binding.spinner1;
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String text = spinner.getSelectedItem().toString();
-                easyToast(text);
+
                 //아이템이 선택되면 선택된 아이템의 순서에 있는 값을 가져옵니다.
                 //parent.getItemAtPosition(position);
 
 //                if(position == 1) {}
-                if(text.equals("내 동네")) {
-                    //spinner.getItemAtPosition(position);
-                } else if (text.equals("양육 꿀팁")) {
-
-                } else if (text.equals("나눔")) {
-
+                if(text.equals("전체")) {
+                    text = "%";
                 }
+                getPostLength(text);
             }
 
             @Override
@@ -75,6 +72,7 @@ public class CommunityActivity extends AppCompatActivity {
 
             }
         });
+
 
 
         //글쓰기 버튼 클릭 시
@@ -88,9 +86,10 @@ public class CommunityActivity extends AppCompatActivity {
         });
     }
 
-    public void getPostLength() {//1
+    public void getPostLength(String category) {//1
         easyToast("getPost 실행됨");
-        String url = "http://14.55.65.181/ondaeng/getPost";//2
+        String url = "http://14.55.65.181/ondaeng/getPost?";//2
+        url = url +"category="+category;
         final int[] length = {0};
         //JSON형식으로 데이터 통신을 진행합니다!
         JSONObject testjson = new JSONObject();
