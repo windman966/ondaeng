@@ -138,8 +138,7 @@ public class CommunityActivity extends AppCompatActivity {
 
     public int getPostLength(String category) {//1
         easyToast("getPost 실행됨");
-        String url = "http://14.55.65.181/ondaeng/getPost";//2
-        final int[] length = null;
+        String url = "http://14.55.65.181/ondaeng/getPostCount";//2
         //JSON형식으로 데이터 통신을 진행합니다!
         JSONObject testjson = new JSONObject();
         try {
@@ -162,13 +161,12 @@ public class CommunityActivity extends AppCompatActivity {
                         //key값에 따라 value값을 쪼개 받아옵니다.
                         JSONObject jsonObject = new JSONObject(response.toString());
                         easyToast("test");
-                        length[0] = Integer.valueOf(jsonObject.getJSONArray("data").length());
 //                        easyToast(length)
 //                        Log.i("length", String.valueOf(jsonObject.getJSONArray("data").length()));
 
 
-//                            JSONObject data = new JSONObject(jsonObject.getJSONArray("data").get(0).toString());
-//                            String dbpw =data.get("password").toString();//4
+                        JSONObject data = new JSONObject(jsonObject.getJSONArray("data").get(0).toString());
+                        int length = (int) data.get("count(*)");//4
 //                        easyToast("dbpw : "+dbpw+" , pw : "+pw);
 
 
@@ -189,7 +187,8 @@ public class CommunityActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return length[0];
+        int length;
+        return length;
     }
 
     void easyToast(Object obj){
