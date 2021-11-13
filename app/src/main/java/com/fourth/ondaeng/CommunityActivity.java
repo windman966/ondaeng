@@ -47,7 +47,6 @@ public class CommunityActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
 //        String id = (String)appData.id;
-        String text ;
         //스피너
         Spinner spinner = binding.spinner1;
 

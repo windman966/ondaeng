@@ -50,7 +50,7 @@
                     android:layout_width="180dp"
                     android:layout_height="50dp"
                     android:layout_marginStart="170dp"
-                    android:entries="@array/카테고리" />
+                    android:entries="@array/writingCategory" />
             </LinearLayout>
         </LinearLayout>
 

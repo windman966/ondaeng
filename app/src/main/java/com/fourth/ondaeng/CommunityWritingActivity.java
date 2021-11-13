@@ -8,8 +8,10 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -49,7 +51,24 @@ public class CommunityWritingActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
 
+        Spinner spinner = binding.spinner2;
 
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String text = spinner.getSelectedItem().toString();
+                //아이템이 선택되면 선택된 아이템의 순서에 있는 값을 가져옵니다.
+                //parent.getItemAtPosition(position);
+//                if(position == 1) {}
+                category = text;
+                easyToast(category);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         binding.bPost.setOnClickListener(new View.OnClickListener() {
             @Override
