@@ -90,7 +90,7 @@ public class CommunityActivity extends AppCompatActivity {
                         easyToast(length);
 
                         postDataList = new ArrayList<postData>();
-                        for(int i=0;i<length;i++){
+                        for(int i=length-1;i>=0;i--){
                             JSONObject data = new JSONObject(jsonObject.getJSONArray("data").get(i).toString());
                             String id =data.get("user_id").toString();
                             String title =data.get("title").toString();
