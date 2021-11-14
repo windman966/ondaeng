@@ -97,7 +97,7 @@ public class CommunityActivity extends AppCompatActivity {
             //이제 전송
             final RequestQueue requestQueue = Volley.newRequestQueue(CommunityActivity.this);
 
-            easyToast(url);
+            //easyToast(url);
             final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,null, new Response.Listener<JSONObject>() {
 
                 //데이터 전달을 끝내고 이제 그 응답을 받을 차례입니다.

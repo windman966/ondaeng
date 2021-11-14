@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,15 +34,19 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 import javax.net.ssl.HttpsURLConnection;
 
 public class CommunityDetailActivity extends AppCompatActivity {
 
     ActivityCommunityDetailBinding binding;
-
+    //수정삭제 전처리
+    ListView listView;
+    ArrayList<String> items;
 
 //    int getNo = getIntent().getIntExtra("postNo",1);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,13 +57,56 @@ public class CommunityDetailActivity extends AppCompatActivity {
 
         readPost(getNo);
 
+        //수정, 삭제 전처리
+        items = new ArrayList<>();
+        final ArrayAdapter adapter = new ArrayAdapter(this, R.layout.item_community, items);
 
+        //'목록으로' 버튼
         binding.bBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onBackPressed();
             }
         });
+
+
+        // !! 로그인 된 유저가 쓴 글만 수정, 삭제 되도록
+
+        //'수정' 버튼
+        binding.bModify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int check;
+                int count = adapter.getCount();
+                if (count > 0) {
+                    check = listView.getCheckedItemPosition(); //선택 항목 position 얻기
+                    if (check > -1 && check < count)
+                        items.set(check, Integer.toString(check + 1) + ") " + binding.tvTitle.getText() + " (수정됨)");
+                        items.set(check, Integer.toString(check + 1) + ") " + binding.tvContent.getText() + " (수정됨)");
+                    adapter.notifyDataSetChanged();
+                    binding.tvTitle.setText("");
+                    binding.tvContent.setText("");
+                }
+            }
+        });
+
+
+        //'삭제' 버튼
+        binding.bDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int check, count= adapter.getCount();
+                if (count>0){
+                    check = listView.getCheckedItemPosition();
+                    if (check>-1 && check<count){
+                        items.remove(check);
+                        listView.clearChoices();
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+            }
+        });
+
     }
 
 //    게시물 읽어오기
