@@ -81,7 +81,7 @@ public class CommunityWritingActivity extends AppCompatActivity {
                     easyToast("제목과 내용을 입력해주세요");
                 }
                 else if(content.length()<10){
-                    easyToast("내용에 10글자 이상은 입력해주세요");
+                    easyToast("내용에 10글자 이상 입력해주세요");
                 }
                 else {
                     createPost(id,title,content,category);
@@ -119,7 +119,7 @@ public class CommunityWritingActivity extends AppCompatActivity {
 //                        easyToast("onResponse내부");
                         JSONObject jsonObject = new JSONObject(response.toString());
                         String message = jsonObject.get("message").toString();
-                        //                        easyToast("dbpw : "+dbpw+" , pw : "+pw);
+
                         if(message.equals("OK")){
 //                            정상 등록시
                             easyToast("글이 작성되었습니다");
@@ -127,7 +127,7 @@ public class CommunityWritingActivity extends AppCompatActivity {
 
                         }
                         else{
-                            easyToast("글이 작성중에 오류가 발생하였습니다.");
+                            easyToast("작성중 오류가 발생하였습니다.");
                         }
 
                     } catch (Exception e) {

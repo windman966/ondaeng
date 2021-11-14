@@ -85,7 +85,7 @@ public class CommunityActivity extends AppCompatActivity {
     }
 
     public void getPostLength(String category) {//1
-        easyToast("getPost 실행됨");
+        //easyToast("getPost 실행됨");
         String url = "http://14.55.65.181/ondaeng/getPost?";//2
         url = url +"category="+category;
         final int[] length = {0};
@@ -104,14 +104,14 @@ public class CommunityActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(JSONObject response) {
                     try {
-                        easyToast("응답");
+                        //easyToast("응답");
                         //받은 json형식의 응답을 받아
                         //key값에 따라 value값을 쪼개 받아옵니다.
                         JSONObject jsonObject = new JSONObject(response.toString());
-                        easyToast("test");
+                        //easyToast("test");
                         postDataList = new ArrayList<postData>();
                         int length = Integer.valueOf(jsonObject.getJSONArray("data").length());
-                        easyToast(length);
+                        //easyToast(length);
 
                         postDataList = new ArrayList<postData>();
                         for(int i=length-1;i>=0;i--){
@@ -134,7 +134,7 @@ public class CommunityActivity extends AppCompatActivity {
                         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
                             @Override
                             public void onItemClick(AdapterView parent, View v, int position, long id){
-                                easyToast(myAdapter.getItem(position).gettitle());
+                                //easyToast(myAdapter.getItem(position).gettitle());
                                 Intent CommIntent = new Intent(CommunityActivity.this, CommunityDetailActivity.class);
                                 int postNo = myAdapter.getItem(position).getpostNo();
 //                                easyToast(postNo);

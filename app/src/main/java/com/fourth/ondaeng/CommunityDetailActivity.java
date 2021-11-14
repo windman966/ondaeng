@@ -52,7 +52,6 @@ public class CommunityDetailActivity extends AppCompatActivity {
         readPost(getNo);
 
 
-
         binding.bBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,7 +62,6 @@ public class CommunityDetailActivity extends AppCompatActivity {
 
 //    게시물 읽어오기
     public void readPost(int postNo){
-//        easyToast("getPwById 실행됨");
         String url = "http://14.55.65.181/ondaeng/readPost?";
         //JSON형식으로 데이터 통신을 진행합니다!
         JSONObject testjson = new JSONObject();
@@ -86,7 +84,7 @@ public class CommunityDetailActivity extends AppCompatActivity {
                         //받은 json형식의 응답을 받아
                         //key값에 따라 value값을 쪼개 받아옵니다.
                         JSONObject jsonObject = new JSONObject(response.toString());
-                        easyToast(Integer.valueOf(jsonObject.getJSONArray("data").length()));
+                        //easyToast(Integer.valueOf(jsonObject.getJSONArray("data").length()));
                         JSONObject data = new JSONObject(jsonObject.getJSONArray("data").get(0).toString());
                         String title =data.get("title").toString();
                         String content =data.get("content").toString();
