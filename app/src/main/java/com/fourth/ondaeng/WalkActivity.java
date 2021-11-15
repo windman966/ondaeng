@@ -335,7 +335,6 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
         locationManager.removeUpdates(locationListener);
 
     }
-
     //DB에서 뼈다구 좌표 받아오기
     public void getWalkSpot(int spot_no){
 //        easyToast("getWalkSpot 실행됨");
