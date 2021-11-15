@@ -255,3 +255,4 @@ public class HospitalActivity extends AppCompatActivity implements OnMapReadyCal
         return false;
     }
 }
+
