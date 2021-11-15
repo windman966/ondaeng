@@ -76,6 +76,9 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
     double boneLatitude;
     double boneLongitude;
 
+    public Marker markers[] = new Marker[11];
+    PathOverlay path = new PathOverlay();
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,11 +143,10 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                 //스톱워치, 거리 중지
 
                 //위치 좌표 불러오기 중지
-                System.exit(settingGPS());
-
+                stopGPS();
                 //뼈다구 마커 없애기
-                Marker marker = new Marker();
-                marker.setMap(null);
+
+
 
                 //산책기록 데이터 저장
 
@@ -287,7 +289,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
      * LocationListener는 위치가 변할때 마다 또는 상태가 변할 때마다 위치를 가져오는 리스너
      * @return
      */
-    private int settingGPS() {
+    private void settingGPS() {
         // Acquire a reference to the system Location Manager
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
@@ -303,26 +305,42 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 LatLng temp = new LatLng(myLatitude,myLongitude);
                 latLngList.add(temp);
-                PathOverlay path = new PathOverlay();
+
                 if(latLngList.size()>1) {
                     path.setCoords(latLngList);
                     path.setColor(Color.YELLOW);
                     path.setMap(naverMap);
                 }
+
             }
 
             public void onStatusChanged(String provider, int status, Bundle extras) {
             }
 
             public void onProviderEnabled(String provider) {
+
             }
 
             public void onProviderDisabled(String provider) {
             }
         };
-        return 0;
+
     }
 
+    public void stopGPS(){
+
+//      pdg제거
+        for(int j=1; j<=10;j++){
+
+//                    Log.i(TAG, j+"생성 markers : "+markers[j].getPosition());
+            markers[j].setMap(null);
+        }
+        //gps 업데이트 종료
+        locationManager.removeUpdates(locationListener);
+
+//        path 제거
+        path.setMap(null);
+    }
     //DB에서 뼈다구 좌표 받아오기
     public void getWalkSpot(int spot_no){
 //        easyToast("getWalkSpot 실행됨");
@@ -351,11 +369,16 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                         //Toast.makeText(getApplicationContext(),"spot_name : " + spot_name + " , latitude : " + boneLatitude + " , longitude : " + boneLongitude,Toast.LENGTH_SHORT).show();
 
                         Marker marker = new Marker();
-                        marker.setPosition(new LatLng(boneLatitude, boneLongitude));
-                        marker.setIcon(OverlayImage.fromResource(R.drawable.bone));
-                        marker.setWidth(80);
-                        marker.setHeight(80);
-                        marker.setMap(naverMap);
+                        markers[spot_no] = marker;
+                        markers[spot_no].setPosition(new LatLng(boneLatitude, boneLongitude));
+                        markers[spot_no].setIcon(OverlayImage.fromResource(R.drawable.bone));
+                        markers[spot_no].setWidth(80);
+                        markers[spot_no].setHeight(80);
+                        markers[spot_no].setMap(naverMap);
+
+
+                        Log.i(TAG, spot_no+"생성 markers : "+markers[spot_no].getPosition());
+
 
                     } catch (Exception e) {
                         e.printStackTrace();
