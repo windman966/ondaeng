@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -30,6 +31,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.fourth.ondaeng.databinding.ActivityWalkBinding;
+import com.google.android.gms.location.Geofence;
+import com.google.android.gms.location.GeofencingClient;
+import com.google.android.gms.location.GeofencingRequest;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.CameraPosition;
@@ -39,6 +44,7 @@ import com.naver.maps.map.NaverMap;
 import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.UiSettings;
 import com.naver.maps.map.overlay.Marker;
+import com.naver.maps.map.overlay.OverlayImage;
 import com.naver.maps.map.overlay.PathOverlay;
 import com.naver.maps.map.util.FusedLocationSource;
 
@@ -62,14 +68,20 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
     private FusedLocationSource locationSource;
     private NaverMap naverMap;
 
+    GeofencingClient mgeofencingClient;
+    ArrayList<Geofence> mGeofenceList;
+    PendingIntent mGeofencePendingIntent;
+
+    String spot_name;
+    double boneLatitude;
+    double boneLongitude;
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityWalkBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-//        walkingFragment = new walkingFragment();
 
         binding.startWalk.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,8 +102,8 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                 Location userLocation = getMyLocation();
 
                 if(userLocation!=null) {
-                    double latitude = userLocation.getLatitude();
-                    double longitude = userLocation.getLongitude();
+                    double myLatitude = userLocation.getLatitude();
+                    double myLongitude = userLocation.getLongitude();
                 }
 
                 //현재위치 경로선 나타내기
@@ -100,18 +112,20 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                 //timeThread = new Thread(new timeThread());
                 //timeThread.start();
 
-                //편의점 위치 좌표 불러오기
                 //뼈다구 마커 추가
-                for(int i=1; i<=10;i++ ){
-                    String spot_name;
-                    double latitude;
-                    double longitude;
+                for(int i=1; i<=10;i++){
+                    //편의점 위치 좌표 불러오기
                     getWalkSpot(i);
                 }
 
-                //Marker marker = new Marker();
-                //marker.setPosition();
-                //marker.setMap(naverMap);
+                mGeofenceList = new ArrayList<>();
+
+                mGeofencePendingIntent = null;
+
+                //GeofenceList();
+
+                mgeofencingClient = LocationServices.getGeofencingClient(WalkActivity.this);
+
             }
         });
 
@@ -177,7 +191,39 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     protected void onStart() {
         super.onStart();
+//        if(!checkPermission()) {
+//            requestPermissions();
+//        }else{
+//            performPendingGeofenceTask();
+//        }
         Log.d(TAG,"onStart");
+    }
+
+    //모니터링할 지오펜싱을 지정하고 관련 지오펜싱 이벤트가 트리거되는 방법 설
+    private GeofencingRequest getGeofencingRequest() {
+        GeofencingRequest.Builder builder = new GeofencingRequest.Builder();
+
+        // The INITIAL_TRIGGER_ENTER flag indicates that geofencing service should trigger a
+        // GEOFENCE_TRANSITION_ENTER notification when the geofence is added and if the device
+        // is already inside that geofence.
+        builder.setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER);
+
+        // Add the geofences to be monitored by geofencing service.
+        builder.addGeofences(mGeofenceList);
+
+        // Return a GeofencingRequest.
+        return builder.build();
+
+    }
+
+//    private void addGeofences() {
+//        mgeofencingClient.addGeofences(getGeofencingRequest(), getGeofencePendingIntent().addOnCompleteListener(this));
+//    }
+
+    private boolean checkPermissions() {
+        int permissionState = ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION);
+        return permissionState == PackageManager.PERMISSION_GRANTED;
     }
 
     @Override
@@ -197,11 +243,6 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(@NonNull NaverMap naverMap) {
         this.naverMap = naverMap;
         naverMap.setLocationSource(locationSource); //현재위치
-
-        // 지도상에 마커 표시
-        Marker marker = new Marker();
-        marker.setPosition(new LatLng(37.5670135, 126.9783740));
-        marker.setMap(naverMap);
 
         UiSettings uiSettings = naverMap.getUiSettings();
         uiSettings.setLocationButtonEnabled(true);
@@ -304,10 +345,17 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                         //key값에 따라 value값을 쪼개 받아옵니다.
                         JSONObject jsonObject = new JSONObject(response.toString());
                         JSONObject data = new JSONObject(jsonObject.getJSONArray("data").get(0).toString());
-                         String spot_name = data.get("spot_name").toString();
-                         double latitude =(double)data.get("latitude");
-                         double longitude =(double)data.get("longitude");
-                        Toast.makeText(getApplicationContext(),"spot_name : " + spot_name + " , latitude : " + latitude + " , longitude : " + longitude,Toast.LENGTH_SHORT).show();
+                        WalkActivity.this.spot_name = data.get("spot_name").toString();
+                        WalkActivity.this.boneLatitude = (double) data.get("latitude");
+                        WalkActivity.this.boneLongitude = (double) data.get("longitude");
+                        //Toast.makeText(getApplicationContext(),"spot_name : " + spot_name + " , latitude : " + boneLatitude + " , longitude : " + boneLongitude,Toast.LENGTH_SHORT).show();
+
+                        Marker marker = new Marker();
+                        marker.setPosition(new LatLng(boneLatitude, boneLongitude));
+                        marker.setIcon(OverlayImage.fromResource(R.drawable.bone));
+                        marker.setWidth(80);
+                        marker.setHeight(80);
+                        marker.setMap(naverMap);
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -326,6 +374,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return ;
     }
 
     @Override
