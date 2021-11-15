@@ -50,7 +50,9 @@ import com.naver.maps.map.util.FusedLocationSource;
 
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class WalkActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -79,6 +81,9 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
     public Marker markers[] = new Marker[11];
     PathOverlay path = new PathOverlay();
 
+    Long startTime;
+    Long endTime;
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +103,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                 binding.walkTime.setText("테스트시간");
                 binding.walkLength.setText("테스트거리");
 
-
+                startTime = System.currentTimeMillis();
                 //사용자의 위치 수신을 위한 세팅
                 settingGPS();
                 // 사용자 현재 위치
@@ -339,7 +344,26 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
         locationManager.removeUpdates(locationListener);
 
 //        path 제거
+
         path.setMap(null);
+
+//        시간 종료
+        endTime = System.currentTimeMillis();
+        Date start = new Date(startTime);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
+        String rsTime = simpleDateFormat.format(start);
+        Toast.makeText(getApplicationContext(), "시작"+rsTime,Toast.LENGTH_SHORT).show();
+
+        Date end = new Date(endTime);
+        String reTime = simpleDateFormat.format(end);
+        Toast.makeText(getApplicationContext(), "종료"+reTime,Toast.LENGTH_SHORT).show();
+
+        long resTime = endTime - startTime;
+        Date res = new Date(resTime);
+        String intervalTime = simpleDateFormat.format(res);
+        Toast.makeText(getApplicationContext(), "결과"+intervalTime,Toast.LENGTH_SHORT).show();
+
+        binding.walkTime.setText(intervalTime.toString());
     }
     //DB에서 뼈다구 좌표 받아오기
     public void getWalkSpot(int spot_no){
