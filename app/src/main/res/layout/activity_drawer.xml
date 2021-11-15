@@ -5,28 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="start"
-    android:background="#a8a7ff"
+    android:background="#cab8ff "
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/testText"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="온댕메뉴" />
+        android:layout_marginTop="30dp"
+        android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/userPhoto"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_gravity="center"
-        android:layout_margin="0dp"
-        android:layout_marginEnd="0dp"
-        app:srcCompat="@drawable/white_radius" />
+        <ImageView
+            android:id="@+id/userPhoto"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:layout_margin="0dp"
+            android:layout_marginEnd="0dp"
+            app:srcCompat="@drawable/white_radius" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_marginTop="15dp"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -62,55 +63,118 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/goToMyPage"
+            android:id="@+id/goToWalk"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="마이페이지"
-            />
+            android:backgroundTint="#FFFFFF"
+            android:gravity="center|start|center_horizontal"
+            android:paddingStart="40dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="산책하기"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            app:icon="@drawable/ic_baseline_pets"
+            app:iconPadding="40dp"
+            app:iconTint="#584F73" />
 
         <Button
             android:id="@+id/goToCareVaccin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="케어탭예방접종" />
+            android:backgroundTint="#FFFFFF"
+            android:gravity="center|start|center_horizontal"
+            android:paddingStart="40dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="예방접종"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            app:icon="@drawable/ic_baseline_calendar_today_24"
+            app:iconPadding="40dp"
+            app:iconTint="#584F73" />
 
         <Button
             android:id="@+id/goToCareHealth"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="케어탭건강체크" />
+            android:backgroundTint="#FFFFFF"
+            android:gravity="center|start|center_horizontal"
+            android:paddingStart="40dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="건강체크"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            app:icon="@drawable/ic_baseline_library_add_check_24"
+            app:iconPadding="40dp"
+            app:iconTint="#584F73" />
 
         <Button
             android:id="@+id/goToCareDaily"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="케어탭 daily기록" />
+            android:backgroundTint="#FFFFFF"
+            android:gravity="center|start|center_horizontal"
+            android:paddingStart="40dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="daily 기록"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            app:icon="@drawable/ic_baseline_edit_note_24"
+            app:iconPadding="40dp"
+            app:iconTint="#584F73" />
 
         <Button
             android:id="@+id/goToComm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="커뮤니티" />
+            android:backgroundTint="#FFFFFF"
+            android:gravity="center|start|center_horizontal"
+            android:paddingStart="40dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="커뮤니티"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            app:icon="@drawable/ic_baseline_message_24"
+            app:iconPadding="40dp"
+            app:iconTint="#584F73" />
 
-        <Button
-            android:id="@+id/goToWalk"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="산책페이지" />
-<!--        임시-->
+        <!--        임시-->
 
         <Button
             android:id="@+id/goToHosp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="병원" />
+            android:backgroundTint="#FFFFFF"
+            android:gravity="center|start|center_horizontal"
+            android:paddingStart="40dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="병원 검색"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            app:icon="@drawable/ic_baseline_local_hospital_24"
+            app:iconPadding="40dp"
+            app:iconTint="#584F73" />
+
+        <Button
+            android:id="@+id/goToMyPage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FFFFFF"
+            android:gravity="center|start|center_horizontal"
+            android:paddingStart="40dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="마이페이지"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            app:icon="@drawable/ic_baseline_contact_page_24"
+            app:iconPadding="40dp"
+            app:iconTint="#584F73" />
 
 
     </LinearLayout>

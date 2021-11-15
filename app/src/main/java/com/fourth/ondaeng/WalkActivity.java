@@ -9,8 +9,10 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -18,8 +20,17 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.fourth.ondaeng.databinding.ActivityWalkBinding;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.CameraPosition;
 import com.naver.maps.map.LocationTrackingMode;
@@ -30,6 +41,8 @@ import com.naver.maps.map.UiSettings;
 import com.naver.maps.map.overlay.Marker;
 import com.naver.maps.map.overlay.PathOverlay;
 import com.naver.maps.map.util.FusedLocationSource;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,6 +102,16 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 //편의점 위치 좌표 불러오기
                 //뼈다구 마커 추가
+                for(int i=1; i<=10;i++ ){
+                    String spot_name;
+                    double latitude;
+                    double longitude;
+                    getWalkSpot(i);
+                }
+
+                //Marker marker = new Marker();
+                //marker.setPosition();
+                //marker.setMap(naverMap);
             }
         });
 
@@ -102,10 +125,13 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 //스톱워치, 거리 중지
 
-                //위치 좌표 불러오기 중지지
-               System.exit(settingGPS());
+                //위치 좌표 불러오기 중지
+                System.exit(settingGPS());
 
                 //뼈다구 마커 없애기
+                Marker marker = new Marker();
+                marker.setMap(null);
+
                 //산책기록 데이터 저장
 
             }
@@ -229,16 +255,17 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
-                double latitude = location.getLatitude();
-                double longitude = location.getLongitude();
+                double myLatitude = location.getLatitude();
+                double myLongitude = location.getLongitude();
                 // TODO 위도, 경도로 하고 싶은 것
-                Log.d("좌표", "latitude="+latitude+",longitude="+longitude);
+                Log.d("좌표", "latitude="+myLatitude+",longitude="+myLongitude);
 
-                LatLng temp = new LatLng(latitude,longitude);
+                LatLng temp = new LatLng(myLatitude,myLongitude);
                 latLngList.add(temp);
                 PathOverlay path = new PathOverlay();
                 if(latLngList.size()>1) {
                     path.setCoords(latLngList);
+                    path.setColor(Color.YELLOW);
                     path.setMap(naverMap);
                 }
             }
@@ -255,8 +282,50 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
         return 0;
     }
 
-    public void showCurrentLocation(Location location) {
-        LatLng curPoint = new LatLng(location.getLatitude(), location.getLongitude());
+    //DB에서 뼈다구 좌표 받아오기
+    public void getWalkSpot(int spot_no){
+//        easyToast("getWalkSpot 실행됨");
+        String url = "http://14.55.65.181/ondaeng/getWalkSpot?";
+        //JSON형식으로 데이터 통신을 진행
+        JSONObject testjson = new JSONObject();
+        try {
+            //받아온 spot_no를 url에 붙여서 보내줄 준비
+            url = url +"spot_no="+spot_no;
+            // 전송
+            final RequestQueue requestQueue = Volley.newRequestQueue(WalkActivity.this);
+//            easyToast(url);
+            final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,null, new Response.Listener<JSONObject>() {
+                //데이터 전달을 끝내고 이제 그 응답을 받을 차례입니다.
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+//                        easyToast("응답");
+                        //받은 json형식의 응답을 받아
+                        //key값에 따라 value값을 쪼개 받아옵니다.
+                        JSONObject jsonObject = new JSONObject(response.toString());
+                        JSONObject data = new JSONObject(jsonObject.getJSONArray("data").get(0).toString());
+                         String spot_name = data.get("spot_name").toString();
+                         double latitude =(double)data.get("latitude");
+                         double longitude =(double)data.get("longitude");
+                        Toast.makeText(getApplicationContext(),"spot_name : " + spot_name + " , latitude : " + latitude + " , longitude : " + longitude,Toast.LENGTH_SHORT).show();
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                //서버로 데이터 전달 및 응답 받기에 실패한 경우 아래 코드가 실행됩니다.
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                }
+            });
+            jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            requestQueue.add(jsonObjectRequest);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

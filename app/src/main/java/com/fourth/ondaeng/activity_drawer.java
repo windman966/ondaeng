@@ -31,7 +31,7 @@ public class activity_drawer extends AppCompatActivity {
         findViewById(R.id.goToMyPage).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                binding.testText.setText("테스트텍스트");
+                //binding.testText.setText("테스트텍스트");
                 Toast.makeText(getApplicationContext(),"테스트완료",Toast.LENGTH_SHORT).show();
             }
         });
