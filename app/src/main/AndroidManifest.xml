@@ -18,9 +18,10 @@
         <activity
             android:name=".myPage"
             android:exported="false" />
-        <activity
+  <!--      <activity
             android:name=".item_viewpager"
             android:exported="false" />
+        -->
         <activity
             android:name=".activity_drawer"
             android:exported="false" />

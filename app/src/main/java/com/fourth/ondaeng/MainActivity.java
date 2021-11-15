@@ -150,6 +150,14 @@ public class MainActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.horizon_enter,R.anim.none);
             }
         });
+        findViewById(R.id.goToHosp).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.closeDrawer(GravityCompat.START);
+                startActivity(hospIntent);
+                overridePendingTransition(R.anim.horizon_enter,R.anim.none);
+            }
+        });
 
 
 

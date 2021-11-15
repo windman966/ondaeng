@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">ondaeng</string>
+    <string name="hospital_list">병원목록보기</string>
+
+    <string name="share_now">share Now</string>
+    <string name="shiba">Shiba</string>
+    <string name="free_delivery">Free Delivery</string>
+    <string name="u2089_734">u2089 734</string>
+    <string name="add_to_favorite">Add To Favorite</string>
+    <string name="share_product">Share Product</string>
+    <string name="share">share</string>
+    <string name="show_bottom_sheet_diaglog">Show Bottom Sheet Diaglog</string>
+    <string name="sheet">Sheet</string>
+    <string name="change">change</string>
+    <string name="hospital_name">병원이름</string>
 </resources>

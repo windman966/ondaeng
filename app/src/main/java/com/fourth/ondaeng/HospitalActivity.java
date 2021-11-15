@@ -13,9 +13,14 @@ import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
-import com.fourth.ondaeng.databinding.ActivityWalkBinding;
+
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.CameraPosition;
 import com.naver.maps.map.LocationTrackingMode;
@@ -23,15 +28,18 @@ import com.naver.maps.map.MapFragment;
 import com.naver.maps.map.NaverMap;
 import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.UiSettings;
+import com.naver.maps.map.overlay.InfoWindow;
 import com.naver.maps.map.overlay.Marker;
+import com.naver.maps.map.overlay.Overlay;
+import com.naver.maps.map.overlay.OverlayImage;
 import com.naver.maps.map.overlay.PathOverlay;
 import com.naver.maps.map.util.FusedLocationSource;
 
 import java.util.List;
+// 여기서 부터 해야할 부분 11.12일 에 마감함
+public class HospitalActivity extends AppCompatActivity implements OnMapReadyCallback, Overlay.OnClickListener {
+    private static String TAG = "HospitalActivity";
 
-public class HospitalActivity extends AppCompatActivity implements OnMapReadyCallback {
-    private static String TAG = "WalkActivity";
-    private ActivityWalkBinding binding;
 
     //    walkingFragment walkingFragment;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
@@ -42,12 +50,69 @@ public class HospitalActivity extends AppCompatActivity implements OnMapReadyCal
     private FusedLocationSource locationSource;
     private NaverMap naverMap;
 
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
-        binding = ActivityWalkBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        setContentView(R.layout.activity_hospital);
+
+
+        /////////////////////////
+        InfoWindow infoWindow = new InfoWindow();
+
+        infoWindow.setAdapter(new InfoWindow.DefaultTextAdapter(getApplicationContext()) {
+            @NonNull
+            @Override
+            public CharSequence getText(@NonNull InfoWindow infoWindow) {
+                return "정보 창 내용";
+            }
+        });
+        ////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // 준석이 추가 한 것 (시작)
+        Button buttonShow = findViewById(R.id.buttonShow);
+        buttonShow.setOnClickListener(new View.OnClickListener() {
+             public void onClick(View view) {
+                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(
+                        HospitalActivity.this, R.style.BottomSheetDialogTheme
+                );
+
+                View bottomSheetView = LayoutInflater.from(getApplication())
+                        .inflate(
+                                R.layout.layout_bottom_sheet,
+                                (LinearLayout)findViewById(R.id.bottomSheetContainer)
+                        );
+                bottomSheetView.findViewById(R.id.buttonShare).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(HospitalActivity.this, "Share", Toast.LENGTH_SHORT).show();
+                        bottomSheetDialog.dismiss();
+                    }
+                });
+                bottomSheetDialog.setContentView(bottomSheetView);
+                bottomSheetDialog.show();
+            }
+        });
+
+        // 준석이 추가 한 것 (끝)
+
+
+
 
 //        walkingFragment = new walkingFragment();
 
@@ -86,13 +151,11 @@ public class HospitalActivity extends AppCompatActivity implements OnMapReadyCal
         // onMapReady에서 NaverMap 객체를 받음
         mapFragment.getMapAsync(this);
 
+
+
+
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.d(TAG,"onStart");
-    }
 
 
     @Override
@@ -113,15 +176,33 @@ public class HospitalActivity extends AppCompatActivity implements OnMapReadyCal
 
     }
 
+
     @Override
     public void onMapReady(@NonNull NaverMap naverMap) {
         this.naverMap = naverMap;
         naverMap.setLocationSource(locationSource); //현재위치
 
-//        // 지도상에 마커 표시
-//        Marker marker = new Marker();
-//        marker.setPosition(new LatLng(37.5670135, 126.9783740));
-//        marker.setMap(naverMap);
+
+        // 지도상에 마커 표시 (강남 25시 병원)
+          Marker hospital_marker1 = new Marker();
+
+          hospital_marker1.setPosition(new LatLng(37.516112, 127.038610));
+          hospital_marker1.setMap(naverMap);
+          hospital_marker1.setIcon(OverlayImage.fromResource(R.drawable.hospital_marker));
+          hospital_marker1.setWidth(50);
+          hospital_marker1.setHeight(80);
+          // 불투명도 조절
+          hospital_marker1.setAlpha(0.5f);
+
+        // 지도상에 마커 표시 (최영민동물의료센터)
+        Marker hospital_marker2 = new Marker();
+        hospital_marker2.setPosition(new LatLng(37.515151, 127.032363));
+        hospital_marker2.setMap(naverMap);
+        hospital_marker2.setIcon(OverlayImage.fromResource(R.drawable.hospital_marker));
+        hospital_marker2.setWidth(50);
+        hospital_marker2.setHeight(80);
+        // 불투명도 조절
+        hospital_marker2.setAlpha(0.5f);
 
         UiSettings uiSettings = naverMap.getUiSettings();
         uiSettings.setLocationButtonEnabled(true);
@@ -169,4 +250,8 @@ public class HospitalActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
 
+    @Override
+    public boolean onClick(@NonNull Overlay overlay) {
+        return false;
+    }
 }
