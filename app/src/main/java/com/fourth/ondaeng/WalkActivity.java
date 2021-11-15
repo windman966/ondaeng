@@ -75,7 +75,10 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
     String spot_name;
     double boneLatitude;
     double boneLongitude;
+
     public Marker markers[] = new Marker[11];
+    PathOverlay path = new PathOverlay();
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -302,12 +305,13 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 LatLng temp = new LatLng(myLatitude,myLongitude);
                 latLngList.add(temp);
-                PathOverlay path = new PathOverlay();
+
                 if(latLngList.size()>1) {
                     path.setCoords(latLngList);
                     path.setColor(Color.YELLOW);
                     path.setMap(naverMap);
                 }
+
             }
 
             public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -334,6 +338,8 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
         //gps 업데이트 종료
         locationManager.removeUpdates(locationListener);
 
+//        path 제거
+        path.setMap(null);
     }
     //DB에서 뼈다구 좌표 받아오기
     public void getWalkSpot(int spot_no){
