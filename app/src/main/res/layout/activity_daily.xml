@@ -57,25 +57,22 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="75dp"
-            android:orientation="horizontal"
-            android:paddingLeft="40dp"
-            android:paddingTop="20dp"
-            android:paddingRight="40dp">
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <ImageButton
                 android:id="@+id/previousButton"
                 android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_height="40dp"
                 android:backgroundTint="#FFFFFF"
                 android:padding="10dp"
+                android:tint="#cab8ff"
                 app:srcCompat="@drawable/previous" />
 
             <Button
                 android:id="@+id/dateButton"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:backgroundTint="#FFFFFF"
                 android:text="날짜"
                 android:textColor="#090808"
@@ -85,21 +82,23 @@
             <ImageButton
                 android:id="@+id/nextButton"
                 android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_height="40dp"
                 android:backgroundTint="#FFFFFF"
+                android:tint="#cab8ff"
                 app:srcCompat="@drawable/next" />
 
         </LinearLayout>
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -121,23 +120,138 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0"
-                        android:paddingLeft="10dp"
+                        android:paddingLeft="5dp"
+                        android:tint="#cab8ff"
                         app:srcCompat="@android:drawable/ic_menu_add" />
 
                 </LinearLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0" >
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="0"
+                    android:orientation="vertical">
 
-                </androidx.recyclerview.widget.RecyclerView>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0"
+                        android:background="@drawable/bgline_search"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView29"
+                            android:layout_width="60dp"
+                            android:layout_height="40dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:gravity="center"
+                            android:text="간식"
+                            android:textColor="#181818"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/textView30"
+                            android:layout_width="60dp"
+                            android:layout_height="40dp"
+                            android:gravity="right|center_vertical"
+                            android:textColor="#181818"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/textView31"
+                            android:layout_width="60dp"
+                            android:layout_height="40dp"
+                            android:gravity="center_vertical"
+                            android:paddingStart="5dp"
+                            android:text="g"
+                            android:textColor="#181818"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/textView32"
+                            android:layout_width="60dp"
+                            android:layout_height="40dp"
+                            android:gravity="right|center_vertical"
+                            android:textColor="#181818"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/textView33"
+                            android:layout_width="60dp"
+                            android:layout_height="40dp"
+                            android:gravity="center_vertical"
+                            android:paddingStart="5dp"
+                            android:text="kcal"
+                            android:textColor="#181818"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="0"
+                        android:background="@drawable/bgline_search"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView11"
+                            android:layout_width="60dp"
+                            android:layout_height="40dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:gravity="center"
+                            android:text="사료"
+                            android:textColor="#181818"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/textView28"
+                            android:layout_width="60dp"
+                            android:layout_height="40dp"
+                            android:gravity="right|center_vertical"
+                            android:textColor="#181818"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/textView25"
+                            android:layout_width="60dp"
+                            android:layout_height="40dp"
+                            android:gravity="center_vertical"
+                            android:paddingStart="5dp"
+                            android:text="g"
+                            android:textColor="#181818"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/textView27"
+                            android:layout_width="60dp"
+                            android:layout_height="40dp"
+                            android:gravity="right|center_vertical"
+                            android:textColor="#181818"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/textView26"
+                            android:layout_width="60dp"
+                            android:layout_height="40dp"
+                            android:gravity="center_vertical"
+                            android:paddingStart="5dp"
+                            android:text="kcal"
+                            android:textColor="#181818"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:orientation="horizontal">
+                    android:layout_marginTop="30dp"
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/textView15"
@@ -147,6 +261,176 @@
                         android:text="산책"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                         android:textSize="24dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="0"
+                        android:background="@drawable/bgline_search"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView36"
+                            android:layout_width="120dp"
+                            android:layout_height="40dp"
+                            android:gravity="center"
+                            android:text="산책 거리"
+                            android:textColor="#181818"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/textView37"
+                            android:layout_width="160dp"
+                            android:layout_height="40dp"
+                            android:gravity="right|center_vertical"
+                            android:textColor="#181818"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/textView38"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:gravity="center_vertical"
+                            android:text="m"
+                            android:textColor="#181818"
+                            android:textSize="18sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="0"
+                        android:background="@drawable/bgline_search"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView34"
+                            android:layout_width="120dp"
+                            android:layout_height="40dp"
+                            android:gravity="center"
+                            android:text="산책 시간"
+                            android:textColor="#181818"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/textView35"
+                            android:layout_width="160dp"
+                            android:layout_height="40dp"
+                            android:gravity="right|center_vertical"
+                            android:textColor="#181818"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/textView39"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:gravity="center_vertical"
+                            android:text="분"
+                            android:textColor="#181818"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_weight="0"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:text="상태"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        android:textSize="24dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="0"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/imageView7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/feeling_exciting" />
+
+                        <ImageView
+                            android:id="@+id/imageView8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/feeling_smile" />
+
+                        <ImageView
+                            android:id="@+id/imageView9"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/feeling_boring" />
+
+                        <ImageView
+                            android:id="@+id/imageView10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/feeling_sad" />
+
+                        <ImageView
+                            android:id="@+id/imageView11"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/feeling_sick" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_weight="0"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView17"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:text="메모"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        android:textSize="24dp" />
+
+                    <EditText
+                        android:id="@+id/editTextTextPersonName"
+                        android:layout_width="300dp"
+                        android:layout_height="100dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="0"
+                        android:background="#EBEBEB"
+                        android:ems="10"
+                        android:inputType="textPersonName"
+                        android:padding="20dp" />
 
                 </LinearLayout>
             </LinearLayout>
