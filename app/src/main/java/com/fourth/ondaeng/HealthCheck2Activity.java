@@ -1,40 +1,48 @@
 package com.fourth.ondaeng;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
 
+import com.fourth.ondaeng.databinding.ActivityHealthcheck2Binding;
+
+
 public class HealthCheck2Activity extends AppCompatActivity {
+
+    ActivityHealthcheck2Binding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_healthcheck2);
+        binding = ActivityHealthcheck2Binding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        Button button2 = findViewById(R.id.button2);
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        Intent intent = getIntent();
+        String part = intent.getStringExtra("part");
+        if(part.equals("eye")) {
+            binding.eyeLayout.setVisibility(View.VISIBLE);
+        } else if(part.equals("ear")) {
+            binding.earLayout.setVisibility(View.VISIBLE);
+        } else if(part.equals("face")) {
+            binding.faceLayout.setVisibility(View.VISIBLE);
+        } else if(part.equals("mouth")) {
+            binding.mouthLayout.setVisibility(View.VISIBLE);
+        } else if(part.equals("action")) {
+            binding.actionLayout.setVisibility(View.VISIBLE);
+        } else if(part.equals("bone")) {
+            binding.boneLayout.setVisibility(View.VISIBLE);
+        }
 
-        Spinner spinner = findViewById(R.id.spinner3);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
 
-            }
-        });
 
 
     }

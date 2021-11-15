@@ -370,21 +370,21 @@
                     app:drawableTint="#519DDA" />
 
                 <TextView
-                    android:id="@+id/textView24"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="20dp"
-                    android:text="심장사상충 : 4-10월 사이에는 꼭 1개월마다"
-                    android:textSize="16sp" />
-
-                <TextView
                     android:id="@+id/textView21"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
                     android:text="광견병 : 12주 차, 1년 차에 각 1번씩 총 2회"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/textView24"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="심장사상충 : 4-10월 사이에는 꼭 1개월마다"
                     android:textSize="16sp" />
 
                 <TextView

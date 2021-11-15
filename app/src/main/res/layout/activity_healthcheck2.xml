@@ -6,25 +6,238 @@
     android:layout_height="match_parent"
     tools:context=".HealthCheck2Activity">
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="75dp"
-        android:layout_marginBottom="66dp"
-        android:text="돌아가기" />
-
-    <Spinner
-        android:id="@+id/spinner3"
+    <RelativeLayout
+        android:id="@+id/topLayout"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="70dp"
-        android:layout_marginEnd="-1dp"
-        android:entries="@array/건강체크" />
+        android:layout_height="70dp"
+        android:background="#FFEB3B">
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/eyeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/topLayout"
+        android:orientation="vertical"
+        android:visibility="invisible">
+
+        <Button
+            android:id="@+id/eyeButton1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="눈이 튀어나옴" />
+
+        <Button
+            android:id="@+id/eyeButton2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="눈동자 중앙이 하얗게 탁해짐" />
+
+        <Button
+            android:id="@+id/eyeButton3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="빨갛게 충혈된 눈" />
+
+        <Button
+            android:id="@+id/eyeButton4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="눈 주변 살이 처짐" />
+
+        <Button
+            android:id="@+id/eyeButton5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="투명하지 않은 과도한 눈물" />
+
+        <Button
+            android:id="@+id/eyeButton6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="노란색 또는 녹색 눈곱" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/earLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/topLayout"
+        android:orientation="vertical"
+        android:visibility="invisible">
+
+        <Button
+            android:id="@+id/earButton1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="황갈색 귀지에 고름" />
+
+        <Button
+            android:id="@+id/earButton2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="초콜릿색 귀지" />
+
+        <Button
+            android:id="@+id/earButton3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="검은색 피부의 귀" />
+
+        <Button
+            android:id="@+id/earButton4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="하얀색 피부의 귀" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/faceLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/topLayout"
+        android:orientation="vertical"
+        android:visibility="invisible">
+
+        <Button
+            android:id="@+id/faceButton1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="얼굴 전체가 불어남" />
+
+        <Button
+            android:id="@+id/faceButton2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="눈 아래 피부가 불어나거나 염증이 생김" />
+
+        <Button
+            android:id="@+id/faceButton3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="코 주위가 벗겨짐" />
+
+        <Button
+            android:id="@+id/faceButton4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="코가 마름" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/mouthLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/topLayout"
+        android:orientation="vertical"
+        android:visibility="invisible">
+
+        <Button
+            android:id="@+id/mouthButton1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="노란색 잇몸 또는 혀" />
+
+        <Button
+            android:id="@+id/mouthButton2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="하얀색 잇몸 또는 혀" />
+
+        <Button
+            android:id="@+id/mouthButton3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="파란색(보라색) 잇몸 또는 혀" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/actionLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/topLayout"
+        android:orientation="vertical"
+        android:visibility="invisible">
+
+        <Button
+            android:id="@+id/actionButton1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="자꾸 벽에 부딪힘" />
+
+        <Button
+            android:id="@+id/actionButton2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="머리를 지속적으로 갸우뚱 거림" />
+
+        <Button
+            android:id="@+id/actionButton3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="계속 한자리에서 빙글빙글 돔" />
+
+        <Button
+            android:id="@+id/actionButton4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="벽에 머리를 박고 밀고 있음" />
+
+        <Button
+            android:id="@+id/actionButton5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="계속 몸을 떨고 있음" />
+
+        <Button
+            android:id="@+id/actionButton6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="발작" />
+
+        <Button
+            android:id="@+id/actionButton7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="갑자기 공격적으로 변함" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/boneLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/topLayout"
+        android:orientation="vertical"
+        android:visibility="invisible">
+
+        <Button
+            android:id="@+id/boneButton1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="한쪽이나 양쪽 다리를 절음" />
+
+        <Button
+            android:id="@+id/boneButton2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="다리가 뻣뻣하고 부자연스러움" />
+
+        <Button
+            android:id="@+id/boneButton3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="계단, 소파 등에서 이전과 다르게 망설임" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/topLayout">
+
+    </FrameLayout>
+
+
 </RelativeLayout>
