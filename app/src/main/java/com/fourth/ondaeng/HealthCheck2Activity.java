@@ -58,15 +58,25 @@ public class HealthCheck2Activity extends AppCompatActivity {
             binding.boneLayout.setVisibility(View.VISIBLE);
         }
 
-        binding.eyeButton1.setOnClickListener(new View.OnClickListener() {
+//        binding.eyeButton1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                String symptom = binding.eyeButton1.getText().toString();
+//                getExplanation(symptom);
+//
+//            }
+//
+//        });
+        Button.OnClickListener clickListener = new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String symptom = binding.eyeButton1.getText().toString();
-                getExplanation(symptom);
+                Toast.makeText(getApplicationContext(), symptom, Toast.LENGTH_SHORT).show();
+                // getExplanation(symptom);
+
+
             }
-
-        });
-
+        };
+        binding.eyeButton1.setOnClickListener(clickListener);
     }
 
     private void getExplanation(String symptom) {
