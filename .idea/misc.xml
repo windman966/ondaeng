@@ -39,7 +39,7 @@
         <entry key="..\:/Users/USER/AndroidStudioProjects/ondaeng/app/src/main/res/font/custom_font_family.xml" value="0.13240740740740742" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/ondaeng/app/src/main/res/layout/activity_care.xml" value="0.371875" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/ondaeng/app/src/main/res/layout/activity_community.xml" value="0.38645833333333335" />
-        <entry key="..\:/Users/USER/AndroidStudioProjects/ondaeng/app/src/main/res/layout/activity_community_detail.xml" value="0.38645833333333335" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/ondaeng/app/src/main/res/layout/activity_community_detail.xml" value="0.36044880785413747" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/ondaeng/app/src/main/res/layout/activity_community_writing.xml" value="0.38645833333333335" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/ondaeng/app/src/main/res/layout/activity_corr_my_page.xml" value="0.2791666666666667" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/ondaeng/app/src/main/res/layout/activity_daily.xml" value="0.38645833333333335" />
@@ -52,6 +52,7 @@
         <entry key="..\:/Users/USER/AndroidStudioProjects/ondaeng/app/src/main/res/layout/activity_login.xml" value="0.38645833333333335" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/ondaeng/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/ondaeng/app/src/main/res/layout/activity_my_page.xml" value="0.38645833333333335" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/ondaeng/app/src/main/res/layout/activity_quest.xml" value="0.2791666666666667" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/ondaeng/app/src/main/res/layout/activity_shop.xml" value="0.38645833333333335" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/ondaeng/app/src/main/res/layout/activity_splash.xml" value="0.38645833333333335" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/ondaeng/app/src/main/res/layout/activity_vaccination1.xml" value="0.38645833333333335" />
@@ -61,6 +62,7 @@
         <entry key="..\:/Users/USER/AndroidStudioProjects/ondaeng/app/src/main/res/layout/hospital15.xml" value="0.2791666666666667" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/ondaeng/app/src/main/res/layout/hospital18.xml" value="0.2791666666666667" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/ondaeng/app/src/main/res/layout/item_community.xml" value="0.38645833333333335" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/ondaeng/app/src/main/res/layout/item_healthcheck.xml" value="0.35128205128205126" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/ondaeng/app/src/main/res/layout/layout_bottom_sheet.xml" value="0.33697916666666666" />
         <entry key="..\:/Users/dusgh/AndroidStudioProjects/ondaeng/app/src/main/res/layout/activity_main.xml" value="0.1296875" />
       </map>

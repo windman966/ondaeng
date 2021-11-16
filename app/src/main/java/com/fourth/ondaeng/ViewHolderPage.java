@@ -28,4 +28,6 @@ public class ViewHolderPage extends RecyclerView.ViewHolder {
         tv_title.setText(data.getDogName());
 
     }
+
+
 }

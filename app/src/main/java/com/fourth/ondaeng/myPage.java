@@ -98,6 +98,13 @@ public class myPage extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        binding.btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myPage.super.onBackPressed();
+            }
+        });
+
 
     }
 

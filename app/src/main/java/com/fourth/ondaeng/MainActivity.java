@@ -97,7 +97,17 @@ public class MainActivity extends AppCompatActivity {
         Intent dailyCareIntent = new Intent(this,DailyActivity.class);
         Intent healthCareIntent = new Intent(this,HealthCheck1Activity.class);
         Intent shopIntent = new Intent(this,Shop.class);
+        Intent questIntent = new Intent(this, QuestActivity.class);
+
         //마이페이지 이동
+        findViewById(R.id.goToQuest).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                drawerLayout.closeDrawer(GravityCompat.START);
+                startActivity(questIntent);
+                overridePendingTransition(R.anim.horizon_enter,R.anim.none);
+            }
+        });
 
         findViewById(R.id.goToMyPage).setOnClickListener(new View.OnClickListener() {
             @Override

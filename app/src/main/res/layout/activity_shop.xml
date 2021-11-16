@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".MainActivity"
+    tools:context=".Shop"
     tools:openDrawer="start">
 
     <LinearLayout
@@ -296,7 +296,7 @@
 
     </LinearLayout>
 
-   <!-- <include layout="@layout/activity_drawer" /> -->
+    <include layout="@layout/activity_drawer" />
 
 
 
