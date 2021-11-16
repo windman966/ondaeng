@@ -50,6 +50,7 @@
         android:id="@+id/layout1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@id/InfoLayout"
         android:layout_below="@id/header"
         android:orientation="vertical">
 
@@ -87,12 +88,15 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="false"
         android:layout_alignParentBottom="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="15dp"
         android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/walkInfo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginStart="35dp"
             android:orientation="vertical"
             android:visibility="visible">
 
@@ -100,14 +104,15 @@
                 android:id="@+id/chronometer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp" />
+                android:textSize="23sp" />
 
             <TextView
                 android:id="@+id/walkLength"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:text="TextView"
-                android:textSize="30sp" />
+                android:textSize="23sp" />
 
         </LinearLayout>
 
@@ -115,6 +120,7 @@
             android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:visibility="visible">
 
             <!--        <androidx.fragment.app.FragmentContainerView-->
@@ -126,21 +132,28 @@
 
             <Button
                 android:id="@+id/startWalk"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:gravity="bottom"
+                android:layout_width="330dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                android:backgroundTint="#b5deff "
                 android:text="산책 시작하기"
                 android:textAlignment="center"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:cornerRadius="20dp"
                 tools:ignore="RtlCompat" />
 
             <Button
                 android:id="@+id/finishWalk"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
+                android:layout_width="330dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                android:backgroundTint="#cab8ff "
                 android:text="산책 그만하기"
-                android:visibility="gone" />
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:cornerRadius="20dp" />
 
         </FrameLayout>
     </LinearLayout>
