@@ -8,12 +8,10 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.fourth.ondaeng.databinding.ActivityDrawerBinding;
 import com.fourth.ondaeng.databinding.ActivityMainBinding;
@@ -21,7 +19,6 @@ import com.fourth.ondaeng.databinding.ActivityMainBinding;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import me.relex.circleindicator.CircleIndicator3;
 
@@ -57,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout = binding.drawerLayout;
         drawerView = (View)findViewById(R.id.drawer);
 
-        Button btn_open = (Button)findViewById(R.id.btn_open);
+        Button btn_open = (Button)findViewById(R.id.btn_back);
         btn_open.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
         Intent hospIntent = new Intent(this, HospitalActivity.class);
         Intent dailyCareIntent = new Intent(this,DailyActivity.class);
         Intent healthCareIntent = new Intent(this,HealthCheck1Activity.class);
+        Intent shopIntent = new Intent(this,Shop.class);
         //마이페이지 이동
 
         findViewById(R.id.goToMyPage).setOnClickListener(new View.OnClickListener() {
@@ -109,7 +107,14 @@ public class MainActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.horizon_enter,R.anim.none);
             }
         });
-
+        findViewById(R.id.goToShop).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerLayout.closeDrawer(GravityCompat.START);
+                startActivity(shopIntent);
+                overridePendingTransition(R.anim.horizon_enter,R.anim.none);
+            }
+        });
         findViewById(R.id.goToCareVaccin).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

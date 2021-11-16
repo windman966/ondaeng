@@ -541,7 +541,9 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
         String intervalTime = simpleDateFormat.format(res);
         Toast.makeText(getApplicationContext(), "결과"+intervalTime,Toast.LENGTH_SHORT).show();
 
-        binding.walkTime.setText(intervalTime.toString());
+        //binding.walkTime.setText(intervalTime.toString());
+        binding.chronometer.setText(intervalTime.toString());
+
     }
     //DB에서 뼈다구 좌표 받아오기
     public void getWalkSpot(int spot_no){

@@ -43,12 +43,12 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/goToMyCorrection"
+                android:id="@+id/goToSaveMyPage"
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0"
                 android:gravity="center"
-                android:text="수정하기"
+                android:text="저장하기"
                 android:textAlignment="center" />
 
         </LinearLayout>
@@ -59,13 +59,14 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/userPhoto"
+                android:id="@+id/corrUserPhoto"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_gravity="center"
                 android:layout_margin="0dp"
                 android:layout_marginEnd="0dp"
-                app:srcCompat="@drawable/applogo" />
+                app:srcCompat="@drawable/ic_baseline_add_a_photo_24"
+                 />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -73,7 +74,7 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <TextView
+                <EditText
                     android:id="@+id/nickNameOnNav"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -95,67 +96,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_weight="0"
-                        android:background="#040202"
-                        android:orientation="vertical">
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:padding="10dp">
-
-                        <ImageView
-                            android:id="@+id/imageView2"
-                            android:layout_width="104dp"
-                            android:layout_height="match_parent"
-                            app:srcCompat="@drawable/bone" />
-
-
-                        <LinearLayout
-                            android:layout_width="205dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/nickNameOnNav2"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="0dp"
-                                android:layout_marginBottom="15dp"
-                                android:layout_weight="0"
-                                android:fontFamily="@font/nanumsquareroundeb"
-                                android:gravity="center"
-                                android:paddingLeft="0dp"
-                                android:text="내가 모은 뼈다귀"
-                                android:textColor="#000000"
-                                android:textSize="20dp" />
-
-                            <TextView
-                                android:id="@+id/pdgPoint"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="0dp"
-                                android:layout_weight="0"
-                                android:fontFamily="@font/nanumsquareroundeb"
-                                android:gravity="center"
-                                android:paddingLeft="0dp"
-                                android:text="몇개?"
-                                android:textSize="20dp" />
-
-
-                        </LinearLayout>
-
-                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -171,7 +113,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="0"
                         android:orientation="vertical"
-                        android:padding="10dp">
+                        android:padding="20dp">
 
                         <TextView
                             android:id="@+id/profileId"
@@ -188,10 +130,11 @@
 
                         <TextView
                             android:id="@+id/idOnNav"
-                            android:layout_width="wrap_content"
-                            android:layout_height="20dp"
-                            android:fontFamily="@font/nanumsquareroundr"
+                            android:layout_width="100dp"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="10dp"
                             android:layout_weight="0"
+                            android:fontFamily="@font/nanumsquareroundr"
                             android:text="TextView"
                             android:textSize="14sp" />
 
@@ -204,16 +147,17 @@
                             android:fontFamily="@font/nanumsquareroundeb"
                             android:gravity="center"
                             android:paddingLeft="0dp"
-                            android:textColor="#000000"
                             android:text="주소"
+                            android:textColor="#000000"
                             android:textSize="20dp" />
 
-                        <TextView
+                        <EditText
                             android:id="@+id/addrOnNav"
-                            android:layout_width="wrap_content"
-                            android:layout_height="20dp"
-                            android:fontFamily="@font/nanumsquareroundr"
+                            android:layout_width="100dp"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="10dp"
                             android:layout_weight="0"
+                            android:fontFamily="@font/nanumsquareroundr"
                             android:text="TextView"
                             android:textSize="14sp" />
 
@@ -226,16 +170,17 @@
                             android:fontFamily="@font/nanumsquareroundeb"
                             android:gravity="center"
                             android:paddingLeft="0dp"
-                            android:textColor="#000000"
                             android:text="생년월일"
+                            android:textColor="#000000"
                             android:textSize="20dp" />
 
                         <TextView
                             android:id="@+id/birthOnNav"
-                            android:layout_width="wrap_content"
-                            android:layout_height="20dp"
-                            android:fontFamily="@font/nanumsquareroundr"
+                            android:layout_width="100dp"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="10dp"
                             android:layout_weight="0"
+                            android:fontFamily="@font/nanumsquareroundr"
                             android:text="TextView"
                             android:textSize="14sp" />
 
@@ -248,16 +193,17 @@
                             android:fontFamily="@font/nanumsquareroundeb"
                             android:gravity="center"
                             android:paddingLeft="0dp"
-                            android:textColor="#000000"
                             android:text="전화번호"
+                            android:textColor="#000000"
                             android:textSize="20dp" />
 
-                        <TextView
+                        <EditText
                             android:id="@+id/mobileOnNav"
-                            android:layout_width="wrap_content"
-                            android:layout_height="20dp"
-                            android:fontFamily="@font/nanumsquareroundr"
+                            android:layout_width="100dp"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="10dp"
                             android:layout_weight="0"
+                            android:fontFamily="@font/nanumsquareroundr"
                             android:text="TextView"
                             android:textSize="14sp" />
 

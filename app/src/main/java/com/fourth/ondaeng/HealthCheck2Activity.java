@@ -70,7 +70,7 @@ public class HealthCheck2Activity extends AppCompatActivity {
         Button.OnClickListener clickListener = new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), symptom, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), symptom, Toast.LENGTH_SHORT).show();
                 // getExplanation(symptom);
 
 
