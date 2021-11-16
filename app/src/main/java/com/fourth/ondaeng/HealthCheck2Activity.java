@@ -7,9 +7,11 @@ import androidx.fragment.app.FragmentTransaction;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -42,44 +44,58 @@ public class HealthCheck2Activity extends AppCompatActivity {
         binding = ActivityHealthcheck2Binding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        LinearLayout[] layouts={
+                binding.eyeLayout,binding.earLayout,binding.faceLayout,binding.mouthLayout,binding.actionLayout,binding.boneLayout
+        };
+        LinearLayout nowLayout;
         Intent intent = getIntent();
         String part = intent.getStringExtra("part");
-        if(part.equals("eye")) {
-            binding.eyeLayout.setVisibility(View.VISIBLE);
-        } else if(part.equals("ear")) {
-            binding.earLayout.setVisibility(View.VISIBLE);
-        } else if(part.equals("face")) {
-            binding.faceLayout.setVisibility(View.VISIBLE);
-        } else if(part.equals("mouth")) {
-            binding.mouthLayout.setVisibility(View.VISIBLE);
-        } else if(part.equals("action")) {
-            binding.actionLayout.setVisibility(View.VISIBLE);
-        } else if(part.equals("bone")) {
-            binding.boneLayout.setVisibility(View.VISIBLE);
+        switch (part){
+            case"eye": nowLayout=layouts[0];
+                break;
+            case"ear": nowLayout=layouts[1];
+                break;
+            case"face": nowLayout=layouts[2];
+                break;
+            case"mouth": nowLayout=layouts[3];
+                break;
+            case"action": nowLayout=layouts[4];
+                break;
+            case"bone": nowLayout=layouts[5];
+                break;
+            default: nowLayout=layouts[0];
         }
+        nowLayout.setVisibility(View.VISIBLE);
 
-//        binding.eyeButton1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                String symptom = binding.eyeButton1.getText().toString();
-//                getExplanation(symptom);
-//
-//            }
-//
-//        });
+
+
         Button.OnClickListener clickListener = new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int buttonId = view.getId();
+                Button button = (Button)findViewById(buttonId);
+                String symptom = button.getText().toString();
                 Toast.makeText(getApplicationContext(), symptom, Toast.LENGTH_SHORT).show();
-                // getExplanation(symptom);
-
-
+                nowLayout.setVisibility(View.GONE);
+                getExplanation(symptom);
             }
         };
-        binding.eyeButton1.setOnClickListener(clickListener);
+        Button[] buttons = {
+                binding.eyeButton1,binding.eyeButton2,binding.eyeButton3,binding.eyeButton4,binding.eyeButton5,binding.eyeButton6,
+                binding.earButton1,binding.earButton2,binding.earButton3,binding.earButton4,
+                binding.faceButton1,binding.faceButton2,binding.faceButton3,binding.faceButton4,
+                binding.mouthButton1,binding.mouthButton2,binding.mouthButton3,
+                binding.actionButton1,binding.actionButton2,binding.actionButton3,binding.actionButton4,binding.actionButton5,binding.actionButton6,binding.actionButton7,
+                binding.boneButton1,binding.boneButton2,binding.boneButton3
+        };
+        for(int i=0;i<buttons.length;i++){
+          buttons[i].setOnClickListener(clickListener);
+        }
+
     }
 
     private void getExplanation(String symptom) {
+        binding.HealthckeckListView.setVisibility(View.VISIBLE);
         String url = "http://14.55.65.181/ondaeng/getDisease?";//2
         url = url +"symptom=%25"+symptom+"%25";
         //JSON형식으로 데이터 통신을 진행합니다!
@@ -104,7 +120,7 @@ public class HealthCheck2Activity extends AppCompatActivity {
                         //easyToast("test");
                         HealthcheckDataList = new ArrayList<HealthcheckData>();
                         int length = Integer.valueOf(jsonObject.getJSONArray("data").length());
-                        Toast.makeText(getApplicationContext(), Integer.toString(length), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getApplicationContext(), Integer.toString(length), Toast.LENGTH_SHORT).show();
 
                         HealthcheckDataList = new ArrayList<HealthcheckData>();
                         for(int i=length-1;i>=0;i--){
