@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
        ArrayList<dogIdCardData> list = new ArrayList<>();
         list.add(new dogIdCardData("댕댕이","010-2432-1677","199-500-500","포메라니안"));
         list.add(new dogIdCardData("댕댕이2","010-2432-16772","199-500-5002","포메라니안2"));
+        list.add(new dogIdCardData("물댕이2","010-2432-16772","199-500-5003","포메라니안2"));
         // 강아지 데이터 쿼리
         String url = "http://14.55.65.181/ondaeng/getDogById?id=test?";
         JSONObject dogJson = new JSONObject();
@@ -87,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
         mIndicator = binding.indicator;
         mIndicator.setViewPager(viewPager2);
         mIndicator.createIndicators(list.size(),0);
+
 
         //메뉴 이동 코드
         Intent myPageIntent = new Intent(this, myPage.class);
@@ -108,6 +110,19 @@ public class MainActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.horizon_enter,R.anim.none);
             }
         });
+
+
+
+
+//        findViewById(R.id.selectDogBtn).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+////                Button btn = (Button)findViewById(R.id.selectDogBtn);
+////                appData.dogName = btn.getText();
+////                Toast.makeText(getApplicationContext(), appData.dogName.toString(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
         findViewById(R.id.goToMyPage).setOnClickListener(new View.OnClickListener() {
             @Override
