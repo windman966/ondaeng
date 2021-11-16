@@ -231,13 +231,11 @@
             android:text="계단, 소파 등에서 이전과 다르게 망설임" />
     </LinearLayout>
 
-    <FrameLayout
-        android:id="@+id/frame"
+    <ListView
+        android:id="@+id/Healthckeck_listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/topLayout">
-
-    </FrameLayout>
+        android:layout_below="@id/topLayout" />
 
 
 </RelativeLayout>
