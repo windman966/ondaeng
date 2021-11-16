@@ -66,8 +66,8 @@
                 android:layout_height="40dp"
                 android:backgroundTint="#FFFFFF"
                 android:padding="10dp"
-                app:tint="#B5DEFF"
-                app:srcCompat="@drawable/previous" />
+                app:srcCompat="@drawable/previous"
+                app:tint="#FF666666" />
 
             <Button
                 android:id="@+id/dateButton"
@@ -84,8 +84,8 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:backgroundTint="#FFFFFF"
-                app:tint="#b5deff"
-                app:srcCompat="@drawable/next" />
+                app:srcCompat="@drawable/next"
+                app:tint="#666666" />
 
         </LinearLayout>
 
@@ -121,8 +121,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0"
                         android:paddingLeft="5dp"
-                        app:tint="#2583CF"
-                        app:srcCompat="@android:drawable/ic_menu_add" />
+                        app:srcCompat="@android:drawable/ic_menu_add"
+                        app:tint="#FF066289" />
 
                 </LinearLayout>
 
@@ -148,7 +148,7 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="10dp"
                             android:gravity="center"
-                            android:text="간식"
+                            android:text="사료"
                             android:textColor="#181818"
                             android:textSize="18sp" />
 
@@ -158,8 +158,12 @@
                             android:layout_height="40dp"
                             android:layout_marginStart="15dp"
                             android:gravity="right|center_vertical"
-                            android:textColor="#181818"
-                            android:textSize="18sp" />
+                            android:paddingEnd="5dp"
+                            android:text="180"
+                            android:textAlignment="viewEnd"
+                            android:textColor="#066289"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/textView31"
@@ -176,8 +180,12 @@
                             android:layout_width="60dp"
                             android:layout_height="40dp"
                             android:gravity="right|center_vertical"
-                            android:textColor="#181818"
-                            android:textSize="18sp" />
+                            android:paddingEnd="5dp"
+                            android:text="630"
+                            android:textAlignment="viewEnd"
+                            android:textColor="#066289"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/textView33"
@@ -205,7 +213,7 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="10dp"
                             android:gravity="center"
-                            android:text="사료"
+                            android:text="간식"
                             android:textColor="#181818"
                             android:textSize="18sp" />
 
@@ -215,8 +223,12 @@
                             android:layout_height="40dp"
                             android:layout_marginStart="15dp"
                             android:gravity="right|center_vertical"
-                            android:textColor="#181818"
-                            android:textSize="18sp" />
+                            android:paddingEnd="5dp"
+                            android:text="25"
+                            android:textAlignment="viewEnd"
+                            android:textColor="#066289"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/textView25"
@@ -233,8 +245,12 @@
                             android:layout_width="60dp"
                             android:layout_height="40dp"
                             android:gravity="right|center_vertical"
-                            android:textColor="#181818"
-                            android:textSize="18sp" />
+                            android:paddingEnd="5dp"
+                            android:text="90"
+                            android:textAlignment="viewEnd"
+                            android:textColor="#066289"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/textView26"
@@ -286,8 +302,12 @@
                             android:layout_width="150dp"
                             android:layout_height="40dp"
                             android:gravity="right|center_vertical"
-                            android:textColor="#181818"
-                            android:textSize="18sp" />
+                            android:paddingEnd="5dp"
+                            android:text="800"
+                            android:textAlignment="viewEnd"
+                            android:textColor="#066289"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/textView38"
@@ -323,8 +343,12 @@
                             android:layout_width="150dp"
                             android:layout_height="40dp"
                             android:gravity="right|center_vertical"
-                            android:textColor="#181818"
-                            android:textSize="18sp" />
+                            android:paddingEnd="5dp"
+                            android:text="30"
+                            android:textAlignment="viewEnd"
+                            android:textColor="#066289"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/textView39"
