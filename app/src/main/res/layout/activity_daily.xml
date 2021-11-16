@@ -66,7 +66,7 @@
                 android:layout_height="40dp"
                 android:backgroundTint="#FFFFFF"
                 android:padding="10dp"
-                android:tint="#cab8ff"
+                app:tint="#B5DEFF"
                 app:srcCompat="@drawable/previous" />
 
             <Button
@@ -84,7 +84,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:backgroundTint="#FFFFFF"
-                android:tint="#cab8ff"
+                app:tint="#b5deff"
                 app:srcCompat="@drawable/next" />
 
         </LinearLayout>
@@ -121,7 +121,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0"
                         android:paddingLeft="5dp"
-                        android:tint="#cab8ff"
+                        app:tint="#2583CF"
                         app:srcCompat="@android:drawable/ic_menu_add" />
 
                 </LinearLayout>
@@ -138,7 +138,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="0"
-                        android:background="@drawable/bgline_search"
+                        android:background="@drawable/bgline_textview2"
                         android:orientation="horizontal">
 
                         <TextView
@@ -156,13 +156,14 @@
                             android:id="@+id/textView30"
                             android:layout_width="60dp"
                             android:layout_height="40dp"
+                            android:layout_marginStart="15dp"
                             android:gravity="right|center_vertical"
                             android:textColor="#181818"
                             android:textSize="18sp" />
 
                         <TextView
                             android:id="@+id/textView31"
-                            android:layout_width="60dp"
+                            android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:gravity="center_vertical"
                             android:paddingStart="5dp"
@@ -194,7 +195,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:layout_weight="0"
-                        android:background="@drawable/bgline_search"
+                        android:background="@drawable/bgline_textview2"
                         android:orientation="horizontal">
 
                         <TextView
@@ -212,13 +213,14 @@
                             android:id="@+id/textView28"
                             android:layout_width="60dp"
                             android:layout_height="40dp"
+                            android:layout_marginStart="15dp"
                             android:gravity="right|center_vertical"
                             android:textColor="#181818"
                             android:textSize="18sp" />
 
                         <TextView
                             android:id="@+id/textView25"
-                            android:layout_width="60dp"
+                            android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:gravity="center_vertical"
                             android:paddingStart="5dp"
@@ -267,7 +269,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginTop="10dp"
                         android:layout_weight="0"
-                        android:background="@drawable/bgline_search"
+                        android:background="@drawable/bgline_textview2"
                         android:orientation="horizontal">
 
                         <TextView
@@ -281,7 +283,7 @@
 
                         <TextView
                             android:id="@+id/textView37"
-                            android:layout_width="160dp"
+                            android:layout_width="150dp"
                             android:layout_height="40dp"
                             android:gravity="right|center_vertical"
                             android:textColor="#181818"
@@ -292,6 +294,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
                             android:gravity="center_vertical"
+                            android:paddingStart="5dp"
                             android:text="m"
                             android:textColor="#181818"
                             android:textSize="18sp" />
@@ -303,7 +306,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginTop="5dp"
                         android:layout_weight="0"
-                        android:background="@drawable/bgline_search"
+                        android:background="@drawable/bgline_textview2"
                         android:orientation="horizontal">
 
                         <TextView
@@ -317,7 +320,7 @@
 
                         <TextView
                             android:id="@+id/textView35"
-                            android:layout_width="160dp"
+                            android:layout_width="150dp"
                             android:layout_height="40dp"
                             android:gravity="right|center_vertical"
                             android:textColor="#181818"
@@ -328,6 +331,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
                             android:gravity="center_vertical"
+                            android:paddingStart="5dp"
                             android:text="분"
                             android:textColor="#181818"
                             android:textSize="18sp" />
