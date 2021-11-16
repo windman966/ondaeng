@@ -59,12 +59,14 @@
                         android:layout_marginBottom="5dp"
                         android:layout_weight="2"
                         android:text="수정" />
+
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="7"
+                    android:foregroundGravity="bottom"
                     android:orientation="vertical">
 
                     <TextView
@@ -74,22 +76,38 @@
                         android:text="이름" />
 
                     <TextView
-                        android:id="@+id/textView4"
+                        android:id="@+id/dogIdBirth"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="전화번호" />
+                        android:text="생일" />
 
                     <TextView
-                        android:id="@+id/textView5"
+                        android:id="@+id/dogIdRegist"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="등록번호" />
 
                     <TextView
-                        android:id="@+id/textView6"
+                        android:id="@+id/dogIdBreed"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="견종" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="bottom"
+                        android:orientation="vertical">
+
+                        <Button
+                            android:id="@+id/selectDogBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:text="선택" />
+                    </LinearLayout>
 
                 </LinearLayout>
             </LinearLayout>

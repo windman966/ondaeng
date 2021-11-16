@@ -2,13 +2,13 @@ package com.fourth.ondaeng;
 
 public class dogIdCardData {
     String dogName;
-    String mobile;
+    String birth;
     String registNo;
     String breed;
     //강아지 등록증을 위한 기초 데이터 구조
     public dogIdCardData(String dogName, String mobile, String registNo, String breed) {
         this.dogName = dogName;
-        this.mobile = mobile;
+        this.birth = mobile;
         this.registNo = registNo;
         this.breed = breed;
     }
@@ -17,8 +17,8 @@ public class dogIdCardData {
         this.dogName = dogName;
     }
 
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
+    public void setBirth(String mobile) {
+        this.birth = mobile;
     }
 
     public void setRegistNo(String registNo) {
@@ -33,8 +33,8 @@ public class dogIdCardData {
         return dogName;
     }
 
-    public String getMobile() {
-        return mobile;
+    public String getBirth() {
+        return birth;
     }
 
     public String getRegistNo() {
