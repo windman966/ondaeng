@@ -10,7 +10,9 @@ import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -18,8 +20,10 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
+import android.widget.Chronometer;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -30,7 +34,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.fourth.ondaeng.databinding.ActivityWalkBinding;
+import com.google.android.gms.common.internal.Constants;
+import com.google.android.gms.location.Geofence;
+import com.google.android.gms.location.GeofencingClient;
+import com.google.android.gms.location.GeofencingRequest;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.Task;
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.CameraPosition;
 import com.naver.maps.map.LocationTrackingMode;
@@ -39,13 +49,17 @@ import com.naver.maps.map.NaverMap;
 import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.UiSettings;
 import com.naver.maps.map.overlay.Marker;
+import com.naver.maps.map.overlay.OverlayImage;
 import com.naver.maps.map.overlay.PathOverlay;
 import com.naver.maps.map.util.FusedLocationSource;
 
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class WalkActivity extends AppCompatActivity implements OnMapReadyCallback {
     private static String TAG = "WalkActivity";
@@ -62,6 +76,38 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
     private FusedLocationSource locationSource;
     private NaverMap naverMap;
 
+    private enum PendingGeofenceTask {
+        ADD, REMOVE, NONE
+    }
+
+    /**
+     * Provides access to the Geofencing API.
+     */
+    GeofencingClient mGeofencingClient;
+    /**
+     * The list of geofences used in this sample.
+     */
+    ArrayList<Geofence> mGeofenceList;
+    /**
+     * Used when requesting to add or remove geofences.
+     */
+    PendingIntent mGeofencePendingIntent;
+    PendingGeofenceTask mPendingGeofenceTask = PendingGeofenceTask.NONE;
+
+    String spot_name;
+    double boneLatitude;
+    double boneLongitude;
+
+    public Marker markers[] = new Marker[11];
+    PathOverlay path = new PathOverlay();
+
+    Long startTime;
+    Long endTime;
+
+    Chronometer chronometer;
+    boolean running;
+    long pauseOffset;
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,29 +115,35 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
         binding = ActivityWalkBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-//        walkingFragment = new walkingFragment();
+        chronometer = findViewById(R.id.chronometer);
+        chronometer.setFormat("산책시간 : %s");
+        binding.walkLength.setText("거리 테스트");
 
         binding.startWalk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                getSupportFragmentManager().beginTransaction().replace(R.id.walkInfo, walkingFragment).commit();
 
                 binding.startWalk.setVisibility(View.GONE);
                 binding.finishWalk.setVisibility(View.VISIBLE);
-                binding.walkInfo.setVisibility(View.VISIBLE);
+                //binding.walkInfo.setVisibility(View.VISIBLE);
 
-                binding.walkTime.setText("테스트시간");
-                binding.walkLength.setText("테스트거리");
+                startTime = System.currentTimeMillis();
 
+                //스탑워치
+                if(!running) {
+                    chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
+                    chronometer.start();
+                    running = true;
+                }
 
                 //사용자의 위치 수신을 위한 세팅
                 settingGPS();
                 // 사용자 현재 위치
                 Location userLocation = getMyLocation();
 
-                if(userLocation!=null) {
-                    double latitude = userLocation.getLatitude();
-                    double longitude = userLocation.getLongitude();
+                if (userLocation != null) {
+                    double myLatitude = userLocation.getLatitude();
+                    double myLongitude = userLocation.getLongitude();
                 }
 
                 //현재위치 경로선 나타내기
@@ -100,18 +152,20 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                 //timeThread = new Thread(new timeThread());
                 //timeThread.start();
 
-                //편의점 위치 좌표 불러오기
                 //뼈다구 마커 추가
-                for(int i=1; i<=10;i++ ){
-                    String spot_name;
-                    double latitude;
-                    double longitude;
+                for (int i = 1; i <= 10; i++) {
+                    //편의점 위치 좌표 불러오기
                     getWalkSpot(i);
                 }
 
-                //Marker marker = new Marker();
-                //marker.setPosition();
-                //marker.setMap(naverMap);
+                mGeofenceList = new ArrayList<>();
+
+                mGeofencePendingIntent = null;
+
+                //mGeofenceList();
+
+                mGeofencingClient = LocationServices.getGeofencingClient(WalkActivity.this);
+
             }
         });
 
@@ -121,16 +175,21 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 binding.startWalk.setVisibility(View.VISIBLE);
                 binding.finishWalk.setVisibility(View.GONE);
-                binding.walkInfo.setVisibility(View.GONE);
+                //binding.walkInfo.setVisibility(View.GONE);
 
                 //스톱워치, 거리 중지
+                if(running){
+                    chronometer.stop();
+                    pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
+                    running = false;
+                }
 
                 //위치 좌표 불러오기 중지
-                System.exit(settingGPS());
+                stopGPS();
 
                 //뼈다구 마커 없애기
-                Marker marker = new Marker();
-                marker.setMap(null);
+
+
 
                 //산책기록 데이터 저장
 
@@ -145,7 +204,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                             Boolean fineLocationGranted = result.getOrDefault(
                                     Manifest.permission.ACCESS_FINE_LOCATION, false);
                             Boolean coarseLocationGranted = result.getOrDefault(
-                                    Manifest.permission.ACCESS_COARSE_LOCATION,false);
+                                    Manifest.permission.ACCESS_COARSE_LOCATION, false);
                             if (fineLocationGranted != null && fineLocationGranted) {
                                 // Precise location access granted.
                             } else if (coarseLocationGranted != null && coarseLocationGranted) {
@@ -174,11 +233,185 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
+    public double getDistance(double lat1 , double lng1 , double lat2 , double lng2 ){
+        double distance;
+
+        Location locationA = new Location("point A");
+        locationA.setLatitude(lat1);
+        locationA.setLongitude(lng1);
+
+        Location locationB = new Location("point B");
+        locationB.setLatitude(lat2);
+        locationB.setLongitude(lng2);
+
+        distance = locationA.distanceTo(locationB);
+
+        return distance;
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d(TAG,"onStart");
+//        if(!checkPermission()) {
+//            requestPermissions();
+//        }else{
+//            performPendingGeofenceTask();
+//        }
+        Log.d(TAG, "onStart");
     }
+
+//    //모니터링할 지오펜싱을 지정하고 관련 지오펜싱 이벤트가 트리거되는 방법 설
+//    private GeofencingRequest getGeofencingRequest() {
+//        GeofencingRequest.Builder builder = new GeofencingRequest.Builder();
+//
+//        // The INITIAL_TRIGGER_ENTER flag indicates that geofencing service should trigger a
+//        // GEOFENCE_TRANSITION_ENTER notification when the geofence is added and if the device
+//        // is already inside that geofence.
+//        builder.setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER);
+//
+//        // Add the geofences to be monitored by geofencing service.
+//        builder.addGeofences(mGeofenceList);
+//
+//        // Return a GeofencingRequest.
+//        return builder.build();
+//
+//    }
+//
+//    /**
+//     * Adds geofences. This method should be called after the user has granted the location
+//     * permission.
+//     */
+//    @SuppressWarnings("MissingPermission")
+//    private void addGeofences() {
+//        mGeofencingClient.addGeofences(getGeofencingRequest(), getGeofencePendingIntent())
+//                .addOnCompleteListener(this);
+//    }
+//
+//    /**
+//     * Removes geofences. This method should be called after the user has granted the location
+//     * permission.
+//     */
+//    @SuppressWarnings("MissingPermission")
+//    private void removeGeofences() {
+//        mGeofencingClient.removeGeofences(getGeofencePendingIntent()).addOnCompleteListener(this);
+//    }
+//
+//    private boolean checkPermissions() {
+//        int permissionState = ActivityCompat.checkSelfPermission(this,
+//                Manifest.permission.ACCESS_FINE_LOCATION);
+//        return permissionState == PackageManager.PERMISSION_GRANTED;
+//    }
+//
+//    /**
+//     * Adds geofences, which sets alerts to be notified when the device enters or exits one of the
+//     * specified geofences. Handles the success or failure results returned by addGeofences().
+//     */
+//    public void addGeofencesButtonHandler(View view) {
+//        if (!checkPermissions()) {
+//            mPendingGeofenceTask = PendingGeofenceTask.ADD;
+//            requestPermissions();
+//            return;
+//        }
+//        addGeofences();
+//    }
+//
+//    /**
+//     * Removes geofences, which stops further notifications when the device enters or exits
+//     * previously registered geofences.
+//     */
+//    public void removeGeofencesButtonHandler(View view) {
+//        if (!checkPermissions()) {
+//            mPendingGeofenceTask = PendingGeofenceTask.REMOVE;
+//            requestPermissions();
+//            return;
+//        }
+//        removeGeofences();
+//    }
+//
+//    /**
+//     * Runs when the result of calling {@link #addGeofences()} and/or {@link #removeGeofences()}
+//     * is available.
+//     * @param task the resulting Task, containing either a result or error.
+//     */
+//    @Override
+//    public void onComplete(@NonNull Task<Void> task) {
+//        mPendingGeofenceTask = PendingGeofenceTask.NONE;
+//        if (task.isSuccessful()) {
+//            updateGeofencesAdded(!getGeofencesAdded());
+//            setButtonsEnabledState();
+//
+//            int messageId = getGeofencesAdded() ? R.string.geofences_added :
+//                    R.string.geofences_removed;
+//            Toast.makeText(this, getString(messageId), Toast.LENGTH_SHORT).show();
+//        } else {
+//            // Get the status code for the error and log it using a user-friendly message.
+//            String errorMessage = GeofenceErrorMessages.getErrorString(this, task.getException());
+//            Log.w(TAG, errorMessage);
+//        }
+//    }
+//
+//    /**
+//     * Gets a PendingIntent to send with the request to add or remove Geofences. Location Services
+//     * issues the Intent inside this PendingIntent whenever a geofence transition occurs for the
+//     * current list of geofences.
+//     *
+//     * @return A PendingIntent for the IntentService that handles geofence transitions.
+//     */
+//    private PendingIntent getGeofencePendingIntent() {
+//        // Reuse the PendingIntent if we already have it.
+//        if (mGeofencePendingIntent != null) {
+//            return mGeofencePendingIntent;
+//        }
+//        Intent intent = new Intent(this, GeofenceBroadcastReceiver.class);
+//        // We use FLAG_UPDATE_CURRENT so that we get the same pending intent back when calling
+//        // addGeofences() and removeGeofences().
+//        mGeofencePendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+//        return mGeofencePendingIntent;
+//    }
+//
+//    /**
+//     * This sample hard codes geofence data. A real app might dynamically create geofences based on
+//     * the user's location.
+//     */
+//    private void mGeofenceList() {
+//        for (Map.Entry<String, com.google.android.gms.maps.model.LatLng> entry : Constants.BAY_AREA_LANDMARKS.entrySet()) {
+//
+//            mGeofenceList.add(new Geofence.Builder()
+//                    // Set the request ID of the geofence. This is a string to identify this
+//                    // geofence.
+//                    .setRequestId(entry.getKey())
+//
+//                    // Set the circular region of this geofence.
+//                    .setCircularRegion(
+//                            entry.getValue().latitude,
+//                            entry.getValue().longitude,
+//                            Constants.GEOFENCE_RADIUS_IN_METERS
+//                    )
+//
+//                    // Set the expiration duration of the geofence. This geofence gets automatically
+//                    // removed after this period of time.
+//                    .setExpirationDuration(Constants.GEOFENCE_EXPIRATION_IN_MILLISECONDS)
+//
+//                    // Set the transition types of interest. Alerts are only generated for these
+//                    // transition. We track entry and exit transitions in this sample.
+//                    .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER |
+//                            Geofence.GEOFENCE_TRANSITION_EXIT)
+//
+//                    // Create the geofence.
+//                    .build());
+//        }
+//    }
+//
+//    /**
+//     * Performs the geofencing task that was pending until location permission was granted.
+//     */
+//    private void performPendingGeofenceTask() {
+//        if (mPendingGeofenceTask == PendingGeofenceTask.ADD) {
+//            addGeofences();
+//        } else if (mPendingGeofenceTask == PendingGeofenceTask.REMOVE) {
+//            removeGeofences();
+//        }
+//    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,  @NonNull int[] grantResults) {
@@ -197,11 +430,6 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(@NonNull NaverMap naverMap) {
         this.naverMap = naverMap;
         naverMap.setLocationSource(locationSource); //현재위치
-
-        // 지도상에 마커 표시
-        Marker marker = new Marker();
-        marker.setPosition(new LatLng(37.5670135, 126.9783740));
-        marker.setMap(naverMap);
 
         UiSettings uiSettings = naverMap.getUiSettings();
         uiSettings.setLocationButtonEnabled(true);
@@ -246,7 +474,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
      * LocationListener는 위치가 변할때 마다 또는 상태가 변할 때마다 위치를 가져오는 리스너
      * @return
      */
-    private int settingGPS() {
+    private void settingGPS() {
         // Acquire a reference to the system Location Manager
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
@@ -262,12 +490,13 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 LatLng temp = new LatLng(myLatitude,myLongitude);
                 latLngList.add(temp);
-                PathOverlay path = new PathOverlay();
+
                 if(latLngList.size()>1) {
                     path.setCoords(latLngList);
                     path.setColor(Color.YELLOW);
                     path.setMap(naverMap);
                 }
+
             }
 
             public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -279,9 +508,41 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onProviderDisabled(String provider) {
             }
         };
-        return 0;
+
     }
 
+    public void stopGPS(){
+
+//      pdg제거
+        for(int j=1; j<=10;j++){
+
+//                    Log.i(TAG, j+"생성 markers : "+markers[j].getPosition());
+            markers[j].setMap(null);
+        }
+        //gps 업데이트 종료
+        locationManager.removeUpdates(locationListener);
+
+        //path 제거
+        path.setMap(null);
+
+        //시간 종료
+        endTime = System.currentTimeMillis();
+        Date start = new Date(startTime);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
+        String rsTime = simpleDateFormat.format(start);
+        Toast.makeText(getApplicationContext(), "시작"+rsTime,Toast.LENGTH_SHORT).show();
+
+        Date end = new Date(endTime);
+        String reTime = simpleDateFormat.format(end);
+        Toast.makeText(getApplicationContext(), "종료"+reTime,Toast.LENGTH_SHORT).show();
+
+        long resTime = endTime - startTime;
+        Date res = new Date(resTime);
+        String intervalTime = simpleDateFormat.format(res);
+        Toast.makeText(getApplicationContext(), "결과"+intervalTime,Toast.LENGTH_SHORT).show();
+
+        binding.walkTime.setText(intervalTime.toString());
+    }
     //DB에서 뼈다구 좌표 받아오기
     public void getWalkSpot(int spot_no){
 //        easyToast("getWalkSpot 실행됨");
@@ -304,10 +565,22 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                         //key값에 따라 value값을 쪼개 받아옵니다.
                         JSONObject jsonObject = new JSONObject(response.toString());
                         JSONObject data = new JSONObject(jsonObject.getJSONArray("data").get(0).toString());
-                         String spot_name = data.get("spot_name").toString();
-                         double latitude =(double)data.get("latitude");
-                         double longitude =(double)data.get("longitude");
-                        Toast.makeText(getApplicationContext(),"spot_name : " + spot_name + " , latitude : " + latitude + " , longitude : " + longitude,Toast.LENGTH_SHORT).show();
+                        WalkActivity.this.spot_name = data.get("spot_name").toString();
+                        WalkActivity.this.boneLatitude = (double) data.get("latitude");
+                        WalkActivity.this.boneLongitude = (double) data.get("longitude");
+                        //Toast.makeText(getApplicationContext(),"spot_name : " + spot_name + " , latitude : " + boneLatitude + " , longitude : " + boneLongitude,Toast.LENGTH_SHORT).show();
+
+                        Marker marker = new Marker();
+                        markers[spot_no] = marker;
+                        markers[spot_no].setPosition(new LatLng(boneLatitude, boneLongitude));
+                        markers[spot_no].setIcon(OverlayImage.fromResource(R.drawable.bone));
+                        markers[spot_no].setWidth(80);
+                        markers[spot_no].setHeight(80);
+                        markers[spot_no].setMap(naverMap);
+
+
+                        Log.i(TAG, spot_no+"생성 markers : "+markers[spot_no].getPosition());
+
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -326,6 +599,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return ;
     }
 
     @Override

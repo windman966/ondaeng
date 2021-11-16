@@ -3,6 +3,7 @@
     <item android:drawable="@drawable/splash_base" />
     <item android:top="0dp"
         android:gravity="center">
-        <bitmap android:src="@drawable/applogo" android:gravity="top" />
+        <bitmap android:src="@drawable/logo_transparent82"
+            android:gravity="top" />
     </item>
 </layer-list>
