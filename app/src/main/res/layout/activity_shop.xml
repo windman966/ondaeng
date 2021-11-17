@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".Shop"
+    tools:openDrawer="start">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <Button
+                android:id="@+id/btn_back"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                android:background="#00FFFFFF"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="open"
+                app:icon="@android:drawable/ic_menu_sort_by_size"
+                app:iconTint="#000000" />
+
+            <TextView
+                android:id="@+id/appName"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="코인샵"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="40dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/goToMyCorrection"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                android:gravity="center"
+                android:text="댕댕이"
+                android:textAlignment="center" />
+
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/bgline_search"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/imageView13"
+                            android:layout_width="match_parent"
+                            android:layout_height="140dp"
+                            android:layout_margin="10dp"
+                            android:soundEffectsEnabled="false"
+                            android:scaleType="centerCrop"
+                            app:srcCompat="@drawable/snack1" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <Button
+                                android:id="@+id/drawSnack1"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_marginRight="5dp"
+                                android:layout_weight="1"
+                                android:backgroundTint="#B5DEFF"
+                                android:text="응모하기(10PDG)"
+                                android:textColor="#000000"
+                                android:textSize="14sp"
+                                tools:ignore="TextContrastCheck" />
+
+                            <Button
+                                android:id="@+id/buySnack1"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_weight="1"
+                                android:backgroundTint="#B5DEFF"
+                                android:text="교환하기(1000PDG)"
+                                android:textColor="#000000"
+                                android:textSize="14sp"
+                                tools:ignore="TextContrastCheck" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+                    </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/bgline_search"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/imageView14"
+                            android:layout_width="match_parent"
+                            android:layout_height="140dp"
+                            android:layout_margin="10dp"
+                            android:scaleType="centerCrop"
+                            android:soundEffectsEnabled="false"
+                            app:srcCompat="@drawable/snack2" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <Button
+                                android:id="@+id/drawSnack2"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_marginRight="5dp"
+                                android:layout_weight="1"
+                                android:backgroundTint="#B5DEFF"
+                                android:text="응모하기(10PDG)"
+                                android:textColor="#000000"
+                                android:textSize="14sp"
+                                tools:ignore="TextContrastCheck" />
+
+                            <Button
+                                android:id="@+id/buySnack2"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_weight="1"
+                                android:backgroundTint="#B5DEFF"
+                                android:text="교환하기(1000PDG)"
+                                android:textColor="#000000"
+                                android:textSize="14sp"
+                                tools:ignore="TextContrastCheck" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/bgline_search"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/imageView15"
+                            android:layout_width="match_parent"
+                            android:layout_height="140dp"
+                            android:layout_margin="10dp"
+                            android:scaleType="centerCrop"
+                            android:soundEffectsEnabled="false"
+                            app:srcCompat="@drawable/snack3" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <Button
+                                android:id="@+id/drawSnack3"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_marginRight="5dp"
+                                android:layout_weight="1"
+                                android:backgroundTint="#B5DEFF"
+                                android:text="응모하기(10PDG)"
+                                android:textColor="#000000"
+                                android:textSize="14sp"
+                                tools:ignore="TextContrastCheck" />
+
+                            <Button
+                                android:id="@+id/buySnack3"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_weight="1"
+                                android:backgroundTint="#B5DEFF"
+                                android:text="교환하기(1000PDG)"
+                                android:textColor="#000000"
+                                android:textSize="14sp"
+                                tools:ignore="TextContrastCheck" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/bgline_search"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/imageView16"
+                            android:layout_width="match_parent"
+                            android:layout_height="140dp"
+                            android:layout_margin="10dp"
+                            android:scaleType="centerCrop"
+                            android:soundEffectsEnabled="false"
+                            app:srcCompat="@drawable/snack4" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <Button
+                                android:id="@+id/drawSnack4"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_marginRight="5dp"
+                                android:layout_weight="1"
+                                android:backgroundTint="#B5DEFF"
+                                android:text="응모하기(10PDG)"
+                                android:textColor="#000000"
+                                android:textSize="14sp"
+                                tools:ignore="TextContrastCheck" />
+
+                            <Button
+                                android:id="@+id/buySnack4"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_weight="1"
+                                android:backgroundTint="#B5DEFF"
+                                android:text="교환하기(1000PDG)"
+                                android:textColor="#000000"
+                                android:textSize="14sp"
+                                tools:ignore="TextContrastCheck" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+
+
+
+        </ScrollView>
+
+
+    </LinearLayout>
+
+    <include layout="@layout/activity_drawer" />
+
+
+
+</androidx.drawerlayout.widget.DrawerLayout>

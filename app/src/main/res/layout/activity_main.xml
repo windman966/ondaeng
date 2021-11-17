@@ -19,7 +19,7 @@
             android:layout_height="50dp">
 
             <Button
-                android:id="@+id/btn_open"
+                android:id="@+id/btn_back"
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0"
@@ -43,7 +43,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/dogName"
+                android:id="@+id/goToMyCorrection"
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0"

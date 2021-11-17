@@ -20,7 +20,7 @@
             android:layout_height="50dp">
 
             <Button
-                android:id="@+id/btn_open"
+                android:id="@+id/btn_back"
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0"
@@ -37,14 +37,14 @@
                 android:layout_height="50dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="On:댕"
+                android:text="Daily 기록"
                 android:textAlignment="center"
                 android:textColor="#000000"
                 android:textSize="40dp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/dogName"
+                android:id="@+id/goToMyCorrection"
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0"
@@ -107,7 +107,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/textView12"
+                        android:id="@+id/addrOnNav"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0"
@@ -207,7 +207,7 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/textView11"
+                            android:id="@+id/idOnNav"
                             android:layout_width="60dp"
                             android:layout_height="40dp"
                             android:layout_marginStart="10dp"
@@ -466,6 +466,6 @@
     </LinearLayout>
 
 
-    <!--<include layout="@layout/activity_drawer" />-->
+    <include layout="@layout/activity_drawer" />
 
 </androidx.drawerlayout.widget.DrawerLayout>
