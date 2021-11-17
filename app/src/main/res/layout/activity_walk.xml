@@ -4,20 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:fitsSystemWindows="true"
-    tools:openDrawer="start"
-    tools:context=".WalkActivity">
+    tools:context=".WalkActivity"
+    tools:openDrawer="start">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent" >
 
         <LinearLayout
-            android:layout_width="match_parent"
             android:id="@+id/header"
-            android:layout_height="50dp">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true">
 
             <Button
                 android:id="@+id/btn_back"
@@ -54,124 +54,122 @@
 
         </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/layout1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/InfoLayout"
-        android:layout_below="@id/header"
-        android:orientation="vertical">
-
         <LinearLayout
-            android:id="@+id/mapLayout"
+            android:id="@+id/layout1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_above="@id/InfoLayout"
+            android:layout_below="@id/header"
             android:orientation="vertical">
 
-            <FrameLayout
-                android:id="@+id/mapFragment"
+            <LinearLayout
+                android:id="@+id/mapLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                <fragment
-                    android:id="@+id/map"
-                    android:name="com.naver.maps.map.MapFragment"
+                <FrameLayout
+                    android:id="@+id/mapFragment"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent">
+
+                    <fragment
+                        android:id="@+id/map"
+                        android:name="com.naver.maps.map.MapFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                    <!--        <androidx.fragment.app.FragmentContainerView-->
+                    <!--            android:id="@+id/fragmentContainerView"-->
+                    <!--            android:name="com.fourth.ondaeng.walkingFragment"-->
+                    <!--            android:layout_width="match_parent"-->
+                    <!--            android:layout_height="match_parent" />-->
+
+                </FrameLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/InfoLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/walkInfo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="35dp"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <Chronometer
+                    android:id="@+id/chronometer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="23sp" />
+
+                <TextView
+                    android:id="@+id/walkLength"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="TextView"
+                    android:textSize="23sp" />
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:visibility="visible">
 
                 <!--        <androidx.fragment.app.FragmentContainerView-->
-                <!--            android:id="@+id/fragmentContainerView"-->
+                <!--            android:id="@+id/walkInfo"-->
                 <!--            android:name="com.fourth.ondaeng.walkingFragment"-->
-                <!--            android:layout_width="match_parent"-->
-                <!--            android:layout_height="match_parent" />-->
+                <!--            android:layout_width="wrap_content"-->
+                <!--            android:layout_height="wrap_content"-->
+                <!--            android:visibility="gone" />-->
+
+                <Button
+                    android:id="@+id/startWalk"
+                    android:layout_width="330dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center_horizontal"
+                    android:backgroundTint="#b5deff "
+                    android:text="산책 시작하기"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:cornerRadius="20dp"
+                    tools:ignore="RtlCompat" />
+
+                <Button
+                    android:id="@+id/finishWalk"
+                    android:layout_width="330dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center_horizontal"
+                    android:backgroundTint="#cab8ff "
+                    android:text="산책 그만하기"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    app:cornerRadius="20dp" />
 
             </FrameLayout>
         </LinearLayout>
 
-    </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/InfoLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="false"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="15dp"
-        android:orientation="vertical">
+        <!--    <com.naver.maps.map.MapView-->
+        <!--        android:id="@+id/map_view"-->
+        <!--        android:layout_width="match_parent"-->
+        <!--        android:layout_height="match_parent" />-->
 
-        <LinearLayout
-            android:id="@+id/walkInfo"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="35dp"
-            android:orientation="vertical"
-            android:visibility="visible">
+    </RelativeLayout>
 
-            <Chronometer
-                android:id="@+id/chronometer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="23sp" />
-
-            <TextView
-                android:id="@+id/walkLength"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="TextView"
-                android:textSize="23sp" />
-
-        </LinearLayout>
-
-        <FrameLayout
-            android:id="@+id/container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:visibility="visible">
-
-            <!--        <androidx.fragment.app.FragmentContainerView-->
-            <!--            android:id="@+id/walkInfo"-->
-            <!--            android:name="com.fourth.ondaeng.walkingFragment"-->
-            <!--            android:layout_width="wrap_content"-->
-            <!--            android:layout_height="wrap_content"-->
-            <!--            android:visibility="gone" />-->
-
-            <Button
-                android:id="@+id/startWalk"
-                android:layout_width="330dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center_horizontal"
-                android:backgroundTint="#b5deff "
-                android:text="산책 시작하기"
-                android:textAlignment="center"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:cornerRadius="20dp"
-                tools:ignore="RtlCompat" />
-
-            <Button
-                android:id="@+id/finishWalk"
-                android:layout_width="330dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center_horizontal"
-                android:backgroundTint="#cab8ff "
-                android:text="산책 그만하기"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:visibility="gone"
-                app:cornerRadius="20dp" />
-
-        </FrameLayout>
-    </LinearLayout>
-
-
-    <!--    <com.naver.maps.map.MapView-->
-    <!--        android:id="@+id/map_view"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent" />-->
-
-    </LinearLayout>
     <include layout="@layout/activity_drawer" />
 </androidx.drawerlayout.widget.DrawerLayout>
