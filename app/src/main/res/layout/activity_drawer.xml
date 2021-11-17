@@ -88,6 +88,22 @@
                     app:iconTint="#584F73" />
 
                 <Button
+                    android:id="@+id/goToQuest"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#FFFFFF"
+                    android:gravity="center|start|center_horizontal"
+                    android:paddingStart="40dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:text="퀘스트"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    app:icon="@drawable/ic_baseline_star_24"
+                    app:iconPadding="40dp"
+                    app:iconTint="#584F73" />
+
+                <Button
                     android:id="@+id/goToCareVaccin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -195,22 +211,6 @@
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
                     android:text="코인샵"
-                    android:textColor="#000000"
-                    android:textSize="18sp"
-                    app:icon="@drawable/ic_baseline_shopping_cart_24"
-                    app:iconPadding="40dp"
-                    app:iconTint="#584F73" />
-
-                <Button
-                    android:id="@+id/goToQuest"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#FFFFFF"
-                    android:gravity="center|start|center_horizontal"
-                    android:paddingStart="40dp"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:text="퀘스트"
                     android:textColor="#000000"
                     android:textSize="18sp"
                     app:icon="@drawable/ic_baseline_shopping_cart_24"
