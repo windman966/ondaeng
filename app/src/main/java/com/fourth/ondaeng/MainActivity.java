@@ -11,13 +11,23 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.fourth.ondaeng.databinding.ActivityDrawerBinding;
 import com.fourth.ondaeng.databinding.ActivityMainBinding;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -35,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private CircleIndicator3 mIndicator;
 
 
-
+    ArrayList<dogIdCardData> dogIdCardDataList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,21 +88,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //등록증 데이터 및 코드 공유유
-       ArrayList<dogIdCardData> list = new ArrayList<>();
-        list.add(new dogIdCardData("댕댕이","010-2432-1677","199-500-500","포메라니안"));
-        list.add(new dogIdCardData("댕댕이2","010-2432-16772","199-500-5002","포메라니안2"));
-        list.add(new dogIdCardData("물댕이2","010-2432-16772","199-500-5003","포메라니안2"));
-        // 강아지 데이터 쿼리
-        String url = "http://14.55.65.181/ondaeng/getDogById?id=test?";
-        JSONObject dogJson = new JSONObject();
+//        강아지 카드
+        setDogCard();
 
-
-        viewPager2.setAdapter(new item_viewpager(list));
-
-        //인디케이터 코드
-        mIndicator = binding.indicator;
-        mIndicator.setViewPager(viewPager2);
-        mIndicator.createIndicators(list.size(),0);
 
 
         //메뉴 이동 코드
@@ -188,6 +186,103 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    private void setDogCard() {
+        ArrayList<dogIdCardData> list = new ArrayList<>();
+
+        String url = "http://14.55.65.181/ondaeng/getDogById?";//2
+        String id = appData.id.toString();
+        url += "id="+id;
+        //Toast.makeText(getApplicationContext(), url, Toast.LENGTH_LONG).show();
+        final int[] length = {0};
+        //JSON형식으로 데이터 통신을 진행합니다!
+        JSONObject testjson = new JSONObject();
+        try {
+            //입력해둔 edittext의 id와 pw값을 받아와 put해줍니다 : 데이터를 json형식으로 바꿔 넣어주었습니다.
+
+            //이제 전송
+            final RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
+//            Toast.makeText(getApplicationContext(), "test", Toast.LENGTH_LONG).show();
+            //easyToast(url);
+            final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,null, new Response.Listener<JSONObject>() {
+
+                //데이터 전달을 끝내고 이제 그 응답을 받을 차례입니다.
+                @Override
+                public void onResponse(JSONObject response) {
+//                    Toast.makeText(getApplicationContext(), "test", Toast.LENGTH_LONG).show();
+                    try {
+                        //easyToast("응답");
+                        //받은 json형식의 응답을 받아
+                        //key값에 따라 value값을 쪼개 받아옵니다.
+
+
+                        JSONObject jsonObject = new JSONObject(response.toString());
+                        //easyToast("test");
+                        JSONArray dataArray = jsonObject.getJSONArray("data");
+//                        Toast.makeText(getApplicationContext(), dataArray.toString(), Toast.LENGTH_SHORT).show();
+
+
+
+                        int length = dataArray.length();
+//                        Toast.makeText(getApplicationContext(), "길이 : "+length, Toast.LENGTH_SHORT).show();
+
+//                        Toast.makeText(getApplicationContext(), "test", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getApplicationContext(), length, Toast.LENGTH_SHORT).show();
+                        //easyToast(length);
+
+                        ArrayList<dogIdCardData> list2 = new ArrayList<>();
+                        for(int i=0;i<length;i++){
+                            JSONObject data = new JSONObject(jsonObject.getJSONArray("data").get(i).toString());
+                            String name =data.get("name").toString();
+                            String dog_birth =data.get("dog_birth").toString();
+                            String regist_no =data.get("regist_no").toString();
+                            String breed =data.get("breed").toString();
+                            dog_birth = dog_birth.substring(0,10);
+//                            Toast.makeText(getApplicationContext(), name+dog_birth+regist_no+breed, Toast.LENGTH_SHORT).show();
+                            list2.add(new dogIdCardData(name,dog_birth,regist_no,breed));
+//                            list.add(new dogIdCardData("댕댕이","010-2432-1677","199-500-500","포메라니안"));
+                        }
+//                        list2.add(new dogIdCardData("댕댕이1","010-2432-1677","199-500-500","포메라니안"));
+
+                        viewPager2.setAdapter(new item_viewpager(list2));
+
+                        //인디케이터 코드
+                        mIndicator = binding.indicator;
+                        mIndicator.setViewPager(viewPager2);
+                        mIndicator.createIndicators(list2.size(),0);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                //서버로 데이터 전달 및 응답 받기에 실패한 경우 아래 코드가 실행됩니다.
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                }
+            });
+            jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            requestQueue.add(jsonObjectRequest);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
+
+        // 강아지 데이터 쿼리
+        list.add(new dogIdCardData("댕댕이","010-2432-1677","199-500-500","포메라니안"));
+
+
+//        viewPager2.setAdapter(new item_viewpager(list));
+//
+//        //인디케이터 코드
+//        mIndicator = binding.indicator;
+//        mIndicator.setViewPager(viewPager2);
+//        mIndicator.createIndicators(list.size(),0);
+    }
+
     //뒤로가기 키 눌렀을 때
     @Override
     public void onBackPressed() {
