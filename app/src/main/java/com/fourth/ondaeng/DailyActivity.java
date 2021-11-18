@@ -62,6 +62,17 @@ public class DailyActivity extends AppCompatActivity {
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
+
+        binding.previousButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String myFormat = "yyyy-MM-dd";
+                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.KOREA);
+                myCalendar.add(Calendar.DAY_OF_MONTH, -1);
+                dateButton.setText(sdf.format(myCalendar.getTime()));
+            }
+        });
+
         myCalendar.getTime();
 
         activityDrawerBinding = ActivityDrawerBinding.inflate(getLayoutInflater());
