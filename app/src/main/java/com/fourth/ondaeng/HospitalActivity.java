@@ -25,7 +25,6 @@ import android.widget.Toast;
 
 
 import com.fourth.ondaeng.databinding.ActivityDrawerBinding;
-import com.fourth.ondaeng.databinding.ActivityHospitalBinding;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.CameraPosition;
@@ -257,6 +256,12 @@ public class HospitalActivity extends AppCompatActivity implements OnMapReadyCal
     public void showCurrentLocation(Location location) {
 
     }
+    public Overlay.OnClickListener hospitalInfo(int a){
+        BottomSheetDialog b = new BottomSheetDialog(this);
+        b.setContentView(a);
+        b.show();
+        return null;
+    }
 
 
     @Override
@@ -267,15 +272,23 @@ public class HospitalActivity extends AppCompatActivity implements OnMapReadyCal
 
         // 지도상에 마커 표시 (강남 25시 병원)
           Marker hospital_marker1 = new Marker();
-          hospital_marker1.setCaptionText(R.layout.hospital1+"");
+          //마커 이름도 바꾸고
+          hospital_marker1.setCaptionText("강남 25시 병원");
           hospital_marker1.setPosition(new LatLng(37.516112, 127.038610));
           hospital_marker1.setMap(naverMap);
           hospital_marker1.setIcon(OverlayImage.fromResource(R.drawable.ic_hospital1));
           // 이걸 쓰면 이상한 숫자가 없어지는데 앱이 죽음 ㅠㅠ hospital_marker1.setCaptionText("");
           // 불투명도 조절
           hospital_marker1.setAlpha(0.5f);
-          hospital_marker1.setOnClickListener(this);
-
+          //hospital_marker1.setOnClickListener(this);
+        //해결 했다. 이거 써서 바꾸렴
+        hospital_marker1.setOnClickListener(new Overlay.OnClickListener() {
+            @Override
+            public boolean onClick(@NonNull Overlay overlay) {
+                hospitalInfo(R.layout.hospital1);
+                return false;
+            }
+        });
 
         // 지도상에 마커 표시 (최영민동물의료센터)
         Marker hospital_marker2 = new Marker();
