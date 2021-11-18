@@ -76,6 +76,7 @@ public class myPage extends AppCompatActivity {
                         binding.pdgPoint.setText(data.get("pdg_point").toString());
                         binding.idOnNav.setText(data.get("id").toString());
                         binding.addrOnNav.setText(data.get("address").toString());
+
                         binding.birthOnNav.setText(data.get("birth").toString());
                         binding.mobileOnNav.setText(data.get("mobile").toString());
 
