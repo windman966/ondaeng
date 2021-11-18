@@ -3,6 +3,7 @@ package com.fourth.ondaeng;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
+import androidx.databinding.DataBindingUtil;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -12,6 +13,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fourth.ondaeng.databinding.ActivityDrawerBinding;
 import com.fourth.ondaeng.databinding.ActivityMainBinding;
@@ -25,6 +27,7 @@ import me.relex.circleindicator.CircleIndicator3;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
+    private ActivityMainBinding databinding;
     private ActivityDrawerBinding activityDrawerBinding;
     private DrawerLayout drawerLayout;
     private View drawerView;
@@ -39,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         activityDrawerBinding = ActivityDrawerBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        appData.getInstance().header_name_tv = findViewById(R.id.goToMyCorrection);
+
 
 //        아이디 값 받아오기
         String id = (String) appData.id;
@@ -113,16 +118,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-//        findViewById(R.id.selectDogBtn).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-////                Button btn = (Button)findViewById(R.id.selectDogBtn);
-////                appData.dogName = btn.getText();
-////                Toast.makeText(getApplicationContext(), appData.dogName.toString(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
 
         findViewById(R.id.goToMyPage).setOnClickListener(new View.OnClickListener() {
             @Override
