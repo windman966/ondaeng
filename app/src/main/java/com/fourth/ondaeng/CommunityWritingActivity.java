@@ -206,6 +206,9 @@ public class CommunityWritingActivity extends AppCompatActivity {
                 }
                 else {
                     createPost(id,title,content,category);
+                    startActivity(commIntent);
+                    overridePendingTransition(R.anim.horizon_enter,R.anim.none);
+                    finish();
                 }
             }
         });
