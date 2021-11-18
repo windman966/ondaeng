@@ -53,7 +53,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0"
                 android:gravity="center"
-                android:text="@{com.fourth.ondaeng.appData.dogName.toString()}"
+                android:text=""
                 tools:text="asdasd"
                 android:textAlignment="center" />
 
