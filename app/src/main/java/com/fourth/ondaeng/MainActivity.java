@@ -3,7 +3,6 @@ package com.fourth.ondaeng;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
-import androidx.databinding.DataBindingUtil;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -37,7 +36,6 @@ import me.relex.circleindicator.CircleIndicator3;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-    private ActivityMainBinding databinding;
     private ActivityDrawerBinding activityDrawerBinding;
     private DrawerLayout drawerLayout;
     private View drawerView;
