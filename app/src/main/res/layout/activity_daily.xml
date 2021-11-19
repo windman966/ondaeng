@@ -103,177 +103,13 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_margin="10dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/addrOnNav"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0"
-                        android:text="식단"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                        android:textSize="24dp" />
-
-                    <ImageView
-                        android:id="@+id/imageView2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0"
-                        android:paddingLeft="5dp"
-                        app:srcCompat="@android:drawable/ic_menu_add"
-                        app:tint="#FF066289" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_weight="0"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0"
-                        android:background="@drawable/bgline_textview2"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/textView29"
-                            android:layout_width="60dp"
-                            android:layout_height="40dp"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:gravity="center"
-                            android:text="사료"
-                            android:textColor="#181818"
-                            android:textSize="18sp" />
-
-                        <TextView
-                            android:id="@+id/textView30"
-                            android:layout_width="60dp"
-                            android:layout_height="40dp"
-                            android:layout_marginStart="15dp"
-                            android:gravity="right|center_vertical"
-                            android:paddingEnd="5dp"
-                            android:text="180"
-                            android:textAlignment="viewEnd"
-                            android:textColor="#066289"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/textView31"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:gravity="center_vertical"
-                            android:paddingStart="5dp"
-                            android:text="g"
-                            android:textColor="#181818"
-                            android:textSize="18sp" />
-
-                        <TextView
-                            android:id="@+id/textView32"
-                            android:layout_width="60dp"
-                            android:layout_height="40dp"
-                            android:gravity="right|center_vertical"
-                            android:paddingEnd="5dp"
-                            android:text="630"
-                            android:textAlignment="viewEnd"
-                            android:textColor="#066289"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/textView33"
-                            android:layout_width="60dp"
-                            android:layout_height="40dp"
-                            android:gravity="center_vertical"
-                            android:paddingStart="5dp"
-                            android:text="kcal"
-                            android:textColor="#181818"
-                            android:textSize="18sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_weight="0"
-                        android:background="@drawable/bgline_textview2"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/idOnNav"
-                            android:layout_width="60dp"
-                            android:layout_height="40dp"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:gravity="center"
-                            android:text="간식"
-                            android:textColor="#181818"
-                            android:textSize="18sp" />
-
-                        <TextView
-                            android:id="@+id/textView28"
-                            android:layout_width="60dp"
-                            android:layout_height="40dp"
-                            android:layout_marginStart="15dp"
-                            android:gravity="right|center_vertical"
-                            android:paddingEnd="5dp"
-                            android:text="25"
-                            android:textAlignment="viewEnd"
-                            android:textColor="#066289"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/textView25"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:gravity="center_vertical"
-                            android:paddingStart="5dp"
-                            android:text="g"
-                            android:textColor="#181818"
-                            android:textSize="18sp" />
-
-                        <TextView
-                            android:id="@+id/textView27"
-                            android:layout_width="60dp"
-                            android:layout_height="40dp"
-                            android:gravity="right|center_vertical"
-                            android:paddingEnd="5dp"
-                            android:text="90"
-                            android:textAlignment="viewEnd"
-                            android:textColor="#066289"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/textView26"
-                            android:layout_width="60dp"
-                            android:layout_height="40dp"
-                            android:gravity="center_vertical"
-                            android:paddingStart="5dp"
-                            android:text="kcal"
-                            android:textColor="#181818"
-                            android:textSize="18sp" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_marginTop="30dp"
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textView15"
+                        android:id="@+id/textView1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0"
@@ -299,12 +135,11 @@
                             android:textSize="18sp" />
 
                         <TextView
-                            android:id="@+id/textView37"
+                            android:id="@+id/walk_dis"
                             android:layout_width="150dp"
                             android:layout_height="40dp"
                             android:gravity="right|center_vertical"
                             android:paddingEnd="5dp"
-                            android:text="800"
                             android:textAlignment="viewEnd"
                             android:textColor="#066289"
                             android:textSize="18sp"
@@ -331,7 +166,6 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/textView34"
                             android:layout_width="120dp"
                             android:layout_height="40dp"
                             android:gravity="center"
@@ -340,12 +174,11 @@
                             android:textSize="18sp" />
 
                         <TextView
-                            android:id="@+id/textView35"
+                            android:id="@+id/walk_time"
                             android:layout_width="150dp"
                             android:layout_height="40dp"
                             android:gravity="right|center_vertical"
                             android:paddingEnd="5dp"
-                            android:text="30"
                             android:textAlignment="viewEnd"
                             android:textColor="#066289"
                             android:textSize="18sp"
@@ -358,6 +191,44 @@
                             android:gravity="center_vertical"
                             android:paddingStart="5dp"
                             android:text="분"
+                            android:textColor="#181818"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="0"
+                        android:background="@drawable/bgline_textview2"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="120dp"
+                            android:layout_height="40dp"
+                            android:gravity="center"
+                            android:text="소모된 칼로리"
+                            android:textColor="#181818"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/walk_calorie"
+                            android:layout_width="150dp"
+                            android:layout_height="40dp"
+                            android:gravity="right|center_vertical"
+                            android:paddingEnd="5dp"
+                            android:textAlignment="viewEnd"
+                            android:textColor="#066289"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/textView39"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:gravity="center_vertical"
+                            android:paddingStart="5dp"
+                            android:text="kcal"
                             android:textColor="#181818"
                             android:textSize="18sp" />
                     </LinearLayout>
@@ -391,14 +262,14 @@
                         android:orientation="horizontal">
 
                         <ImageView
-                            android:id="@+id/imageView7"
+                            android:id="@+id/emotion1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             app:srcCompat="@drawable/feeling_exciting" />
 
                         <ImageView
-                            android:id="@+id/imageView8"
+                            android:id="@+id/emotion2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
@@ -406,7 +277,7 @@
                             app:srcCompat="@drawable/feeling_smile" />
 
                         <ImageView
-                            android:id="@+id/imageView9"
+                            android:id="@+id/emotion3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
@@ -414,7 +285,7 @@
                             app:srcCompat="@drawable/feeling_boring" />
 
                         <ImageView
-                            android:id="@+id/imageView10"
+                            android:id="@+id/emotion4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
@@ -422,7 +293,7 @@
                             app:srcCompat="@drawable/feeling_sad" />
 
                         <ImageView
-                            android:id="@+id/imageView11"
+                            android:id="@+id/emotion5"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
@@ -450,9 +321,9 @@
                         android:textSize="24dp" />
 
                     <EditText
-                        android:id="@+id/editTextTextPersonName"
+                        android:id="@+id/memo"
                         android:layout_width="300dp"
-                        android:layout_height="100dp"
+                        android:layout_height="180dp"
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
                         android:layout_weight="0"
@@ -467,6 +338,6 @@
     </LinearLayout>
 
 
-   <include layout="@layout/activity_drawer" />
+<!--   <include layout="@layout/activity_drawer" />-->
 
 </androidx.drawerlayout.widget.DrawerLayout>
