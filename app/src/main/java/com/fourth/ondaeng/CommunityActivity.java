@@ -87,7 +87,7 @@ public class CommunityActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent MainIntent = new Intent(CommunityActivity.this, CommunityWritingActivity.class);
                 CommunityActivity.this.startActivity(MainIntent);
-                CommunityActivity.this.finish();
+//                CommunityActivity.this.finish();
             }
         });
     }
@@ -117,9 +117,9 @@ public class CommunityActivity extends AppCompatActivity {
                         //key값에 따라 value값을 쪼개 받아옵니다.
                         JSONObject jsonObject = new JSONObject(response.toString());
                         //easyToast("test");
-                        postDataList = new ArrayList<postData>();
+
                         int length = Integer.valueOf(jsonObject.getJSONArray("data").length());
-                        //easyToast(length);
+//                        easyToast(length);
 
                         postDataList = new ArrayList<postData>();
                         for(int i=length-1;i>=0;i--){
@@ -148,7 +148,7 @@ public class CommunityActivity extends AppCompatActivity {
 //                                easyToast(postNo);
                                 CommIntent.putExtra("postNo", postNo);
                                 CommunityActivity.this.startActivity(CommIntent);
-                                CommunityActivity.this.finish();
+//                                CommunityActivity.this.finish();
                             }
                         });
 

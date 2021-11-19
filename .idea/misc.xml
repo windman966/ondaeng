@@ -25,7 +25,29 @@
         <entry key="..\:/Users/Jinny/AndroidStudioProjects/ondaeng/app/src/main/res/layout/activity_community.xml" value="0.18333333333333332" />
         <entry key="..\:/Users/Jinny/AndroidStudioProjects/ondaeng/app/src/main/res/layout/activity_community_writing.xml" value="0.18333333333333332" />
         <entry key="..\:/Users/Jinny/AndroidStudioProjects/ondaeng/app/src/main/res/layout/item_community.xml" value="0.18333333333333332" />
+        <entry key="..\:/Users/KJS/AndroidStudioProjects/OnDaeng/app/src/main/res/drawable-v24/bottom_sheet_background.xml" value="0.36203703703703705" />
+        <entry key="..\:/Users/KJS/AndroidStudioProjects/OnDaeng/app/src/main/res/drawable-v24/button_background.xml" value="0.36203703703703705" />
+        <entry key="..\:/Users/KJS/AndroidStudioProjects/OnDaeng/app/src/main/res/layout/activity_community.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/KJS/AndroidStudioProjects/OnDaeng/app/src/main/res/layout/activity_community_writing.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/KJS/AndroidStudioProjects/OnDaeng/app/src/main/res/layout/activity_drawer.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/KJS/AndroidStudioProjects/OnDaeng/app/src/main/res/layout/activity_healthcheck1.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/KJS/AndroidStudioProjects/OnDaeng/app/src/main/res/layout/activity_healthcheck2.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/KJS/AndroidStudioProjects/OnDaeng/app/src/main/res/layout/activity_hospital.xml" value="0.3605128205128205" />
+        <entry key="..\:/Users/KJS/AndroidStudioProjects/OnDaeng/app/src/main/res/layout/activity_quest.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/KJS/AndroidStudioProjects/OnDaeng/app/src/main/res/layout/activity_quest_menu.xml" value="0.33" />
+        <entry key="..\:/Users/KJS/AndroidStudioProjects/OnDaeng/app/src/main/res/layout/activity_shop.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/KJS/AndroidStudioProjects/OnDaeng/app/src/main/res/layout/activity_test.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/KJS/AndroidStudioProjects/OnDaeng/app/src/main/res/layout/activity_vaccination1.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/KJS/AndroidStudioProjects/OnDaeng/app/src/main/res/layout/activity_walk.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/KJS/AndroidStudioProjects/OnDaeng/app/src/main/res/layout/content_quest_menu.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/KJS/AndroidStudioProjects/OnDaeng/app/src/main/res/layout/fragment_first.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/KJS/AndroidStudioProjects/OnDaeng/app/src/main/res/layout/hospital1.xml" value="0.3277777777777778" />
+        <entry key="..\:/Users/KJS/AndroidStudioProjects/OnDaeng/app/src/main/res/layout/hospital16.xml" value="0.3296296296296296" />
+        <entry key="..\:/Users/KJS/AndroidStudioProjects/OnDaeng/app/src/main/res/layout/hospital17.xml" value="0.3296296296296296" />
+        <entry key="..\:/Users/KJS/AndroidStudioProjects/OnDaeng/app/src/main/res/layout/hospital18.xml" value="0.3351851851851852" />
+        <entry key="..\:/Users/KJS/AndroidStudioProjects/OnDaeng/app/src/main/res/layout/hospital7.xml" value="0.3296296296296296" />
+        <entry key="..\:/Users/KJS/AndroidStudioProjects/OnDaeng/app/src/main/res/layout/hospital8.xml" value="0.3296296296296296" />
+        <entry key="..\:/Users/KJS/AndroidStudioProjects/OnDaeng/app/src/main/res/layout/hospital9.xml" value="0.3351851851851852" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/ondaeng/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.13055555555555556" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/ondaeng/app/src/main/res/drawable/bgline_search.xml" value="0.13055555555555556" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/ondaeng/app/src/main/res/drawable/bgline_textview.xml" value="0.13055555555555556" />
@@ -57,6 +79,7 @@
         <entry key="..\:/Users/USER/AndroidStudioProjects/ondaeng/app/src/main/res/layout/activity_splash.xml" value="0.38645833333333335" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/ondaeng/app/src/main/res/layout/activity_vaccination1.xml" value="0.38645833333333335" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/ondaeng/app/src/main/res/layout/activity_walk.xml" value="0.371875" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/ondaeng/app/src/main/res/layout/hospital1.xml" value="0.25104166666666666" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/ondaeng/app/src/main/res/layout/hospital10.xml" value="0.2791666666666667" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/ondaeng/app/src/main/res/layout/hospital12.xml" value="0.2791666666666667" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/ondaeng/app/src/main/res/layout/hospital15.xml" value="0.2791666666666667" />
