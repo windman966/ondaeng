@@ -54,51 +54,51 @@
 
         </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/eyeLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/header"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <Button
-            android:id="@+id/eyeButton1"
+        <LinearLayout
+            android:id="@+id/eyeLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="눈이 튀어나옴" />
+            android:layout_below="@id/header"
+            android:orientation="vertical"
+            android:visibility="gone">
 
-        <Button
-            android:id="@+id/eyeButton2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="눈동자 중앙이 하얗게 탁해짐" />
+            <Button
+                android:id="@+id/eyeButton1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="눈이 튀어나옴" />
 
-        <Button
-            android:id="@+id/eyeButton3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="빨갛게 충혈된 눈" />
+            <Button
+                android:id="@+id/eyeButton2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="눈동자 중앙이 하얗게 탁해짐" />
 
-        <Button
-            android:id="@+id/eyeButton4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="눈 주변 살이 처짐" />
+            <Button
+                android:id="@+id/eyeButton3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="빨갛게 충혈된 눈" />
 
-        <Button
-            android:id="@+id/eyeButton5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="투명하지 않은 과도한 눈물" />
+            <Button
+                android:id="@+id/eyeButton4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="눈 주변 살이 처짐" />
 
-        <Button
-            android:id="@+id/eyeButton6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="노란색 또는 녹색 눈곱" />
+            <Button
+                android:id="@+id/eyeButton5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="투명하지 않은 과도한 눈물" />
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/eyeButton6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="노란색 또는 녹색 눈곱" />
+
+        </LinearLayout>
 
     <LinearLayout
         android:id="@+id/earLayout"

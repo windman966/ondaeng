@@ -2,6 +2,7 @@ package com.fourth.ondaeng;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -62,15 +63,15 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void getPwById(String id, String pw){//1
+    public void getPwById(String id, String pw){
 //        easyToast("getPwById 실행됨");
-        String url = "http://14.55.65.181/ondaeng/getMemberId?";//2
+        String url = "http://14.55.65.181/ondaeng/getMemberId?";
         //JSON형식으로 데이터 통신을 진행합니다!
         JSONObject testjson = new JSONObject();
         try {
             //입력해둔 edittext의 id와 pw값을 받아와 put해줍니다 : 데이터를 json형식으로 바꿔 넣어주었습니다.
 
-            url = url +"id="+id;//3
+            url = url +"id="+id;
 
             //이제 전송
             final RequestQueue requestQueue = Volley.newRequestQueue(LoginActivity.this);
@@ -86,8 +87,9 @@ public class LoginActivity extends AppCompatActivity {
                         //받은 json형식의 응답을 받아
                         //key값에 따라 value값을 쪼개 받아옵니다.
                         JSONObject jsonObject = new JSONObject(response.toString());
+//                        easyToast(Integer.valueOf(jsonObject.getJSONArray("data").length()));
                         JSONObject data = new JSONObject(jsonObject.getJSONArray("data").get(0).toString());
-                        String dbpw =data.get("password").toString();//4
+                        String dbpw =data.get("password").toString();
 //                        easyToast("dbpw : "+dbpw+" , pw : "+pw);
                         if(pw.equals(dbpw)){
 //                        로그인 성공시
@@ -124,7 +126,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-     void easyToast(String str){
-        Toast.makeText(getApplicationContext(),str,Toast.LENGTH_SHORT).show();
+     void easyToast(Object obj){
+        Toast.makeText(getApplicationContext(),obj.toString(),Toast.LENGTH_SHORT).show();
     }
 }
