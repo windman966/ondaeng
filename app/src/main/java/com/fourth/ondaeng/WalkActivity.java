@@ -88,6 +88,9 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
     private DrawerLayout drawerLayout;
     private View drawerView;
 
+    double myLatitude;
+    double myLongitude;
+
     /**
      * Provides access to the Geofencing API.
      */
@@ -269,12 +272,6 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                     double myLongitude = userLocation.getLongitude();
                 }
 
-                //현재위치 경로선 나타내기
-
-                //스톱워치, 경로선 거리 나타내기
-                //timeThread = new Thread(new timeThread());
-                //timeThread.start();
-
                 //뼈다구 마커 추가
                 for (int i = 1; i <= 10; i++) {
                     //편의점 위치 좌표 불러오기
@@ -285,7 +282,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 mGeofencePendingIntent = null;
 
-                //mGeofenceList();
+                boneGeofenceList();
 
                 mGeofencingClient = LocationServices.getGeofencingClient(WalkActivity.this);
 
@@ -383,42 +380,56 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
         Log.d(TAG, "onStart");
     }
 
-//    //모니터링할 지오펜싱을 지정하고 관련 지오펜싱 이벤트가 트리거되는 방법 설
-//    private GeofencingRequest getGeofencingRequest() {
-//        GeofencingRequest.Builder builder = new GeofencingRequest.Builder();
-//
-//        // The INITIAL_TRIGGER_ENTER flag indicates that geofencing service should trigger a
-//        // GEOFENCE_TRANSITION_ENTER notification when the geofence is added and if the device
-//        // is already inside that geofence.
-//        builder.setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER);
-//
-//        // Add the geofences to be monitored by geofencing service.
-//        builder.addGeofences(mGeofenceList);
-//
-//        // Return a GeofencingRequest.
-//        return builder.build();
-//
-//    }
-//
-//    /**
-//     * Adds geofences. This method should be called after the user has granted the location
-//     * permission.
-//     */
-//    @SuppressWarnings("MissingPermission")
-//    private void addGeofences() {
-//        mGeofencingClient.addGeofences(getGeofencingRequest(), getGeofencePendingIntent())
-//                .addOnCompleteListener(this);
-//    }
-//
-//    /**
-//     * Removes geofences. This method should be called after the user has granted the location
-//     * permission.
-//     */
-//    @SuppressWarnings("MissingPermission")
-//    private void removeGeofences() {
-//        mGeofencingClient.removeGeofences(getGeofencePendingIntent()).addOnCompleteListener(this);
-//    }
-//
+    //모니터링할 지오펜싱을 지정하고 관련 지오펜싱 이벤트가 트리거되는 방법 설
+    private GeofencingRequest getGeofencingRequest() {
+        GeofencingRequest.Builder builder = new GeofencingRequest.Builder();
+
+        // The INITIAL_TRIGGER_ENTER flag indicates that geofencing service should trigger a
+        // GEOFENCE_TRANSITION_ENTER notification when the geofence is added and if the device
+        // is already inside that geofence.
+        builder.setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER);
+
+        // Add the geofences to be monitored by geofencing service.
+        builder.addGeofences(mGeofenceList);
+
+        // Return a GeofencingRequest.
+        return builder.build();
+
+    }
+
+    /**
+     * Adds geofences. This method should be called after the user has granted the location
+     * permission.
+     */
+    @SuppressWarnings("MissingPermission")
+    private void addGeofences() {
+        mGeofencingClient.addGeofences(getGeofencingRequest(), getGeofencePendingIntent())
+                .addOnCompleteListener(this, avoid -> {
+                    Toast.makeText(getApplicationContext(), "Geofencing has started", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(this, e -> {
+                    Toast.makeText(getApplicationContext()
+                            , "Geofencing failed", Toast.LENGTH_SHORT).show();
+
+                });
+    }
+
+    /**
+     * Removes geofences. This method should be called after the user has granted the location
+     * permission.
+     */
+    @SuppressWarnings("MissingPermission")
+    private void removeGeofences() {
+        mGeofencingClient.removeGeofences(getGeofencePendingIntent()).addOnCompleteListener(this, aVoid -> {
+            Toast.makeText(getApplicationContext()
+                    , "Geofencing has been removed", Toast.LENGTH_SHORT).show();
+        })
+                .addOnFailureListener(this, e -> {
+                    Toast.makeText(getApplicationContext()
+                            , "Geofencing could not be removed", Toast.LENGTH_SHORT).show();
+                });
+    }
+
 //    private boolean checkPermissions() {
 //        int permissionState = ActivityCompat.checkSelfPermission(this,
 //                Manifest.permission.ACCESS_FINE_LOCATION);
@@ -473,68 +484,63 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
 //        }
 //    }
 //
-//    /**
-//     * Gets a PendingIntent to send with the request to add or remove Geofences. Location Services
-//     * issues the Intent inside this PendingIntent whenever a geofence transition occurs for the
-//     * current list of geofences.
-//     *
-//     * @return A PendingIntent for the IntentService that handles geofence transitions.
-//     */
-//    private PendingIntent getGeofencePendingIntent() {
-//        // Reuse the PendingIntent if we already have it.
-//        if (mGeofencePendingIntent != null) {
-//            return mGeofencePendingIntent;
-//        }
-//        Intent intent = new Intent(this, GeofenceBroadcastReceiver.class);
-//        // We use FLAG_UPDATE_CURRENT so that we get the same pending intent back when calling
-//        // addGeofences() and removeGeofences().
-//        mGeofencePendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-//        return mGeofencePendingIntent;
-//    }
-//
-//    /**
-//     * This sample hard codes geofence data. A real app might dynamically create geofences based on
-//     * the user's location.
-//     */
-//    private void mGeofenceList() {
-//        for (Map.Entry<String, com.google.android.gms.maps.model.LatLng> entry : Constants.BAY_AREA_LANDMARKS.entrySet()) {
-//
-//            mGeofenceList.add(new Geofence.Builder()
-//                    // Set the request ID of the geofence. This is a string to identify this
-//                    // geofence.
-//                    .setRequestId(entry.getKey())
-//
-//                    // Set the circular region of this geofence.
-//                    .setCircularRegion(
-//                            entry.getValue().latitude,
-//                            entry.getValue().longitude,
-//                            Constants.GEOFENCE_RADIUS_IN_METERS
-//                    )
-//
-//                    // Set the expiration duration of the geofence. This geofence gets automatically
-//                    // removed after this period of time.
-//                    .setExpirationDuration(Constants.GEOFENCE_EXPIRATION_IN_MILLISECONDS)
-//
-//                    // Set the transition types of interest. Alerts are only generated for these
-//                    // transition. We track entry and exit transitions in this sample.
-//                    .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER |
-//                            Geofence.GEOFENCE_TRANSITION_EXIT)
-//
-//                    // Create the geofence.
-//                    .build());
-//        }
-//    }
-//
-//    /**
-//     * Performs the geofencing task that was pending until location permission was granted.
-//     */
-//    private void performPendingGeofenceTask() {
-//        if (mPendingGeofenceTask == PendingGeofenceTask.ADD) {
-//            addGeofences();
-//        } else if (mPendingGeofenceTask == PendingGeofenceTask.REMOVE) {
-//            removeGeofences();
-//        }
-//    }
+    /**
+     * Gets a PendingIntent to send with the request to add or remove Geofences. Location Services
+     * issues the Intent inside this PendingIntent whenever a geofence transition occurs for the
+     * current list of geofences.
+     *
+     * @return A PendingIntent for the IntentService that handles geofence transitions.
+     */
+    private PendingIntent getGeofencePendingIntent() {
+        // Reuse the PendingIntent if we already have it.
+        if (mGeofencePendingIntent != null) {
+            return mGeofencePendingIntent;
+        }
+        Intent intent = new Intent(this, GeofenceBroadcastReceiver.class);
+        // We use FLAG_UPDATE_CURRENT so that we get the same pending intent back when calling
+        // addGeofences() and removeGeofences().
+        mGeofencePendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return mGeofencePendingIntent;
+    }
+
+    /**
+     * This sample hard codes geofence data. A real app might dynamically create geofences based on
+     * the user's location.
+     */
+    private void boneGeofenceList() {
+
+            mGeofenceList.add(new Geofence.Builder()
+                    // Set the request ID of the geofence. This is a string to identify this
+                    // geofence.
+                    .setRequestId("PDG")
+                    // Set the circular region of this geofence.
+                    .setCircularRegion(
+                            boneLatitude,
+                            boneLongitude,
+                            50
+                    )
+                    // Set the expiration duration of the geofence. This geofence gets automatically
+                    // removed after this period of time.
+                    .setExpirationDuration(12*60*60*1000)
+
+                    // Set the transition types of interest. Alerts are only generated for these
+                    // transition. We track entry and exit transitions in this sample.
+                    .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
+
+                    // Create the geofence.
+                    .build());
+    }
+
+    /**
+     * Performs the geofencing task that was pending until location permission was granted.
+     */
+    private void performPendingGeofenceTask() {
+        if (mPendingGeofenceTask == PendingGeofenceTask.ADD) {
+            addGeofences();
+        } else if (mPendingGeofenceTask == PendingGeofenceTask.REMOVE) {
+            removeGeofences();
+        }
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,  @NonNull int[] grantResults) {
@@ -606,8 +612,8 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
-                double myLatitude = location.getLatitude();
-                double myLongitude = location.getLongitude();
+                myLatitude = location.getLatitude();
+                myLongitude = location.getLongitude();
                 // TODO 위도, 경도로 하고 싶은 것
                 Log.d("좌표", "latitude="+myLatitude+",longitude="+myLongitude);
 
@@ -659,13 +665,13 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
         String reTime = simpleDateFormat.format(end);
         Toast.makeText(getApplicationContext(), "종료"+reTime,Toast.LENGTH_SHORT).show();
 
-        long resTime = endTime - startTime;
-        Date res = new Date(resTime);
-        String intervalTime = simpleDateFormat.format(res);
-        Toast.makeText(getApplicationContext(), "결과"+intervalTime,Toast.LENGTH_SHORT).show();
-
-        //binding.walkTime.setText(intervalTime.toString());
-        binding.chronometer.setText(intervalTime.toString());
+//        long resTime = endTime - startTime;
+//        Date res = new Date(resTime);
+//        String intervalTime = simpleDateFormat.format(res);
+//        Toast.makeText(getApplicationContext(), "결과"+intervalTime,Toast.LENGTH_SHORT).show();
+//
+//        //binding.walkTime.setText(intervalTime.toString());
+//        binding.chronometer.setText(intervalTime.toString());
 
     }
     //DB에서 뼈다구 좌표 받아오기
