@@ -85,6 +85,7 @@
                 android:layout_gravity="center_vertical"
                 android:background="#EBEBEB"
                 android:ems="10"
+                android:fontFamily="@font/nanumsquareroundr"
                 android:hint="제목"
                 android:inputType="textPersonName"
                 android:paddingStart="30dp"
@@ -118,6 +119,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="#EBEBEB"
+                android:fontFamily="@font/nanumsquareroundr"
                 android:hint="내용"
                 android:padding="30dp"
                 android:textSize="20sp" />
@@ -136,6 +138,7 @@
                 android:layout_width="80dp"
                 android:layout_height="50dp"
                 android:backgroundTint="#FFB8DA"
+                android:fontFamily="@font/nanumsquareroundb"
                 android:text="삭제"
                 android:textColor="#000000"
                 android:textSize="17sp" />
@@ -146,6 +149,7 @@
                 android:layout_height="50dp"
                 android:layout_marginStart="10dp"
                 android:backgroundTint="#cab8ff"
+                android:fontFamily="@font/nanumsquareroundb"
                 android:text="수정"
                 android:textColor="#000000"
                 android:textSize="17sp" />
@@ -156,6 +160,7 @@
                 android:layout_height="50dp"
                 android:layout_marginStart="40dp"
                 android:backgroundTint="#B5DEFF"
+                android:fontFamily="@font/nanumsquareroundb"
                 android:text="목록으로"
                 android:textColor="#000000"
                 android:textSize="18sp"

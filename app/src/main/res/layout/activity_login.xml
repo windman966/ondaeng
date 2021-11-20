@@ -28,6 +28,7 @@
 
             android:layout_gravity="center_horizontal"
             android:background="@drawable/bgline_search"
+            android:fontFamily="@font/nanumsquareroundb"
             android:hint="아이디"
             android:paddingLeft="20dp"
             android:paddingTop="10dp"
@@ -41,6 +42,7 @@
 
             android:layout_marginTop="10dp"
             android:background="@drawable/bgline_search"
+            android:fontFamily="@font/nanumsquareroundb"
             android:hint="비밀번호"
             android:inputType="textPassword"
             android:paddingLeft="20dp"
@@ -56,6 +58,7 @@
 
         android:layout_marginTop="20dp"
         android:backgroundTint="#cab8ff "
+        android:fontFamily="@font/nanumsquareroundb"
         android:gravity="center"
         android:text="로그인"
         android:textColor="@color/white"
@@ -77,6 +80,7 @@
             android:layout_height="45dp"
 
             android:backgroundTint="#EBEBEB"
+            android:fontFamily="@font/nanumsquareroundr"
             android:text="회원가입"
             android:textColor="#2F2F2F"
             android:textSize="15sp"
@@ -88,6 +92,7 @@
             android:layout_height="45dp"
             android:layout_marginStart="5dp"
             android:backgroundTint="#EBEBEB"
+            android:fontFamily="@font/nanumsquareroundr"
             android:text="ID/PW 찾기"
             android:textColor="#2F2F2F"
             android:textSize="15sp" />

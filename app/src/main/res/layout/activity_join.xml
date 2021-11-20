@@ -48,6 +48,7 @@
             android:layout_height="50dp"
 
             android:background="@drawable/bgline_search"
+            android:fontFamily="@font/nanumsquareroundb"
             android:hint="아이디"
             android:paddingLeft="20dp"
             android:paddingTop="10dp"
@@ -59,6 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:backgroundTint="#cab8ff "
+            android:fontFamily="@font/nanumsquareroundb"
             android:text="중복확인"
             android:textStyle="bold"
             app:cornerRadius="20dp" />
@@ -72,6 +74,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/bgline_search"
+        android:fontFamily="@font/nanumsquareroundb"
         android:hint="비밀번호"
         android:inputType="textPassword"
         android:paddingLeft="20dp"
@@ -86,6 +89,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/bgline_search"
+        android:fontFamily="@font/nanumsquareroundb"
         android:hint="닉네임"
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
@@ -99,6 +103,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/bgline_search"
+        android:fontFamily="@font/nanumsquareroundb"
         android:hint="주소"
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
@@ -119,6 +124,7 @@
 
             android:layout_gravity="center"
             android:background="@drawable/bgline_search"
+            android:fontFamily="@font/nanumsquareroundb"
             android:gravity="center"
             android:hint="2021"
             android:padding="10dp" />
@@ -128,6 +134,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
+            android:fontFamily="@font/nanumsquareroundr"
             android:text="년"
             android:textSize="24sp" />
 
@@ -138,6 +145,7 @@
 
             android:layout_gravity="center"
             android:background="@drawable/bgline_search"
+            android:fontFamily="@font/nanumsquareroundb"
             android:gravity="center"
             android:hint="10"
             android:padding="10dp" />
@@ -148,6 +156,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
+            android:fontFamily="@font/nanumsquareroundr"
             android:text="월"
             android:textSize="24sp" />
 
@@ -158,6 +167,7 @@
 
             android:layout_gravity="center"
             android:background="@drawable/bgline_search"
+            android:fontFamily="@font/nanumsquareroundb"
             android:gravity="center"
             android:hint="10"
             android:padding="10dp" />
@@ -167,6 +177,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
+            android:fontFamily="@font/nanumsquareroundr"
             android:text="일"
             android:textSize="24sp" />
     </LinearLayout>
@@ -179,6 +190,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/bgline_search"
+        android:fontFamily="@font/nanumsquareroundb"
         android:hint="전화번호"
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
@@ -191,6 +203,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
         android:backgroundTint="#cab8ff "
+        android:fontFamily="@font/nanumsquareroundb"
         android:text="회원가입"
         android:textColor="@color/white"
         android:textSize="16sp"

@@ -24,6 +24,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0"
                 android:background="#00FFFFFF"
+                android:fontFamily="@font/nanumsquareroundb"
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
                 android:text="open"

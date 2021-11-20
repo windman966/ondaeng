@@ -75,6 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#FFFFFF"
+                android:fontFamily="@font/nanumsquareroundb"
                 android:text="날짜"
                 android:textColor="#090808"
                 android:textSize="14dp"
@@ -113,6 +114,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0"
+                        android:fontFamily="@font/nanumsquareroundb"
                         android:text="산책"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                         android:textSize="24dp" />
@@ -129,6 +131,7 @@
                             android:id="@+id/textView2"
                             android:layout_width="120dp"
                             android:layout_height="40dp"
+                            android:fontFamily="@font/nanumsquareroundr"
                             android:gravity="center"
                             android:text="산책 거리"
                             android:textColor="#181818"
@@ -138,6 +141,7 @@
                             android:id="@+id/walk_dis"
                             android:layout_width="150dp"
                             android:layout_height="40dp"
+                            android:fontFamily="@font/nanumsquareroundr"
                             android:gravity="center_vertical"
                             android:paddingEnd="5dp"
                             android:textAlignment="viewEnd"
@@ -149,6 +153,7 @@
                             android:id="@+id/textView3"
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
+                            android:fontFamily="@font/nanumsquareroundr"
                             android:gravity="center_vertical"
                             android:paddingStart="5dp"
                             android:text="m"
@@ -168,6 +173,7 @@
                         <TextView
                             android:layout_width="120dp"
                             android:layout_height="40dp"
+                            android:fontFamily="@font/nanumsquareroundr"
                             android:gravity="center"
                             android:text="산책 시간"
                             android:textColor="#181818"
@@ -177,6 +183,7 @@
                             android:id="@+id/walk_time"
                             android:layout_width="150dp"
                             android:layout_height="40dp"
+                            android:fontFamily="@font/nanumsquareroundr"
                             android:gravity="center_vertical"
                             android:paddingEnd="5dp"
                             android:textAlignment="viewEnd"
@@ -188,6 +195,7 @@
                             android:id="@+id/textView4"
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
+                            android:fontFamily="@font/nanumsquareroundr"
                             android:gravity="center_vertical"
                             android:paddingStart="5dp"
                             android:text="분"
@@ -206,6 +214,7 @@
                         <TextView
                             android:layout_width="120dp"
                             android:layout_height="40dp"
+                            android:fontFamily="@font/nanumsquareroundr"
                             android:gravity="center"
                             android:text="소모된 칼로리"
                             android:textColor="#181818"
@@ -215,6 +224,7 @@
                             android:id="@+id/walk_calorie"
                             android:layout_width="150dp"
                             android:layout_height="40dp"
+                            android:fontFamily="@font/nanumsquareroundr"
                             android:gravity="center_vertical"
                             android:paddingEnd="5dp"
                             android:textAlignment="viewEnd"
@@ -226,6 +236,7 @@
                             android:id="@+id/textView5"
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
+                            android:fontFamily="@font/nanumsquareroundr"
                             android:gravity="center_vertical"
                             android:paddingStart="5dp"
                             android:text="kcal"
@@ -248,6 +259,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0"
+                        android:fontFamily="@font/nanumsquareroundb"
                         android:text="상태"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                         android:textSize="24dp" />
@@ -318,6 +330,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0"
+                        android:fontFamily="@font/nanumsquareroundb"
                         android:text="메모"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                         android:textSize="24dp" />
@@ -331,6 +344,7 @@
                         android:layout_weight="0"
                         android:background="#EBEBEB"
                         android:ems="10"
+                        android:fontFamily="@font/nanumsquareroundr"
                         android:inputType="textPersonName"
                         android:padding="20dp" />
 
@@ -352,6 +366,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/nanumsquareroundb"
                 android:text="저장하기"
                 android:textSize="16sp" />
 
