@@ -38,6 +38,6 @@ public class item_viewpager extends RecyclerView.Adapter<ViewHolderPage> {
 
     @Override
     public int getItemCount() {
-        return listData.size()+1;
+        return listData.size();
     }
 }
