@@ -11,10 +11,11 @@
         android:layout_height="50dp"
         android:layout_gravity="center_vertical"
         android:autoText="false"
+        android:fontFamily="@font/nanumsquareroundr"
         android:gravity="center_vertical"
         android:padding="5dp"
         android:textAlignment="center"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/textView_title"
@@ -23,6 +24,7 @@
         android:layout_gravity="center_vertical"
         android:autoText="false"
         android:drawablePadding="10dp"
+        android:fontFamily="@font/nanumsquareroundr"
         android:gravity="center_vertical"
         android:padding="5dp"
         android:textSize="20sp"
@@ -35,9 +37,10 @@
         android:layout_height="50dp"
         android:layout_gravity="center_vertical"
         android:autoText="false"
+        android:fontFamily="@font/nanumsquareroundr"
         android:gravity="center_vertical"
         android:padding="5dp"
         android:textAlignment="center"
-        android:textSize="16sp" />
+        android:textSize="14sp" />
 
 </LinearLayout>

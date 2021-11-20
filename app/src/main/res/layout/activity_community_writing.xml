@@ -74,6 +74,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="120dp"
+                android:fontFamily="@font/nanumsquareroundr"
                 android:text="작성할 게시물의 카테고리를 선택해 주세요." />
 
             <LinearLayout
@@ -110,6 +111,7 @@
                 android:layout_gravity="center_vertical"
                 android:background="#EBEBEB"
                 android:ems="10"
+                android:fontFamily="@font/nanumsquareroundr"
                 android:hint="제목을 입력하세요."
                 android:inputType="textPersonName"
                 android:paddingStart="30dp"
@@ -135,6 +137,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="#EBEBEB"
+                android:fontFamily="@font/nanumsquareroundr"
                 android:hint="내용을 입력하세요."
                 android:padding="30dp"
                 android:textSize="20sp" />
@@ -154,6 +157,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:backgroundTint="#B5DEFF"
+                android:fontFamily="@font/nanumsquareroundb"
                 android:text="등록하기"
                 android:textColor="#000000"
                 android:textSize="18sp"

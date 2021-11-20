@@ -126,6 +126,8 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
         binding = ActivityWalkBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        mGeofenceList = new ArrayList<>();
+
         chronometer = findViewById(R.id.chronometer);
         chronometer.setFormat("산책시간 : %s");
         binding.walkLength.setText("거리 테스트");
@@ -267,10 +269,10 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                 // 사용자 현재 위치
                 Location userLocation = getMyLocation();
 
-                if (userLocation != null) {
-                    double myLatitude = userLocation.getLatitude();
-                    double myLongitude = userLocation.getLongitude();
-                }
+//                if (userLocation != null) {
+//                    double myLatitude = userLocation.getLatitude();
+//                    double myLongitude = userLocation.getLongitude();
+//                }
 
                 //뼈다구 마커 추가
                 for (int i = 1; i <= 10; i++) {
@@ -278,11 +280,11 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                     getWalkSpot(i);
                 }
 
-                mGeofenceList = new ArrayList<>();
-
                 mGeofencePendingIntent = null;
 
-                boneGeofenceList();
+                for(int k = 1; k <=10; k++) {
+                    boneGeofenceList(k);
+                }
 
                 mGeofencingClient = LocationServices.getGeofencingClient(WalkActivity.this);
 
@@ -506,8 +508,9 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
     /**
      * This sample hard codes geofence data. A real app might dynamically create geofences based on
      * the user's location.
+     * @param spot_no
      */
-    private void boneGeofenceList() {
+    private void boneGeofenceList(int spot_no) {
 
             mGeofenceList.add(new Geofence.Builder()
                     // Set the request ID of the geofence. This is a string to identify this
@@ -571,6 +574,12 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
+    double currentLon=0;
+    double currentLat=0;
+    double lastLon=0;
+    double lastLat=0;
+    double distance;
+
     int rqCode = 1004;
     //사용자 위치 수신
     private Location getMyLocation() {
@@ -589,10 +598,14 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
             String locationProvider = LocationManager.GPS_PROVIDER;
             currentLocation = locationManager.getLastKnownLocation(locationProvider);
             if(currentLocation!=null) {
-                double lng = currentLocation.getLongitude();
-                double lat = currentLocation.getLatitude();
-                Log.d("Walk", "latitude="+lat+", longitude="+lng);
+                currentLon = currentLocation.getLongitude();
+                currentLat = currentLocation.getLatitude();
+                //Log.d("Walk", "latitude="+currentLat+", longitude="+currentLog);
             }
+
+            lastLat=currentLat;
+            lastLon=currentLon;
+
         }
         return currentLocation;
     }
@@ -617,6 +630,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                 // TODO 위도, 경도로 하고 싶은 것
                 Log.d("좌표", "latitude="+myLatitude+",longitude="+myLongitude);
 
+                //이동 경로선 생성
                 LatLng temp = new LatLng(myLatitude,myLongitude);
                 latLngList.add(temp);
 
@@ -625,6 +639,44 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                     path.setColor(Color.YELLOW);
                     path.setMap(naverMap);
                 }
+
+                //start location manager
+
+//                //Get last location
+//                Location loc = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);
+//
+//                //Request new location
+//                locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER, 0,0, locationListener);
+//
+//                //Get new location
+//                Location loc2 = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);
+
+                //get the current lat and long
+//                currentLat = loc.getLatitude();
+//                currentLon = loc.getLongitude();
+
+
+                Location locationA = new Location("point A");
+                locationA.setLatitude(lastLat);
+                locationA.setLongitude(lastLon);
+
+                Location locationB = new Location("point B");
+                locationB.setLatitude(currentLat);
+                locationB.setLongitude(currentLon);
+
+                double distanceMeters = locationA.distanceTo(locationB);
+
+                double distanceKm = distanceMeters / 1000f;
+
+
+//                if(lastKnownLocation==null) {
+//                    lastKnownLocation = location;
+//                }
+//                else {
+//                    distance=lastKnownLocation.distanceTo(location);
+//                    Log.i("Distance","Distance:"+distance);
+//                    lastKnownLocation=location;
+//                }
 
             }
 
@@ -697,8 +749,8 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                         JSONObject jsonObject = new JSONObject(response.toString());
                         JSONObject data = new JSONObject(jsonObject.getJSONArray("data").get(0).toString());
                         WalkActivity.this.spot_name = data.get("spot_name").toString();
-                        WalkActivity.this.boneLatitude = (double) data.get("latitude");
-                        WalkActivity.this.boneLongitude = (double) data.get("longitude");
+                        boneLatitude = (double) data.get("latitude");
+                        boneLongitude = (double) data.get("longitude");
                         //Toast.makeText(getApplicationContext(),"spot_name : " + spot_name + " , latitude : " + boneLatitude + " , longitude : " + boneLongitude,Toast.LENGTH_SHORT).show();
 
                         Marker marker = new Marker();
