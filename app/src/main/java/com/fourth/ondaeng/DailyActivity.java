@@ -14,10 +14,19 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.fourth.ondaeng.R;
 import com.fourth.ondaeng.databinding.ActivityDailyBinding;
 import com.fourth.ondaeng.databinding.ActivityDrawerBinding;
 import com.fourth.ondaeng.databinding.ActivityQuestBinding;
+
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -110,12 +119,102 @@ public class DailyActivity extends AppCompatActivity {
             }
         });
 
+        binding.emotion2.setOnTouchListener(new View.OnTouchListener() {
+            private boolean emotion1Pressed,emotion2Pressed,emotion3Pressed,emotion4Pressed,emotion5Pressed;
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        if(!emotion1Pressed && !emotion3Pressed
+                                && !emotion4Pressed && !emotion5Pressed) {
+                            binding.emotion2.setBackgroundColor(500029);
+                            view.setPressed(true);
+                        }
+                        emotion2Pressed = true;
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        binding.emotion2.setBackgroundColor(500109);
+                        view.setPressed(false);
+                        emotion2Pressed = false;
+                        break;
+                }
+                return true;
+            }
+        });
+
+        binding.emotion3.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+
+            }
+        });
+
 
 
         binding.saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                // 날짜 맞춰서
+                // 메모, 상태 디비로 넘어가기
+                // dateButton
+//                public void insertMember(String id,String pw,String nn,String ad,String bi,String mo){
+//                    //        easyToast("idCheck 실행됨");
+//                    String url = "http://14.55.65.181/ondaeng/insertMember?";
+//                    //JSON형식으로 데이터 통신을 진행합니다!
+//                    JSONObject testjson = new JSONObject();
+//                    try {
+////            id=test3&password=tt&nickname=tt&address=tt&birth=1999-01-01&mobile=010-1234-1234
+//                        url = url +"id="+id;
+//                        url = url +"&password="+pw;
+//                        url = url +"&nickname="+nn;
+//                        url = url +"&address="+ad;
+//                        url = url +"&birth="+bi;
+//                        url = url +"&mobile="+mo;
+//                        easyToast(url);
+//                        //이제 전송
+//                        final RequestQueue requestQueue = Volley.newRequestQueue(JoinActivity.this);
+//                        //            easyToast(url);
+//                        final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,null, new Response.Listener<JSONObject>() {
+//
+//                            //데이터 전달을 끝내고 이제 그 응답을 받을 차례입니다.
+//                            @Override
+//                            public void onResponse(JSONObject response) {
+//                                try {
+//                                    //                        easyToast("응답");
+//                                    //받은 json형식의 응답을 받아
+//                                    //key값에 따라 value값을 쪼개 받아옵니다.
+////                        easyToast("onResponse내부");
+//                                    JSONObject jsonObject = new JSONObject(response.toString());
+//                                    String message = jsonObject.get("message").toString();
+//                                    //                        easyToast("dbpw : "+dbpw+" , pw : "+pw);
+//                                    if(message.equals("OK")){
+//                                        //                        회원가입 성공시
+//                                        easyToast("정상적으로 회원가입이 되었습니다.");
+//                                        onBackPressed();
+//
+//                                    }
+//                                    else{
+//                                        easyToast("회원가입이 되지않았습니다.");
+//                                    }
+//
+//                                } catch (Exception e) {
+//                                    e.printStackTrace();
+//                                }
+//                            }
+//                            //서버로 데이터 전달 및 응답 받기에 실패한 경우 아래 코드가 실행됩니다.
+//                        }, new Response.ErrorListener() {
+//                            @Override
+//                            public void onErrorResponse(VolleyError error) {
+//                                error.printStackTrace();
+//                            }
+//                        });
+//                        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+//                        requestQueue.add(jsonObjectRequest);
+//
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                }
             }
 
         });
