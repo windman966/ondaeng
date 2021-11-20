@@ -24,6 +24,7 @@ public class item_viewpager extends RecyclerView.Adapter<ViewHolderPage> {
     public ViewHolderPage onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         View view = LayoutInflater.from(context).inflate(R.layout.activity_item_viewpager, parent, false);
+
         return new ViewHolderPage(view);
     }
 
@@ -37,6 +38,6 @@ public class item_viewpager extends RecyclerView.Adapter<ViewHolderPage> {
 
     @Override
     public int getItemCount() {
-        return listData.size();
+        return listData.size()+1;
     }
 }

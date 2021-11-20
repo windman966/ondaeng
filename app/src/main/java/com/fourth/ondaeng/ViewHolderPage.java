@@ -39,6 +39,7 @@ public class ViewHolderPage extends RecyclerView.ViewHolder {
 
     public void onBind(dogIdCardData data){
         this.data = data;
+        String dogName = data.getDogName();
 
         tv_name.setText(data.getDogName());
         tv_birth.setText(data.getBirth());
@@ -59,6 +60,12 @@ public class ViewHolderPage extends RecyclerView.ViewHolder {
 
             }
         });
+        if(dogName == "addNewDog"){
+            tv_name.setVisibility(View.GONE);
+            tv_birth.setVisibility(View.GONE);
+            tv_regist.setVisibility(View.GONE);
+            tv_breed.setVisibility(View.GONE);
+        }
 
 
     }

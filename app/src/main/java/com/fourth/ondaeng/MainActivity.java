@@ -243,6 +243,7 @@ public class MainActivity extends AppCompatActivity {
                         }
 //                        list2.add(new dogIdCardData("댕댕이1","010-2432-1677","199-500-500","포메라니안"));
 
+
                         viewPager2.setAdapter(new item_viewpager(list2));
 
                         //인디케이터 코드
