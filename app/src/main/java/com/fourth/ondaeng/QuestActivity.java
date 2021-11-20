@@ -19,5 +19,8 @@ public class QuestActivity extends AppCompatActivity {
 
         binding.imageView29.setVisibility(View.VISIBLE);
 
+
     }
+
+
 }
