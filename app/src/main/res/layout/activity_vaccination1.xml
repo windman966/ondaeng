@@ -63,13 +63,14 @@
         android:layout_marginTop="30dp"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView16"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:text="접종일자를 등록해 주세요"
-            android:textSize="16sp" />
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:fontFamily="@font/nanumsquareroundr"
+                android:text="접종일자를 등록해 주세요"
+                android:textSize="16sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -88,17 +89,18 @@
             android:layout_height="40dp"
             android:layout_gravity="center_vertical"
             android:background="@drawable/bgline_textview2"
+            android:fontFamily="@font/nanumsquareroundeb"
             android:gravity="center"
             android:text="심장사상충"
             android:textColor="#000000"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/dateTextView"
             android:layout_width="170dp"
             android:layout_height="40dp"
             android:layout_gravity="center_vertical"
+            android:fontFamily="@font/nanumsquareroundr"
             android:gravity="center"
             android:text="기록이 없습니다."
             android:textColor="#252525"
@@ -114,6 +116,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:backgroundTint="#b5deff "
+                android:fontFamily="@font/nanumsquareroundb"
                 android:text="등록"
                 android:textColor="#000000" />
 
@@ -123,6 +126,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:backgroundTint="#cab8ff "
+                android:fontFamily="@font/nanumsquareroundb"
                 android:text="수정"
                 android:textColor="#000000"
                 android:visibility="invisible" />
@@ -145,17 +149,18 @@
             android:layout_height="40dp"
             android:layout_gravity="center_vertical"
             android:background="@drawable/bgline_textview2"
+            android:fontFamily="@font/nanumsquareroundeb"
             android:gravity="center"
             android:text="광견병"
             android:textColor="#000000"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/dateTextView2"
             android:layout_width="170dp"
             android:layout_height="40dp"
             android:layout_gravity="center_vertical"
+            android:fontFamily="@font/nanumsquareroundr"
             android:gravity="center"
             android:text="기록이 없습니다."
             android:textColor="#252525"
@@ -172,6 +177,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:backgroundTint="#b5deff "
+                android:fontFamily="@font/nanumsquareroundb"
                 android:text="등록"
                 android:textColor="#000000" />
 
@@ -181,6 +187,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:backgroundTint="#cab8ff "
+                android:fontFamily="@font/nanumsquareroundb"
                 android:text="수정"
                 android:textColor="#000000"
                 android:visibility="invisible" />
@@ -203,17 +210,18 @@
             android:layout_height="40dp"
             android:layout_gravity="center_vertical"
             android:background="@drawable/bgline_textview2"
+            android:fontFamily="@font/nanumsquareroundeb"
             android:gravity="center"
             android:text="코로나장염"
             android:textColor="#000000"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/dateTextView3"
             android:layout_width="170dp"
             android:layout_height="40dp"
             android:layout_gravity="center_vertical"
+            android:fontFamily="@font/nanumsquareroundr"
             android:gravity="center"
             android:text="기록이 없습니다."
             android:textColor="#252525"
@@ -230,6 +238,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:backgroundTint="#b5deff "
+                android:fontFamily="@font/nanumsquareroundb"
                 android:text="등록"
                 android:textColor="#000000" />
 
@@ -239,6 +248,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:backgroundTint="#cab8ff "
+                android:fontFamily="@font/nanumsquareroundb"
                 android:text="수정"
                 android:textColor="#000000"
                 android:visibility="invisible" />
@@ -261,17 +271,18 @@
             android:layout_height="40dp"
             android:layout_gravity="center_vertical"
             android:background="@drawable/bgline_textview2"
+            android:fontFamily="@font/nanumsquareroundeb"
             android:gravity="center"
             android:text="종합백신"
             android:textColor="#000000"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/dateTextView4"
             android:layout_width="170dp"
             android:layout_height="40dp"
             android:layout_gravity="center_vertical"
+            android:fontFamily="@font/nanumsquareroundr"
             android:gravity="center"
             android:text="기록이 없습니다."
             android:textColor="#252525"
@@ -288,6 +299,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:backgroundTint="#b5deff "
+                android:fontFamily="@font/nanumsquareroundb"
                 android:text="등록"
                 android:textColor="#000000" />
 
@@ -297,6 +309,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:backgroundTint="#cab8ff "
+                android:fontFamily="@font/nanumsquareroundb"
                 android:text="수정"
                 android:textColor="#000000"
                 android:visibility="invisible" />
@@ -318,17 +331,18 @@
             android:layout_height="40dp"
             android:layout_gravity="center_vertical"
             android:background="@drawable/bgline_textview2"
+            android:fontFamily="@font/nanumsquareroundeb"
             android:gravity="center"
             android:text="켄넬코프"
             android:textColor="#000000"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/dateTextView5"
             android:layout_width="170dp"
             android:layout_height="40dp"
             android:layout_gravity="center_vertical"
+            android:fontFamily="@font/nanumsquareroundr"
             android:gravity="center"
             android:text="기록이 없습니다."
             android:textColor="#252525"
@@ -345,6 +359,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:backgroundTint="#b5deff "
+                android:fontFamily="@font/nanumsquareroundb"
                 android:text="등록"
                 android:textColor="#000000" />
 
@@ -354,6 +369,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:backgroundTint="#cab8ff "
+                android:fontFamily="@font/nanumsquareroundb"
                 android:text="수정"
                 android:textColor="#000000"
                 android:visibility="invisible" />
@@ -382,6 +398,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:drawablePadding="10dp"
+                    android:fontFamily="@font/nanumsquareroundb"
                     android:text="강아지 예방접종 순서 알아보기"
                     android:textColor="#000000"
                     android:textSize="19sp"
@@ -394,6 +411,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
+                    android:fontFamily="@font/nanumsquareroundr"
                     android:text="광견병 : 12주 차, 1년 차에 각 1번씩 총 2회"
                     android:textSize="16sp" />
 
@@ -402,7 +420,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/nanumsquareroundr"
                     android:text="심장사상충 : 4-10월 사이에는 꼭 1개월마다"
                     android:textSize="16sp" />
 
@@ -412,6 +431,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
+                    android:fontFamily="@font/nanumsquareroundr"
                     android:text="코로나 장염 : 6, 8주 차에 각 1번씩 총 2회"
                     android:textSize="16sp" />
 
@@ -421,6 +441,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
+                    android:fontFamily="@font/nanumsquareroundr"
                     android:text="종합백신 : 6~14주 차에 2주 간격으로 각 1번씩 총 5회"
                     android:textSize="16sp" />
 
@@ -430,6 +451,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
+                    android:fontFamily="@font/nanumsquareroundr"
                     android:text="켄넬코프 : 10, 12주 차에 각 1번씩 총 2회"
                     android:textSize="16sp" />
 
@@ -439,6 +461,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
+                    android:fontFamily="@font/nanumsquareroundr"
                     android:text="인플루엔자 : 14, 16주 차에 각 1번씩 총 2회"
                     android:textSize="16sp" />
 
@@ -448,6 +471,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
+                    android:fontFamily="@font/nanumsquareroundr"
                     android:text="첫 예방접종이 끝났다면, 모두 1년 주기로 접종할 것"
                     android:textColor="#000000"
                     android:textSize="16sp" />
