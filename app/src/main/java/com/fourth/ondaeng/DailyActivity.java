@@ -51,7 +51,6 @@ public class DailyActivity extends AppCompatActivity {
         // (날짜랑 맞는) 산책 거리, 시간 가져오기
         getWalkData();
         // (날짜에 맞는) 상태와 메모 넣기
-        // 상태 버튼 중복체크 안되게 하기
 
 
         String myFormat = "yyyy-MM-dd";
@@ -88,10 +87,27 @@ public class DailyActivity extends AppCompatActivity {
             }
         });
 
-        binding.emotion1.setOnClickListener(new View.OnClickListener() {
+        // 상태 버튼 중복체크 안되게 하기
+        binding.emotion1.setOnTouchListener(new View.OnTouchListener() {
+            private boolean emotion1Pressed,emotion2Pressed,emotion3Pressed,emotion4Pressed,emotion5Pressed;
             @Override
-            public void onClick(View view) {
-                binding.emotion1.setBackgroundColor(500029);
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        if(!emotion2Pressed && !emotion3Pressed
+                                && !emotion4Pressed && !emotion5Pressed) {
+                            binding.emotion1.setBackgroundColor(500029);
+                            view.setPressed(true);
+                        }
+                        emotion1Pressed = true;
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        binding.emotion1.setBackgroundColor(500109);
+                        view.setPressed(false);
+                        emotion1Pressed = false;
+                        break;
+                }
+                return true;
             }
         });
 
