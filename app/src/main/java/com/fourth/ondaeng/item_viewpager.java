@@ -34,6 +34,8 @@ public class item_viewpager extends RecyclerView.Adapter<ViewHolderPage> {
             ViewHolderPage viewHolder = (ViewHolderPage) holder;
             viewHolder.onBind(listData.get(position));
         }
+
+
     }
 
     @Override

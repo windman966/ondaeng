@@ -5,12 +5,22 @@ public class dogIdCardData {
     String birth;
     String registNo;
     String breed;
+    String imgPath;
     //강아지 등록증을 위한 기초 데이터 구조
-    public dogIdCardData(String dogName, String mobile, String registNo, String breed) {
+    public dogIdCardData(String dogName, String mobile, String registNo, String breed,String imgPath) {
         this.dogName = dogName;
         this.birth = mobile;
         this.registNo = registNo;
         this.breed = breed;
+        this.imgPath = imgPath;
+    }
+
+    public String getImgPath() {
+        return imgPath;
+    }
+
+    public void setImgPath(String imgPath) {
+        this.imgPath = imgPath;
     }
 
     public void setDogName(String dogName) {

@@ -6,6 +6,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -102,6 +103,16 @@ public class MainActivity extends AppCompatActivity {
         Intent healthCareIntent = new Intent(this,HealthCheck1Activity.class);
         Intent shopIntent = new Intent(this,Shop.class);
         Intent questIntent = new Intent(this, QuestActivity.class);
+        //강아지 추가페이지 이동
+        Intent addNewDogIntent = new Intent(this,addNewDog.class);
+
+        binding.addNewDogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(addNewDogIntent);
+                overridePendingTransition(R.anim.horizon_enter,R.anim.none);
+            }
+        });
 
         //마이페이지 이동
         findViewById(R.id.goToQuest).setOnClickListener(new View.OnClickListener(){
@@ -230,6 +241,7 @@ public class MainActivity extends AppCompatActivity {
                         //easyToast(length);
 
                         ArrayList<dogIdCardData> list2 = new ArrayList<>();
+
                         for(int i=0;i<length;i++){
                             JSONObject data = new JSONObject(jsonObject.getJSONArray("data").get(i).toString());
                             String name =data.get("name").toString();
@@ -238,20 +250,28 @@ public class MainActivity extends AppCompatActivity {
                             String breed =data.get("breed").toString();
                             dog_birth = dog_birth.substring(0,10);
 //                            Toast.makeText(getApplicationContext(), name+dog_birth+regist_no+breed, Toast.LENGTH_SHORT).show();
-                            list2.add(new dogIdCardData(name,dog_birth,regist_no,breed));
+                            String imgpath = getCacheDir() + "/" + name;
+                            list2.add(new dogIdCardData(name,dog_birth,regist_no,breed,imgpath));
 //                            list.add(new dogIdCardData("댕댕이","010-2432-1677","199-500-500","포메라니안"));
                         }
 //                        list2.add(new dogIdCardData("댕댕이1","010-2432-1677","199-500-500","포메라니안"));
 
-
+                        if(list2.size()==0){
+                            viewPager2.setVisibility(View.GONE);
+                            binding.addNewDog.setVisibility(View.VISIBLE);
+                        }
                         viewPager2.setAdapter(new item_viewpager(list2));
+
+
 
                         //인디케이터 코드
                         mIndicator = binding.indicator;
                         mIndicator.setViewPager(viewPager2);
                         mIndicator.createIndicators(list2.size(),0);
+
                     } catch (Exception e) {
                         e.printStackTrace();
+
                     }
                 }
                 //서버로 데이터 전달 및 응답 받기에 실패한 경우 아래 코드가 실행됩니다.
@@ -271,8 +291,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        // 강아지 데이터 쿼리
-        list.add(new dogIdCardData("댕댕이","010-2432-1677","199-500-500","포메라니안"));
 
 
 //        viewPager2.setAdapter(new item_viewpager(list));

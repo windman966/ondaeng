@@ -44,7 +44,7 @@
                     android:weightSum="10">
 
                     <ImageView
-                        android:id="@+id/imageView3"
+                        android:id="@+id/dogPhotoOnCard"
                         android:layout_width="100dp"
                         android:layout_height="124dp"
                         android:layout_gravity="center_horizontal"

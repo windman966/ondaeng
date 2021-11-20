@@ -1,7 +1,10 @@
 package com.fourth.ondaeng;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +23,7 @@ public class ViewHolderPage extends RecyclerView.ViewHolder {
     final TextView tv_regist;
     final TextView tv_breed;
     final Button btn_select;
+    final ImageView dogPhoto;
 //    final TextView header_tv_name;
 
     dogIdCardData data;
@@ -29,7 +33,7 @@ public class ViewHolderPage extends RecyclerView.ViewHolder {
         tv_birth = itemView.findViewById(R.id.dogIdBirth);
         tv_regist = itemView.findViewById(R.id.dogIdRegist);
         tv_breed = itemView.findViewById(R.id.dogIdBreed);
-
+        dogPhoto = itemView.findViewById(R.id.dogPhotoOnCard);
 
         btn_select = itemView.findViewById(R.id.selectDogBtn);
 
@@ -46,6 +50,9 @@ public class ViewHolderPage extends RecyclerView.ViewHolder {
         tv_regist.setText(data.getRegistNo());
         tv_breed.setText(data.getBreed());
 
+        Bitmap bm = BitmapFactory.decodeFile(data.getImgPath());
+        dogPhoto.setImageBitmap(bm);
+
 
         btn_select.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,12 +67,6 @@ public class ViewHolderPage extends RecyclerView.ViewHolder {
 
             }
         });
-        if(dogName == "addNewDog"){
-            tv_name.setVisibility(View.GONE);
-            tv_birth.setVisibility(View.GONE);
-            tv_regist.setVisibility(View.GONE);
-            tv_breed.setVisibility(View.GONE);
-        }
 
 
     }
