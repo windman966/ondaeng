@@ -386,7 +386,7 @@
             </androidx.cardview.widget.CardView>
 
         </LinearLayout>
-
+        <!--오류수정-->
 
     </LinearLayout>
    <include layout="@layout/activity_drawer" />
