@@ -49,7 +49,6 @@ public class DailyActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         // (날짜랑 맞는) 산책 거리, 시간 가져오기
-        getWalkData();
         // (날짜에 맞는) 상태와 메모 넣기
 
 
