@@ -48,9 +48,14 @@ public class DailyActivity extends AppCompatActivity {
         binding = ActivityDailyBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // (날짜랑 맞는) 산책 거리, 시간 가져오기
+        getWalkData();
+        // (날짜에 맞는) 상태와 메모 넣기
+        // 상태 버튼 중복체크 안되게 하기
+
+
         String myFormat = "yyyy-MM-dd";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.KOREA);
-
         Button dateButton = findViewById(R.id.dateButton);
         dateButton.setText(sdf.format(System.currentTimeMillis()));
 
@@ -82,6 +87,26 @@ public class DailyActivity extends AppCompatActivity {
                 dateButton.setText(sdf.format(myCalendar.getTime()));
             }
         });
+
+        binding.emotion1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                binding.emotion1.setBackgroundColor(500029);
+            }
+        });
+
+
+
+        binding.saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+
+        });
+
+
+
 
         myCalendar.getTime();
 
@@ -239,4 +264,11 @@ public class DailyActivity extends AppCompatActivity {
         Button dateButton = findViewById(R.id.dateButton);
         dateButton.setText(sdf.format(myCalendar.getTime()));
     }
+
+    public void getWalkData() {
+
+    }
+
+
+
 }
