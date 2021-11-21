@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
@@ -47,7 +48,9 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.Task;
 import com.naver.maps.geometry.LatLng;
+import com.naver.maps.map.CameraAnimation;
 import com.naver.maps.map.CameraPosition;
+import com.naver.maps.map.CameraUpdate;
 import com.naver.maps.map.LocationTrackingMode;
 import com.naver.maps.map.MapFragment;
 import com.naver.maps.map.NaverMap;
@@ -84,6 +87,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
     private enum PendingGeofenceTask {
         ADD, REMOVE, NONE
     }
+
     private ActivityDrawerBinding activityDrawerBinding;
     private DrawerLayout drawerLayout;
     private View drawerView;
@@ -119,6 +123,8 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
     boolean running;
     long pauseOffset;
 
+    double totalDistance = 0.0;
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,7 +132,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
         binding = ActivityWalkBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        mGeofenceList = new ArrayList<>();
+        //mGeofenceList = new ArrayList<>();
 
         chronometer = findViewById(R.id.chronometer);
         chronometer.setFormat("산책시간 : %s");
@@ -135,9 +141,9 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
         activityDrawerBinding = ActivityDrawerBinding.inflate(getLayoutInflater());
         //네비게이션 메뉴 코드
         drawerLayout = binding.drawerLayout;
-        drawerView = (View)findViewById(R.id.drawer);
+        drawerView = (View) findViewById(R.id.drawer);
 
-        Button btn_open = (Button)findViewById(R.id.btn_back);
+        Button btn_open = (Button) findViewById(R.id.btn_back);
         btn_open.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -158,18 +164,18 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
         Intent commIntent = new Intent(this, CommunityActivity.class);
         Intent walkIntent = new Intent(this, WalkActivity.class);
         Intent hospIntent = new Intent(this, HospitalActivity.class);
-        Intent dailyCareIntent = new Intent(this,DailyActivity.class);
-        Intent healthCareIntent = new Intent(this,HealthCheck1Activity.class);
-        Intent shopIntent = new Intent(this,Shop.class);
+        Intent dailyCareIntent = new Intent(this, DailyActivity.class);
+        Intent healthCareIntent = new Intent(this, HealthCheck1Activity.class);
+        Intent shopIntent = new Intent(this, Shop.class);
         Intent questIntent = new Intent(this, QuestActivity.class);
 
         //마이페이지 이동
-        findViewById(R.id.goToQuest).setOnClickListener(new View.OnClickListener(){
+        findViewById(R.id.goToQuest).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 drawerLayout.closeDrawer(GravityCompat.START);
                 startActivity(questIntent);
-                overridePendingTransition(R.anim.horizon_enter,R.anim.none);
+                overridePendingTransition(R.anim.horizon_enter, R.anim.none);
                 finish();
             }
         });
@@ -179,7 +185,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onClick(View v) {
                 drawerLayout.closeDrawer(GravityCompat.START);
                 startActivity(myPageIntent);
-                overridePendingTransition(R.anim.horizon_enter,R.anim.none);
+                overridePendingTransition(R.anim.horizon_enter, R.anim.none);
                 finish();
             }
         });
@@ -188,7 +194,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onClick(View view) {
                 drawerLayout.closeDrawer(GravityCompat.START);
                 startActivity(shopIntent);
-                overridePendingTransition(R.anim.horizon_enter,R.anim.none);
+                overridePendingTransition(R.anim.horizon_enter, R.anim.none);
                 finish();
             }
         });
@@ -197,7 +203,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onClick(View v) {
                 drawerLayout.closeDrawer(GravityCompat.START);
                 startActivity(careIntent);
-                overridePendingTransition(R.anim.horizon_enter,R.anim.none);
+                overridePendingTransition(R.anim.horizon_enter, R.anim.none);
                 finish();
             }
         });
@@ -206,7 +212,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onClick(View v) {
                 drawerLayout.closeDrawer(GravityCompat.START);
                 startActivity(dailyCareIntent);
-                overridePendingTransition(R.anim.horizon_enter,R.anim.none);
+                overridePendingTransition(R.anim.horizon_enter, R.anim.none);
                 finish();
             }
         });
@@ -215,7 +221,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onClick(View v) {
                 drawerLayout.closeDrawer(GravityCompat.START);
                 startActivity(healthCareIntent);
-                overridePendingTransition(R.anim.horizon_enter,R.anim.none);
+                overridePendingTransition(R.anim.horizon_enter, R.anim.none);
                 finish();
             }
         });
@@ -224,7 +230,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onClick(View v) {
                 drawerLayout.closeDrawer(GravityCompat.START);
                 startActivity(commIntent);
-                overridePendingTransition(R.anim.horizon_enter,R.anim.none);
+                overridePendingTransition(R.anim.horizon_enter, R.anim.none);
                 finish();
             }
         });
@@ -233,7 +239,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onClick(View v) {
                 drawerLayout.closeDrawer(GravityCompat.START);
                 startActivity(walkIntent);
-                overridePendingTransition(R.anim.horizon_enter,R.anim.none);
+                overridePendingTransition(R.anim.horizon_enter, R.anim.none);
                 finish();
             }
         });
@@ -242,7 +248,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onClick(View v) {
                 drawerLayout.closeDrawer(GravityCompat.START);
                 startActivity(hospIntent);
-                overridePendingTransition(R.anim.horizon_enter,R.anim.none);
+                overridePendingTransition(R.anim.horizon_enter, R.anim.none);
                 finish();
             }
         });
@@ -258,7 +264,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                 startTime = System.currentTimeMillis();
 
                 //스탑워치
-                if(!running) {
+                if (!running) {
                     chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
                     chronometer.start();
                     running = true;
@@ -280,13 +286,19 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                     getWalkSpot(i);
                 }
 
-                mGeofencePendingIntent = null;
+//                if(!checkPermissions()) {
+//                    requestPermission();
+//                }else{
+//                    performPendingGeofenceTask();
+//                }
 
-                for(int k = 1; k <=10; k++) {
-                    boneGeofenceList(k);
-                }
+                //mGeofencePendingIntent = null;
 
-                mGeofencingClient = LocationServices.getGeofencingClient(WalkActivity.this);
+//                for(int k = 1; k <=10; k++) {
+//                    boneGeofenceList(k);
+//                }
+
+                //mGeofencingClient = LocationServices.getGeofencingClient(WalkActivity.this);
 
             }
         });
@@ -300,7 +312,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                 //binding.walkInfo.setVisibility(View.GONE);
 
                 //스톱워치, 거리 중지
-                if(running){
+                if (running) {
                     chronometer.stop();
                     pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
                     running = false;
@@ -312,12 +324,45 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                 //뼈다구 마커 없애기
 
 
-
                 //산책기록 데이터 저장
 
             }
         });
 
+        requestPermission();
+
+        // 지도 객체 생성
+        FragmentManager fm = getSupportFragmentManager();
+        MapFragment mapFragment = (MapFragment) fm.findFragmentById(R.id.map);
+        if (mapFragment == null) {
+            mapFragment = MapFragment.newInstance();
+            fm.beginTransaction().add(R.id.map, mapFragment).commit();
+        }
+
+        // getMapAsync를 호출하여 비동기로 onMapReady 콜백 메서드 호출
+        // onMapReady에서 NaverMap 객체를 받음
+        mapFragment.getMapAsync(this);
+
+    }
+
+    public double getDistance(double lat1, double lng1, double lat2, double lng2) {
+        double distance;
+
+        Location locationA = new Location("point A");
+        locationA.setLatitude(lat1);
+        locationA.setLongitude(lng1);
+
+        Location locationB = new Location("point B");
+        locationB.setLatitude(lat2);
+        locationB.setLongitude(lng2);
+
+        distance = locationA.distanceTo(locationB);
+
+        return distance;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void requestPermission() {
         locationSource = new FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE);
 
         ActivityResultLauncher<String[]> locationPermissionRequest =
@@ -336,107 +381,105 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                             }
                         }
                 );
-        locationPermissionRequest.launch(new String[] {
+        locationPermissionRequest.launch(new String[]{
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION
         });
-
-        // 지도 객체 생성
-        FragmentManager fm = getSupportFragmentManager();
-        MapFragment mapFragment = (MapFragment)fm.findFragmentById(R.id.map);
-        if (mapFragment == null) {
-            mapFragment = MapFragment.newInstance();
-            fm.beginTransaction().add(R.id.map, mapFragment).commit();
-        }
-
-        // getMapAsync를 호출하여 비동기로 onMapReady 콜백 메서드 호출
-        // onMapReady에서 NaverMap 객체를 받음
-        mapFragment.getMapAsync(this);
-
-    }
-
-    public double getDistance(double lat1 , double lng1 , double lat2 , double lng2 ){
-        double distance;
-
-        Location locationA = new Location("point A");
-        locationA.setLatitude(lat1);
-        locationA.setLongitude(lng1);
-
-        Location locationB = new Location("point B");
-        locationB.setLatitude(lat2);
-        locationB.setLongitude(lng2);
-
-        distance = locationA.distanceTo(locationB);
-
-        return distance;
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-//        if(!checkPermission()) {
-//            requestPermissions();
-//        }else{
-//            performPendingGeofenceTask();
-//        }
+
         Log.d(TAG, "onStart");
     }
 
-    //모니터링할 지오펜싱을 지정하고 관련 지오펜싱 이벤트가 트리거되는 방법 설
-    private GeofencingRequest getGeofencingRequest() {
-        GeofencingRequest.Builder builder = new GeofencingRequest.Builder();
-
-        // The INITIAL_TRIGGER_ENTER flag indicates that geofencing service should trigger a
-        // GEOFENCE_TRANSITION_ENTER notification when the geofence is added and if the device
-        // is already inside that geofence.
-        builder.setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER);
-
-        // Add the geofences to be monitored by geofencing service.
-        builder.addGeofences(mGeofenceList);
-
-        // Return a GeofencingRequest.
-        return builder.build();
-
-    }
-
-    /**
-     * Adds geofences. This method should be called after the user has granted the location
-     * permission.
-     */
-    @SuppressWarnings("MissingPermission")
-    private void addGeofences() {
-        mGeofencingClient.addGeofences(getGeofencingRequest(), getGeofencePendingIntent())
-                .addOnCompleteListener(this, avoid -> {
-                    Toast.makeText(getApplicationContext(), "Geofencing has started", Toast.LENGTH_SHORT).show();
-                })
-                .addOnFailureListener(this, e -> {
-                    Toast.makeText(getApplicationContext()
-                            , "Geofencing failed", Toast.LENGTH_SHORT).show();
-
-                });
-    }
-
-    /**
-     * Removes geofences. This method should be called after the user has granted the location
-     * permission.
-     */
-    @SuppressWarnings("MissingPermission")
-    private void removeGeofences() {
-        mGeofencingClient.removeGeofences(getGeofencePendingIntent()).addOnCompleteListener(this, aVoid -> {
-            Toast.makeText(getApplicationContext()
-                    , "Geofencing has been removed", Toast.LENGTH_SHORT).show();
-        })
-                .addOnFailureListener(this, e -> {
-                    Toast.makeText(getApplicationContext()
-                            , "Geofencing could not be removed", Toast.LENGTH_SHORT).show();
-                });
-    }
-
+//    //모니터링할 지오펜싱을 지정하고 관련 지오펜싱 이벤트가 트리거되는 방법 설
+//    private GeofencingRequest getGeofencingRequest() {
+//        GeofencingRequest.Builder builder = new GeofencingRequest.Builder();
+//
+//        // The INITIAL_TRIGGER_ENTER flag indicates that geofencing service should trigger a
+//        // GEOFENCE_TRANSITION_ENTER notification when the geofence is added and if the device
+//        // is already inside that geofence.
+//        builder.setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER);
+//
+//        // Add the geofences to be monitored by geofencing service.
+//        builder.addGeofences(mGeofenceList);
+//
+//        // Return a GeofencingRequest.
+//        return builder.build();
+//
+//    }
+//
+//    /**
+//     * Adds geofences. This method should be called after the user has granted the location
+//     * permission.
+//     */
+//    @SuppressWarnings("MissingPermission")
+//    private void addGeofences() {
+//        mGeofencingClient.addGeofences(getGeofencingRequest(), getGeofencePendingIntent())
+//                .addOnCompleteListener(this, avoid -> {
+//                    Toast.makeText(getApplicationContext(), "Geofencing has started", Toast.LENGTH_SHORT).show();
+//                })
+//                .addOnFailureListener(this, e -> {
+//                    Toast.makeText(getApplicationContext()
+//                            , "Geofencing failed", Toast.LENGTH_SHORT).show();
+//
+//                });
+//    }
+//
+//    /**
+//     * Removes geofences. This method should be called after the user has granted the location
+//     * permission.
+//     */
+//    @SuppressWarnings("MissingPermission")
+//    private void removeGeofences() {
+//        mGeofencingClient.removeGeofences(getGeofencePendingIntent()).addOnCompleteListener(this, aVoid -> {
+//            Toast.makeText(getApplicationContext()
+//                    , "Geofencing has been removed", Toast.LENGTH_SHORT).show();
+//        })
+//                .addOnFailureListener(this, e -> {
+//                    Toast.makeText(getApplicationContext()
+//                            , "Geofencing could not be removed", Toast.LENGTH_SHORT).show();
+//                });
+//    }
+//
 //    private boolean checkPermissions() {
 //        int permissionState = ActivityCompat.checkSelfPermission(this,
 //                Manifest.permission.ACCESS_FINE_LOCATION);
 //        return permissionState == PackageManager.PERMISSION_GRANTED;
 //    }
+
+//    private void requestPermissions() {
+//        boolean shouldProvideRationale =
+//                ActivityCompat.shouldShowRequestPermissionRationale(this,
+//                        Manifest.permission.ACCESS_FINE_LOCATION);
+//
+//        // Provide an additional rationale to the user. This would happen if the user denied the
+//        // request previously, but didn't check the "Don't ask again" checkbox.
+//        if (shouldProvideRationale) {
+//            Log.i(TAG, "Displaying permission rationale to provide additional context.");
+//            showSnackbar(R.string.permission_rationale, android.R.string.ok,
+//                    new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            // Request permission
+//                            ActivityCompat.requestPermissions(WalkActivity.this,
+//                                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+//                                    REQUEST_PERMISSIONS_REQUEST_CODE);
+//                        }
+//                    });
+//        } else {
+//            Log.i(TAG, "Requesting permission");
+//            // Request permission. It's possible this can be auto answered if device policy
+//            // sets the permission in a given state or the user denied the permission
+//            // previously and checked "Never ask again".
+//            ActivityCompat.requestPermissions(WalkActivity.this,
+//                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+//                    REQUEST_PERMISSIONS_REQUEST_CODE);
+//        }
+//    }
+
 //
 //    /**
 //     * Adds geofences, which sets alerts to be notified when the device enters or exits one of the
@@ -486,73 +529,74 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
 //        }
 //    }
 //
-    /**
-     * Gets a PendingIntent to send with the request to add or remove Geofences. Location Services
-     * issues the Intent inside this PendingIntent whenever a geofence transition occurs for the
-     * current list of geofences.
-     *
-     * @return A PendingIntent for the IntentService that handles geofence transitions.
-     */
-    private PendingIntent getGeofencePendingIntent() {
-        // Reuse the PendingIntent if we already have it.
-        if (mGeofencePendingIntent != null) {
-            return mGeofencePendingIntent;
-        }
-        Intent intent = new Intent(this, GeofenceBroadcastReceiver.class);
-        // We use FLAG_UPDATE_CURRENT so that we get the same pending intent back when calling
-        // addGeofences() and removeGeofences().
-        mGeofencePendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        return mGeofencePendingIntent;
-    }
-
-    /**
-     * This sample hard codes geofence data. A real app might dynamically create geofences based on
-     * the user's location.
-     * @param spot_no
-     */
-    private void boneGeofenceList(int spot_no) {
-
-            mGeofenceList.add(new Geofence.Builder()
-                    // Set the request ID of the geofence. This is a string to identify this
-                    // geofence.
-                    .setRequestId("PDG")
-                    // Set the circular region of this geofence.
-                    .setCircularRegion(
-                            boneLatitude,
-                            boneLongitude,
-                            50
-                    )
-                    // Set the expiration duration of the geofence. This geofence gets automatically
-                    // removed after this period of time.
-                    .setExpirationDuration(12*60*60*1000)
-
-                    // Set the transition types of interest. Alerts are only generated for these
-                    // transition. We track entry and exit transitions in this sample.
-                    .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
-
-                    // Create the geofence.
-                    .build());
-    }
-
-    /**
-     * Performs the geofencing task that was pending until location permission was granted.
-     */
-    private void performPendingGeofenceTask() {
-        if (mPendingGeofenceTask == PendingGeofenceTask.ADD) {
-            addGeofences();
-        } else if (mPendingGeofenceTask == PendingGeofenceTask.REMOVE) {
-            removeGeofences();
-        }
-    }
+//    /**
+//     * Gets a PendingIntent to send with the request to add or remove Geofences. Location Services
+//     * issues the Intent inside this PendingIntent whenever a geofence transition occurs for the
+//     * current list of geofences.
+//     *
+//     * @return A PendingIntent for the IntentService that handles geofence transitions.
+//     */
+//    private PendingIntent getGeofencePendingIntent() {
+//        // Reuse the PendingIntent if we already have it.
+//        if (mGeofencePendingIntent != null) {
+//            return mGeofencePendingIntent;
+//        }
+//        Intent intent = new Intent(this, GeofenceBroadcastReceiver.class);
+//        // We use FLAG_UPDATE_CURRENT so that we get the same pending intent back when calling
+//        // addGeofences() and removeGeofences().
+//        mGeofencePendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+//        return mGeofencePendingIntent;
+//    }
+//
+//    /**
+//     * This sample hard codes geofence data. A real app might dynamically create geofences based on
+//     * the user's location.
+//     * @param spot_no
+//     */
+//    private void boneGeofenceList(int spot_no) {
+//
+//            mGeofenceList.add(new Geofence.Builder()
+//                    // Set the request ID of the geofence. This is a string to identify this
+//                    // geofence.
+//                    .setRequestId("PDG")
+//                    // Set the circular region of this geofence.
+//                    .setCircularRegion(
+//                            boneLatitude,
+//                            boneLongitude,
+//                            50
+//                    )
+//                    // Set the expiration duration of the geofence. This geofence gets automatically
+//                    // removed after this period of time.
+//                    .setExpirationDuration(12*60*60*1000)
+//
+//                    // Set the transition types of interest. Alerts are only generated for these
+//                    // transition. We track entry and exit transitions in this sample.
+//                    .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
+//
+//                    // Create the geofence.
+//                    .build());
+//    }
+//
+//    /**
+//     * Performs the geofencing task that was pending until location permission was granted.
+//     */
+//    private void performPendingGeofenceTask() {
+//        if (mPendingGeofenceTask == PendingGeofenceTask.ADD) {
+//            addGeofences();
+//        } else if (mPendingGeofenceTask == PendingGeofenceTask.REMOVE) {
+//            removeGeofences();
+//        }
+//    }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,  @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (locationSource.onRequestPermissionsResult(requestCode, permissions, grantResults)) {
             if (!locationSource.isActivated()) { // 권한 거부됨
                 naverMap.setLocationTrackingMode(LocationTrackingMode.None);
                 return;
-            }else {
+            } else {
                 naverMap.setLocationTrackingMode(LocationTrackingMode.Follow);
+                settingGPS();
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -569,42 +613,42 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
         //현재위치 표시할때 권한확인. 결과는 onRequestPermissionsResult 콜백 매서드 호출
         ActivityCompat.requestPermissions(this, PERMISSIONS, LOCATION_PERMISSION_REQUEST_CODE);
 
-        CameraPosition cameraPosition = new CameraPosition(new LatLng(37.5158,127.0350),15);
+        CameraPosition cameraPosition = new CameraPosition(new LatLng(37.5158, 127.0350), 15);
         naverMap.setCameraPosition(cameraPosition);
-
     }
 
-    double currentLon=0;
-    double currentLat=0;
-    double lastLon=0;
-    double lastLat=0;
+    double currentLon = 0;
+    double currentLat = 0;
+    double lastLon = 0;
+    double lastLat = 0;
     double distance;
 
     int rqCode = 1004;
+
     //사용자 위치 수신
     private Location getMyLocation() {
         Location currentLocation = null;
-        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)!=
-                PackageManager.PERMISSION_GRANTED&&ActivityCompat.checkSelfPermission(
-                        this,Manifest.permission.ACCESS_COARSE_LOCATION)!=PackageManager.PERMISSION_GRANTED){
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             //사용자 권한 요청
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     rqCode);
-        }else{
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0,0,locationListener);
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,locationListener);
+        } else {
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 
             //수동으로 위치 구하기
-            String locationProvider = LocationManager.GPS_PROVIDER;
-            currentLocation = locationManager.getLastKnownLocation(locationProvider);
-            if(currentLocation!=null) {
-                currentLon = currentLocation.getLongitude();
-                currentLat = currentLocation.getLatitude();
-                //Log.d("Walk", "latitude="+currentLat+", longitude="+currentLog);
-            }
-
-            lastLat=currentLat;
-            lastLon=currentLon;
+//            String locationProvider = LocationManager.GPS_PROVIDER;
+//            if (currentLocation != null) {
+//                currentLon = currentLocation.getLongitude();
+//                currentLat = currentLocation.getLatitude();
+//                currentLocation = locationManager.getLastKnownLocation(locationProvider);
+//                Log.d("Walk", "latitude=" + currentLat + ", longitude=" + currentLon);
+//            }
+//
+//            lastLat = currentLat;
+//            lastLon = currentLon;
 
         }
         return currentLocation;
@@ -622,39 +666,62 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         List<LatLng> latLngList;
         latLngList = new ArrayList<>();
+        final Location[] currentLocation = {null};
 
         locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
                 myLatitude = location.getLatitude();
                 myLongitude = location.getLongitude();
                 // TODO 위도, 경도로 하고 싶은 것
-                Log.d("좌표", "latitude="+myLatitude+",longitude="+myLongitude);
+                Log.d("좌표", "latitude=" + myLatitude + ",longitude=" + myLongitude);
+
+                //카메라 현재위치로 이동
+                CameraUpdate cameraUpdate = CameraUpdate.scrollTo(new LatLng(myLatitude, myLongitude))
+                        .animate(CameraAnimation.Easing);
+                naverMap.moveCamera(cameraUpdate);
 
                 //이동 경로선 생성
-                LatLng temp = new LatLng(myLatitude,myLongitude);
+                LatLng temp = new LatLng(myLatitude, myLongitude);
                 latLngList.add(temp);
 
-                if(latLngList.size()>1) {
+                if (latLngList.size() > 1) {
                     path.setCoords(latLngList);
                     path.setColor(Color.YELLOW);
                     path.setMap(naverMap);
                 }
 
-                //start location manager
+                if (ActivityCompat.checkSelfPermission(WalkActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(WalkActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
+                }
+                String locationProvider = LocationManager.GPS_PROVIDER;
+                if (currentLocation[0] != null) {
+                    currentLon = currentLocation[0].getLongitude();
+                    currentLat = currentLocation[0].getLatitude();
+                    currentLocation[0] = locationManager.getLastKnownLocation(locationProvider);
+                }
 
-//                //Get last location
-//                Location loc = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);
-//
-//                //Request new location
-//                locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER, 0,0, locationListener);
-//
-//                //Get new location
-//                Location loc2 = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);
+                lastLat = currentLat;
+                lastLon = currentLon;
+
+                //start location manager
+                Location loc = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);
+
+                //Request new location
+                locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER, 0,0, locationListener);
+
+                //Get new location
+                Location loc2 = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);
 
                 //get the current lat and long
-//                currentLat = loc.getLatitude();
-//                currentLon = loc.getLongitude();
-
+                currentLat = loc.getLatitude();
+                currentLon = loc.getLongitude();
 
                 Location locationA = new Location("point A");
                 locationA.setLatitude(lastLat);
@@ -665,8 +732,13 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                 locationB.setLongitude(currentLon);
 
                 double distanceMeters = locationA.distanceTo(locationB);
-
+                if(distanceMeters<100) {
+                    totalDistance += distanceMeters;
+                }
                 double distanceKm = distanceMeters / 1000f;
+
+                Log.d("거리", String.valueOf(distanceMeters));
+                Log.d("총거리", Double.toString(totalDistance));
 
 
 //                if(lastKnownLocation==null) {
@@ -726,6 +798,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
 //        binding.chronometer.setText(intervalTime.toString());
 
     }
+
     //DB에서 뼈다구 좌표 받아오기
     public void getWalkSpot(int spot_no){
 //        easyToast("getWalkSpot 실행됨");
@@ -763,6 +836,28 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
                         Log.i(TAG, spot_no+"생성 markers : "+markers[spot_no].getPosition());
+
+                        //지오펜싱 생성
+//                        mGeofenceList.add(new Geofence.Builder()
+//                                // Set the request ID of the geofence. This is a string to identify this
+//                                // geofence.
+//                                .setRequestId("PDG")
+//                                // Set the circular region of this geofence.
+//                                .setCircularRegion(
+//                                        boneLatitude,
+//                                        boneLongitude,
+//                                        50
+//                                )
+//                                // Set the expiration duration of the geofence. This geofence gets automatically
+//                                // removed after this period of time.
+//                                .setExpirationDuration(12*60*60*1000)
+//
+//                                // Set the transition types of interest. Alerts are only generated for these
+//                                // transition. We track entry and exit transitions in this sample.
+//                                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
+//
+//                                // Create the geofence.
+//                                .build());
 
 
                     } catch (Exception e) {
