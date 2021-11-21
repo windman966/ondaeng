@@ -11,8 +11,8 @@
 
         <Button
             android:id="@+id/btn_back"
-            app:icon="@android:drawable/ic_menu_sort_by_size"
-            app:iconTint="#000000"
+            android:icon="@android:drawable/ic_menu_sort_by_size"
+            android:iconTint="#000000"
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:layout_weight="0"
