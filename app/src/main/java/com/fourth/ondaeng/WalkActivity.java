@@ -120,7 +120,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
         //mGeofenceList = new ArrayList<>();
 
         chronometer = findViewById(R.id.chronometer);
-        chronometer.setFormat("산책시간 : %s");
+        chronometer.setFormat("산책시간  %s");
         //binding.walkLength.setText("산책거리 : " + totalDistance);
 
         activityDrawerBinding = ActivityDrawerBinding.inflate(getLayoutInflater());
@@ -528,7 +528,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                 double distanceKm = distanceMeters / 1000f;
 
                 formatted = String.format("%.2f",totalDistance);
-                binding.walkLength.setText("산책거리 : " + formatted + "m");
+                binding.walkLength.setText("산책거리  " + formatted + "m");
 
                 Log.d("거리", String.valueOf(distanceMeters));
                 Log.d("총거리", Double.toString(totalDistance));
@@ -561,8 +561,10 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
 //            Toast.makeText(getApplicationContext(), Double.toString(markers[j].getPosition().latitude), Toast.LENGTH_SHORT).show();
             Location spotLocation = new Location(j+"번째 스팟");
             spotLocation.setLatitude(markers[j].getPosition().latitude);
-            spotLocation.setLatitude(markers[j].getPosition().longitude);
+            spotLocation.setLongitude(markers[j].getPosition().longitude);
 
+            Log.i("내위치", String.valueOf(location));
+            Log.i("마커위치", String.valueOf(spotLocation));
             double spotDis = location.distanceTo(spotLocation);
             Toast.makeText(getApplicationContext(), Double.toString(spotDis), Toast.LENGTH_SHORT).show();
             if (spotDis<=50) {
