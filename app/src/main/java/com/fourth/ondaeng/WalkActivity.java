@@ -598,14 +598,6 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
         String reTime = simpleDateFormat.format(end);
         Toast.makeText(getApplicationContext(), "산책 종료시간"+reTime,Toast.LENGTH_SHORT).show();
 
-//        long resTime = endTime - startTime;
-//        Date res = new Date(resTime);
-//        String intervalTime = simpleDateFormat.format(res);
-//        Toast.makeText(getApplicationContext(), "결과"+intervalTime,Toast.LENGTH_SHORT).show();
-//
-//        //binding.walkTime.setText(intervalTime.toString());
-//        binding.chronometer.setText(intervalTime.toString());
-
     }
 
     public void distanceToBone() {
