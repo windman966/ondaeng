@@ -63,6 +63,7 @@ import com.naver.maps.map.util.FusedLocationSource;
 
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -123,7 +124,9 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
     boolean running;
     long pauseOffset;
 
+    DecimalFormat myFormatter = new DecimalFormat("0.00");
     double totalDistance = 0.0;
+    String formatted;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -136,7 +139,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         chronometer = findViewById(R.id.chronometer);
         chronometer.setFormat("산책시간 : %s");
-        binding.walkLength.setText("거리 테스트");
+        //binding.walkLength.setText("산책거리 : " + totalDistance);
 
         activityDrawerBinding = ActivityDrawerBinding.inflate(getLayoutInflater());
         //네비게이션 메뉴 코드
@@ -737,9 +740,11 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }
                 double distanceKm = distanceMeters / 1000f;
 
+                formatted = String.format("%.2f",totalDistance);
+                binding.walkLength.setText("산책거리 : " + formatted);
+
                 Log.d("거리", String.valueOf(distanceMeters));
                 Log.d("총거리", Double.toString(totalDistance));
-
 
 //                if(lastKnownLocation==null) {
 //                    lastKnownLocation = location;
