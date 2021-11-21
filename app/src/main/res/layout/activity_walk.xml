@@ -120,7 +120,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/nanumsquareroundb"
-                    android:text="산책 시간"
+                    android:text="산책거리"
+                    android:textColor="#020202"
                     android:textSize="23sp" />
 
             </LinearLayout>
@@ -180,5 +181,5 @@
     </RelativeLayout>
 
 
-    <!--<include layout="@layout/activity_drawer"/>-->
+    <include layout="@layout/activity_drawer" />
 </androidx.drawerlayout.widget.DrawerLayout>
