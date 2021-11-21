@@ -114,7 +114,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
     double boneLatitude;
     double boneLongitude;
 
-    public Marker markers[] = new Marker[11];
+    public static Marker markers[] = new Marker[11];
     PathOverlay path = new PathOverlay();
 
     Long startTime;
@@ -260,11 +260,14 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onClick(View v) {
 
+
                 binding.startWalk.setVisibility(View.GONE);
                 binding.finishWalk.setVisibility(View.VISIBLE);
                 //binding.walkInfo.setVisibility(View.VISIBLE);
 
                 startTime = System.currentTimeMillis();
+
+
 
                 //스탑워치
                 if (!running) {
@@ -287,7 +290,11 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                 for (int i = 1; i <= 10; i++) {
                     //편의점 위치 좌표 불러오기
                     getWalkSpot(i);
+
+//                    Log.d(TAG, Double.toString(markers[i].getPosition().latitude));
+//                    Toast.makeText(getApplicationContext(), i+": "+markers[i], Toast.LENGTH_SHORT).show();
                 }
+
 
 //                if(!checkPermissions()) {
 //                    requestPermission();
@@ -318,6 +325,9 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                 if (running) {
                     chronometer.stop();
                     pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
+                    String chroTime=chronometer.getText().toString();
+                    chroTime = "00:"+chroTime.substring(7,12);
+                    Toast.makeText(getApplicationContext(), chroTime, Toast.LENGTH_SHORT).show();
                     running = false;
                 }
 
@@ -328,6 +338,18 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
                 //산책기록 데이터 저장
+
+            }
+        });
+
+        binding.walkLength.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Location location = new Location("test");
+                location.setLatitude(myLatitude);
+                location.setLongitude(myLongitude);
+
+                spotDis(location);
 
             }
         });
@@ -346,6 +368,12 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
         // onMapReady에서 NaverMap 객체를 받음
         mapFragment.getMapAsync(this);
 
+    }
+
+    private void testf() {
+        for(int i=1;i<=10;i++){
+            Toast.makeText(getApplicationContext(), Double.toString(markers[i].getPosition().latitude), Toast.LENGTH_SHORT).show();
+        }
     }
 
     public double getDistance(double lat1, double lng1, double lat2, double lng2) {
@@ -663,7 +691,9 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
      * LocationListener는 위치가 변할때 마다 또는 상태가 변할 때마다 위치를 가져오는 리스너
      * @return
      */
-    private void settingGPS() {
+    public void settingGPS() {
+
+
         // Acquire a reference to the system Location Manager
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
@@ -673,6 +703,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
+
                 myLatitude = location.getLatitude();
                 myLongitude = location.getLongitude();
                 // TODO 위도, 경도로 하고 싶은 것
@@ -754,6 +785,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
 //                    Log.i("Distance","Distance:"+distance);
 //                    lastKnownLocation=location;
 //                }
+//                spotDis(locationB);
 
             }
 
@@ -769,12 +801,30 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
+    public void spotDis(Location location) {
+        for(int j=1; j<=10;j++){
+//            Toast.makeText(getApplicationContext(), Double.toString(markers[j].getPosition().latitude), Toast.LENGTH_SHORT).show();
+            Location spotLocation = new Location(j+"번째 스팟");
+            spotLocation.setLatitude(markers[j].getPosition().latitude);
+            spotLocation.setLatitude(markers[j].getPosition().longitude);
+
+            double spotDis = location.distanceTo(spotLocation);
+            Toast.makeText(getApplicationContext(), Double.toString(spotDis), Toast.LENGTH_SHORT).show();
+            if (spotDis<=50) {
+                markers[j].setMap(null);
+                Toast.makeText(getApplicationContext(), "스팟에 도착했습니다", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
     public void stopGPS(){
 
 //      pdg제거
         for(int j=1; j<=10;j++){
 
 //                    Log.i(TAG, j+"생성 markers : "+markers[j].getPosition());
+
+//            Toast.makeText(getApplicationContext(), Double.toString(markers[j].getPosition().latitude), Toast.LENGTH_SHORT).show();
             markers[j].setMap(null);
         }
         //gps 업데이트 종료
@@ -827,7 +877,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                         JSONObject jsonObject = new JSONObject(response.toString());
                         JSONObject data = new JSONObject(jsonObject.getJSONArray("data").get(0).toString());
                         WalkActivity.this.spot_name = data.get("spot_name").toString();
-                        boneLatitude = (double) data.get("latitude");
+                        WalkActivity.this.boneLatitude = (double) data.get("latitude");
                         boneLongitude = (double) data.get("longitude");
                         //Toast.makeText(getApplicationContext(),"spot_name : " + spot_name + " , latitude : " + boneLatitude + " , longitude : " + boneLongitude,Toast.LENGTH_SHORT).show();
 
@@ -890,7 +940,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
         if(drawerLayout.isDrawerOpen(GravityCompat.START)){
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+
         }
     }
     //drawer액티비티
