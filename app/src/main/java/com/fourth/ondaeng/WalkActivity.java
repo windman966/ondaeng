@@ -85,30 +85,12 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
     private FusedLocationSource locationSource;
     private NaverMap naverMap;
 
-    private enum PendingGeofenceTask {
-        ADD, REMOVE, NONE
-    }
-
     private ActivityDrawerBinding activityDrawerBinding;
     private DrawerLayout drawerLayout;
     private View drawerView;
 
     double myLatitude;
     double myLongitude;
-
-    /**
-     * Provides access to the Geofencing API.
-     */
-    GeofencingClient mGeofencingClient;
-    /**
-     * The list of geofences used in this sample.
-     */
-    ArrayList<Geofence> mGeofenceList;
-    /**
-     * Used when requesting to add or remove geofences.
-     */
-    PendingIntent mGeofencePendingIntent;
-    PendingGeofenceTask mPendingGeofenceTask = PendingGeofenceTask.NONE;
 
     String spot_name;
     double boneLatitude;
@@ -287,21 +269,9 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                 for (int i = 1; i <= 10; i++) {
                     //편의점 위치 좌표 불러오기
                     getWalkSpot(i);
+
+                    Log.d("뼈다구", boneLatitude+","+boneLongitude);
                 }
-
-//                if(!checkPermissions()) {
-//                    requestPermission();
-//                }else{
-//                    performPendingGeofenceTask();
-//                }
-
-                //mGeofencePendingIntent = null;
-
-//                for(int k = 1; k <=10; k++) {
-//                    boneGeofenceList(k);
-//                }
-
-                //mGeofencingClient = LocationServices.getGeofencingClient(WalkActivity.this);
 
             }
         });
@@ -348,22 +318,6 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
-    public double getDistance(double lat1, double lng1, double lat2, double lng2) {
-        double distance;
-
-        Location locationA = new Location("point A");
-        locationA.setLatitude(lat1);
-        locationA.setLongitude(lng1);
-
-        Location locationB = new Location("point B");
-        locationB.setLatitude(lat2);
-        locationB.setLongitude(lng2);
-
-        distance = locationA.distanceTo(locationB);
-
-        return distance;
-    }
-
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void requestPermission() {
         locationSource = new FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE);
@@ -396,200 +350,6 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         Log.d(TAG, "onStart");
     }
-
-//    //모니터링할 지오펜싱을 지정하고 관련 지오펜싱 이벤트가 트리거되는 방법 설
-//    private GeofencingRequest getGeofencingRequest() {
-//        GeofencingRequest.Builder builder = new GeofencingRequest.Builder();
-//
-//        // The INITIAL_TRIGGER_ENTER flag indicates that geofencing service should trigger a
-//        // GEOFENCE_TRANSITION_ENTER notification when the geofence is added and if the device
-//        // is already inside that geofence.
-//        builder.setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER);
-//
-//        // Add the geofences to be monitored by geofencing service.
-//        builder.addGeofences(mGeofenceList);
-//
-//        // Return a GeofencingRequest.
-//        return builder.build();
-//
-//    }
-//
-//    /**
-//     * Adds geofences. This method should be called after the user has granted the location
-//     * permission.
-//     */
-//    @SuppressWarnings("MissingPermission")
-//    private void addGeofences() {
-//        mGeofencingClient.addGeofences(getGeofencingRequest(), getGeofencePendingIntent())
-//                .addOnCompleteListener(this, avoid -> {
-//                    Toast.makeText(getApplicationContext(), "Geofencing has started", Toast.LENGTH_SHORT).show();
-//                })
-//                .addOnFailureListener(this, e -> {
-//                    Toast.makeText(getApplicationContext()
-//                            , "Geofencing failed", Toast.LENGTH_SHORT).show();
-//
-//                });
-//    }
-//
-//    /**
-//     * Removes geofences. This method should be called after the user has granted the location
-//     * permission.
-//     */
-//    @SuppressWarnings("MissingPermission")
-//    private void removeGeofences() {
-//        mGeofencingClient.removeGeofences(getGeofencePendingIntent()).addOnCompleteListener(this, aVoid -> {
-//            Toast.makeText(getApplicationContext()
-//                    , "Geofencing has been removed", Toast.LENGTH_SHORT).show();
-//        })
-//                .addOnFailureListener(this, e -> {
-//                    Toast.makeText(getApplicationContext()
-//                            , "Geofencing could not be removed", Toast.LENGTH_SHORT).show();
-//                });
-//    }
-//
-//    private boolean checkPermissions() {
-//        int permissionState = ActivityCompat.checkSelfPermission(this,
-//                Manifest.permission.ACCESS_FINE_LOCATION);
-//        return permissionState == PackageManager.PERMISSION_GRANTED;
-//    }
-
-//    private void requestPermissions() {
-//        boolean shouldProvideRationale =
-//                ActivityCompat.shouldShowRequestPermissionRationale(this,
-//                        Manifest.permission.ACCESS_FINE_LOCATION);
-//
-//        // Provide an additional rationale to the user. This would happen if the user denied the
-//        // request previously, but didn't check the "Don't ask again" checkbox.
-//        if (shouldProvideRationale) {
-//            Log.i(TAG, "Displaying permission rationale to provide additional context.");
-//            showSnackbar(R.string.permission_rationale, android.R.string.ok,
-//                    new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            // Request permission
-//                            ActivityCompat.requestPermissions(WalkActivity.this,
-//                                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-//                                    REQUEST_PERMISSIONS_REQUEST_CODE);
-//                        }
-//                    });
-//        } else {
-//            Log.i(TAG, "Requesting permission");
-//            // Request permission. It's possible this can be auto answered if device policy
-//            // sets the permission in a given state or the user denied the permission
-//            // previously and checked "Never ask again".
-//            ActivityCompat.requestPermissions(WalkActivity.this,
-//                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-//                    REQUEST_PERMISSIONS_REQUEST_CODE);
-//        }
-//    }
-
-//
-//    /**
-//     * Adds geofences, which sets alerts to be notified when the device enters or exits one of the
-//     * specified geofences. Handles the success or failure results returned by addGeofences().
-//     */
-//    public void addGeofencesButtonHandler(View view) {
-//        if (!checkPermissions()) {
-//            mPendingGeofenceTask = PendingGeofenceTask.ADD;
-//            requestPermissions();
-//            return;
-//        }
-//        addGeofences();
-//    }
-//
-//    /**
-//     * Removes geofences, which stops further notifications when the device enters or exits
-//     * previously registered geofences.
-//     */
-//    public void removeGeofencesButtonHandler(View view) {
-//        if (!checkPermissions()) {
-//            mPendingGeofenceTask = PendingGeofenceTask.REMOVE;
-//            requestPermissions();
-//            return;
-//        }
-//        removeGeofences();
-//    }
-//
-//    /**
-//     * Runs when the result of calling {@link #addGeofences()} and/or {@link #removeGeofences()}
-//     * is available.
-//     * @param task the resulting Task, containing either a result or error.
-//     */
-//    @Override
-//    public void onComplete(@NonNull Task<Void> task) {
-//        mPendingGeofenceTask = PendingGeofenceTask.NONE;
-//        if (task.isSuccessful()) {
-//            updateGeofencesAdded(!getGeofencesAdded());
-//            setButtonsEnabledState();
-//
-//            int messageId = getGeofencesAdded() ? R.string.geofences_added :
-//                    R.string.geofences_removed;
-//            Toast.makeText(this, getString(messageId), Toast.LENGTH_SHORT).show();
-//        } else {
-//            // Get the status code for the error and log it using a user-friendly message.
-//            String errorMessage = GeofenceErrorMessages.getErrorString(this, task.getException());
-//            Log.w(TAG, errorMessage);
-//        }
-//    }
-//
-//    /**
-//     * Gets a PendingIntent to send with the request to add or remove Geofences. Location Services
-//     * issues the Intent inside this PendingIntent whenever a geofence transition occurs for the
-//     * current list of geofences.
-//     *
-//     * @return A PendingIntent for the IntentService that handles geofence transitions.
-//     */
-//    private PendingIntent getGeofencePendingIntent() {
-//        // Reuse the PendingIntent if we already have it.
-//        if (mGeofencePendingIntent != null) {
-//            return mGeofencePendingIntent;
-//        }
-//        Intent intent = new Intent(this, GeofenceBroadcastReceiver.class);
-//        // We use FLAG_UPDATE_CURRENT so that we get the same pending intent back when calling
-//        // addGeofences() and removeGeofences().
-//        mGeofencePendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-//        return mGeofencePendingIntent;
-//    }
-//
-//    /**
-//     * This sample hard codes geofence data. A real app might dynamically create geofences based on
-//     * the user's location.
-//     * @param spot_no
-//     */
-//    private void boneGeofenceList(int spot_no) {
-//
-//            mGeofenceList.add(new Geofence.Builder()
-//                    // Set the request ID of the geofence. This is a string to identify this
-//                    // geofence.
-//                    .setRequestId("PDG")
-//                    // Set the circular region of this geofence.
-//                    .setCircularRegion(
-//                            boneLatitude,
-//                            boneLongitude,
-//                            50
-//                    )
-//                    // Set the expiration duration of the geofence. This geofence gets automatically
-//                    // removed after this period of time.
-//                    .setExpirationDuration(12*60*60*1000)
-//
-//                    // Set the transition types of interest. Alerts are only generated for these
-//                    // transition. We track entry and exit transitions in this sample.
-//                    .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
-//
-//                    // Create the geofence.
-//                    .build());
-//    }
-//
-//    /**
-//     * Performs the geofencing task that was pending until location permission was granted.
-//     */
-//    private void performPendingGeofenceTask() {
-//        if (mPendingGeofenceTask == PendingGeofenceTask.ADD) {
-//            addGeofences();
-//        } else if (mPendingGeofenceTask == PendingGeofenceTask.REMOVE) {
-//            removeGeofences();
-//        }
-//    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -624,7 +384,6 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
     double currentLat = 0;
     double lastLon = 0;
     double lastLat = 0;
-    double distance;
 
     int rqCode = 1004;
 
@@ -741,20 +500,10 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                 double distanceKm = distanceMeters / 1000f;
 
                 formatted = String.format("%.2f",totalDistance);
-                binding.walkLength.setText("산책거리 : " + formatted);
+                binding.walkLength.setText("산책거리 : " + formatted + "m");
 
                 Log.d("거리", String.valueOf(distanceMeters));
                 Log.d("총거리", Double.toString(totalDistance));
-
-//                if(lastKnownLocation==null) {
-//                    lastKnownLocation = location;
-//                }
-//                else {
-//                    distance=lastKnownLocation.distanceTo(location);
-//                    Log.i("Distance","Distance:"+distance);
-//                    lastKnownLocation=location;
-//                }
-
             }
 
             public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -774,7 +523,8 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
 //      pdg제거
         for(int j=1; j<=10;j++){
 
-//                    Log.i(TAG, j+"생성 markers : "+markers[j].getPosition());
+            //Log.i(TAG, j+"생성 markers : "+markers[j].getPosition());
+            //Log.i("pdg", boneLatitude+","+boneLongitude);
             markers[j].setMap(null);
         }
         //gps 업데이트 종료
@@ -788,11 +538,11 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
         Date start = new Date(startTime);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
         String rsTime = simpleDateFormat.format(start);
-        Toast.makeText(getApplicationContext(), "시작"+rsTime,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "산책 시작시간"+rsTime,Toast.LENGTH_SHORT).show();
 
         Date end = new Date(endTime);
         String reTime = simpleDateFormat.format(end);
-        Toast.makeText(getApplicationContext(), "종료"+reTime,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "산책 종료시간"+reTime,Toast.LENGTH_SHORT).show();
 
 //        long resTime = endTime - startTime;
 //        Date res = new Date(resTime);
@@ -802,6 +552,10 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
 //        //binding.walkTime.setText(intervalTime.toString());
 //        binding.chronometer.setText(intervalTime.toString());
 
+    }
+
+    public void distanceToBone() {
+        Log.d("PDG", this.boneLatitude+","+WalkActivity.this.boneLongitude);
     }
 
     //DB에서 뼈다구 좌표 받아오기
@@ -841,29 +595,6 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
                         Log.i(TAG, spot_no+"생성 markers : "+markers[spot_no].getPosition());
-
-                        //지오펜싱 생성
-//                        mGeofenceList.add(new Geofence.Builder()
-//                                // Set the request ID of the geofence. This is a string to identify this
-//                                // geofence.
-//                                .setRequestId("PDG")
-//                                // Set the circular region of this geofence.
-//                                .setCircularRegion(
-//                                        boneLatitude,
-//                                        boneLongitude,
-//                                        50
-//                                )
-//                                // Set the expiration duration of the geofence. This geofence gets automatically
-//                                // removed after this period of time.
-//                                .setExpirationDuration(12*60*60*1000)
-//
-//                                // Set the transition types of interest. Alerts are only generated for these
-//                                // transition. We track entry and exit transitions in this sample.
-//                                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
-//
-//                                // Create the geofence.
-//                                .build());
-
 
                     } catch (Exception e) {
                         e.printStackTrace();
