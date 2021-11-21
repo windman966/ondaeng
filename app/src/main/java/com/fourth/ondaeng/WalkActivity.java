@@ -302,7 +302,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
-        binding.walkLength.setOnClickListener(new View.OnClickListener() {
+        binding.getPointBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Location location = new Location("test");
@@ -557,6 +557,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void spotDis(Location location) {
+        int spotPlag = 0;
         for(int j=1; j<=10;j++){
 //            Toast.makeText(getApplicationContext(), Double.toString(markers[j].getPosition().latitude), Toast.LENGTH_SHORT).show();
             Location spotLocation = new Location(j+"번째 스팟");
@@ -566,11 +567,15 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
             Log.i("내위치", String.valueOf(location));
             Log.i("마커위치", String.valueOf(spotLocation));
             double spotDis = location.distanceTo(spotLocation);
-            Toast.makeText(getApplicationContext(), Double.toString(spotDis), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), Double.toString(spotDis), Toast.LENGTH_SHORT).show();
             if (spotDis<=50) {
                 markers[j].setMap(null);
-                Toast.makeText(getApplicationContext(), "스팟에 도착했습니다", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "뼈다구를 획득했습니다.", Toast.LENGTH_SHORT).show();
+                spotPlag = 1;
             }
+        }
+        if(spotPlag==0){
+            Toast.makeText(getApplicationContext(), "주변에 뼈다구가 없습니다.", Toast.LENGTH_SHORT).show();
         }
     }
 
