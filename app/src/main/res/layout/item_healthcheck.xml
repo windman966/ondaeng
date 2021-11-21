@@ -27,7 +27,7 @@
             android:layout_height="50dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="퀘스트"
+            android:text="건강체크"
             android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="40dp"
