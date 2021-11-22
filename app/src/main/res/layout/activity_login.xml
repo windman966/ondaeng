@@ -80,11 +80,11 @@
             android:layout_height="45dp"
 
             android:backgroundTint="#EBEBEB"
-            android:fontFamily="@font/nanumsquareroundr"
+            android:fontFamily="@font/nanumsquareroundb"
             android:text="회원가입"
             android:textColor="#2F2F2F"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textSize="14sp"
+            app:cornerRadius="20dp" />
 
         <Button
             android:id="@+id/button"
@@ -92,10 +92,11 @@
             android:layout_height="45dp"
             android:layout_marginStart="5dp"
             android:backgroundTint="#EBEBEB"
-            android:fontFamily="@font/nanumsquareroundr"
+            android:fontFamily="@font/nanumsquareroundb"
             android:text="ID/PW 찾기"
             android:textColor="#2F2F2F"
-            android:textSize="15sp" />
+            android:textSize="14sp"
+            app:cornerRadius="20dp" />
     </LinearLayout>
 
 </LinearLayout>
