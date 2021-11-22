@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.fourth.ondaeng">
+    package="com.fourth.ondaeng" >
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -18,12 +18,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Ondaeng"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true" >
         <activity
             android:name=".addNewDog"
-            android:exported="false" />
-        <activity
-            android:name=".test"
             android:exported="false" />
         <activity
             android:name=".QuestActivity"
@@ -98,14 +95,13 @@
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="an0uh3krxd" />
-
         <receiver
             android:name=".GeofenceBroadcastReceiver"
             android:allowBackup="true"
             android:directBootAware="true"
             android:enabled="true"
-            android:exported="false" />
-
+            android:exported="false">
+        </receiver>
         <service
             android:name=".GeofenceTransitionsJobIntentService"
             android:exported="true"

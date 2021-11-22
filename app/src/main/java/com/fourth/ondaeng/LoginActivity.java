@@ -91,6 +91,8 @@ public class LoginActivity extends AppCompatActivity {
                         JSONObject data = new JSONObject(jsonObject.getJSONArray("data").get(0).toString());
                         String dbpw =data.get("password").toString();
 //                        easyToast("dbpw : "+dbpw+" , pw : "+pw);
+                        String nick = data.get("nickname").toString();
+
                         if(pw.equals(dbpw)){
 //                        로그인 성공시
                             Intent MainIntent = new Intent(LoginActivity.this, MainActivity.class);
@@ -99,7 +101,8 @@ public class LoginActivity extends AppCompatActivity {
                             ActivityDrawerBinding.inflate(getLayoutInflater()).nickNameOnNav.setText(id);
                             LoginActivity.this.startActivity(MainIntent);
                             LoginActivity.this.finish();
-                            
+                            appData.nickName = nick;
+
                         }
                         else{
                             easyToast("ID혹은 password가 잘못되었습니다");

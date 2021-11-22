@@ -197,5 +197,5 @@
     </RelativeLayout>
 
 
-        <!--<include layout="@layout/activity_drawer" />-->
+        <include layout="@layout/activity_drawer" />
 </androidx.drawerlayout.widget.DrawerLayout>

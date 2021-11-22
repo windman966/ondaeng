@@ -2,6 +2,7 @@ package com.fourth.ondaeng;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -59,11 +60,11 @@ public class ViewHolderPage extends RecyclerView.ViewHolder {
             public void onClick(View view) {
 
                 appData.setDogName(data.getDogName());
-                Toast.makeText(btn_select.getContext(), data.getDogName().toString(), Toast.LENGTH_SHORT).show();
                 appData.getInstance().header_name_tv.setText(appData.getDogName().toString());
-
-//                view.getContext().
-//                header_tv_name.setText(appData.getDogName().toString());
+//              view.getContext().
+//              header_tv_name.setText(appData.getDogName().toString());
+                btn_select.setText("선택된 강아지");
+                btn_select.setBackgroundColor(Color.parseColor("#70004C"));
 
             }
         });

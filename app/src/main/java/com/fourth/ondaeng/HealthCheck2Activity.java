@@ -1,6 +1,7 @@
 package com.fourth.ondaeng;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -8,16 +9,21 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.Layout;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -83,89 +89,24 @@ public class HealthCheck2Activity extends AppCompatActivity {
         Intent shopIntent = new Intent(this,Shop.class);
         Intent questIntent = new Intent(this, QuestActivity.class);
 
-        //마이페이지 이동
-        findViewById(R.id.goToQuest).setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                drawerLayout.closeDrawer(GravityCompat.START);
-                startActivity(questIntent);
-                overridePendingTransition(R.anim.horizon_enter,R.anim.none);
-                finish();
-            }
-        });
-
-        findViewById(R.id.goToMyPage).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawerLayout.closeDrawer(GravityCompat.START);
-                startActivity(myPageIntent);
-                overridePendingTransition(R.anim.horizon_enter,R.anim.none);
-                finish();
-            }
-        });
-        findViewById(R.id.goToShop).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                drawerLayout.closeDrawer(GravityCompat.START);
-                startActivity(shopIntent);
-                overridePendingTransition(R.anim.horizon_enter,R.anim.none);
-                finish();
-            }
-        });
-        findViewById(R.id.goToCareVaccin).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawerLayout.closeDrawer(GravityCompat.START);
-                startActivity(careIntent);
-                overridePendingTransition(R.anim.horizon_enter,R.anim.none);
-                finish();
-            }
-        });
-        findViewById(R.id.goToCareDaily).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawerLayout.closeDrawer(GravityCompat.START);
-                startActivity(dailyCareIntent);
-                overridePendingTransition(R.anim.horizon_enter,R.anim.none);
-                finish();
-            }
-        });
-        findViewById(R.id.goToCareHealth).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawerLayout.closeDrawer(GravityCompat.START);
-                startActivity(healthCareIntent);
-                overridePendingTransition(R.anim.horizon_enter,R.anim.none);
-                finish();
-            }
-        });
-        findViewById(R.id.goToComm).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawerLayout.closeDrawer(GravityCompat.START);
-                startActivity(commIntent);
-                overridePendingTransition(R.anim.horizon_enter,R.anim.none);
-                finish();
-            }
-        });
-        findViewById(R.id.goToWalk).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawerLayout.closeDrawer(GravityCompat.START);
-                startActivity(walkIntent);
-                overridePendingTransition(R.anim.horizon_enter,R.anim.none);
-                finish();
-            }
-        });
-        findViewById(R.id.goToHosp).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawerLayout.closeDrawer(GravityCompat.START);
-                startActivity(hospIntent);
-                overridePendingTransition(R.anim.horizon_enter,R.anim.none);
-                finish();
-            }
-        });
+        //드로어 닉네임, 프사 지정.
+        binding.goToMyCorrection.setText(appData.getDogName().toString());
+        TextView textView = findViewById(R.id.nickNameOnNav);
+        textView.setText(appData.getNickName().toString());
+        String imgpath = getCacheDir() + "/profilePic.png";
+        Bitmap bm = BitmapFactory.decodeFile(imgpath);
+        ImageView imageView = findViewById(R.id.userPhoto);
+        imageView.setImageBitmap(bm);
+//액티비티 이동
+        goToFunc(findViewById(R.id.goToHosp),hospIntent);
+        goToFunc(findViewById(R.id.goToWalk),walkIntent);
+        goToFunc(findViewById(R.id.goToComm),commIntent);
+        goToFunc(findViewById(R.id.goToCareHealth),healthCareIntent);
+        goToFunc(findViewById(R.id.goToCareVaccin),careIntent);
+        goToFunc(findViewById(R.id.goToCareDaily),dailyCareIntent);
+        goToFunc(findViewById(R.id.goToShop),shopIntent);
+        goToFunc(findViewById(R.id.goToMyPage),myPageIntent);
+        goToFunc(findViewById(R.id.goToQuest),questIntent);
 
         LinearLayout[] layouts={
                 binding.eyeLayout,binding.earLayout,binding.faceLayout,binding.mouthLayout,binding.actionLayout,binding.boneLayout
@@ -215,6 +156,46 @@ public class HealthCheck2Activity extends AppCompatActivity {
           buttons[i].setOnClickListener(clickListener);
         }
 
+    }
+
+    //강아지 선택 안 할 때 알림 띄우기
+    public void checkDog() {
+        Intent addNewDogIntent = new Intent(this,addNewDog.class);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("알림");
+        //타이틀설정
+        String tv_text = "강아지를 선택해주세요.";
+        builder.setMessage(tv_text);
+        //내용설정
+        builder.setNeutralButton("강아지 등록하기", new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog, int which){
+                drawerLayout.closeDrawer(GravityCompat.START);
+                startActivity(addNewDogIntent);
+            }
+        });
+        builder.setPositiveButton("닫기", new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog, int which){
+                drawerLayout.closeDrawer(GravityCompat.START);
+            }
+        });
+
+        builder.show();
+    };
+    //펑션이동하기
+    public void goToFunc(View view, Intent intent) {
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(appData.getDogName()==""){
+                    checkDog();
+                }else{
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.horizon_enter,R.anim.none);
+                    finish();
+                }
+            }
+        });
     }
 
     private void getExplanation(String symptom) {
