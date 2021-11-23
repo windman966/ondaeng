@@ -214,12 +214,12 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                     Log.d("뼈다구", boneLatitude+","+boneLongitude);
                 }
 
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-
-                    }
-                }, 2000);
+//                handler.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//
+//                    }
+//                }, 2000);
 
             }
         });
@@ -358,7 +358,6 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                 return;
             } else {
                 naverMap.setLocationTrackingMode(LocationTrackingMode.Follow);
-                settingGPS();
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -623,7 +622,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
         //JSON형식으로 데이터 통신을 진행합니다!
 
         try {
-            Toast.makeText(getApplicationContext(), url, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), url, Toast.LENGTH_SHORT).show();
             // 전송
             final RequestQueue requestQueue = Volley.newRequestQueue(WalkActivity.this);
 
