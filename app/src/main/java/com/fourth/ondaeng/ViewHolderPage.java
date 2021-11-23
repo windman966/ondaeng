@@ -1,5 +1,6 @@
 package com.fourth.ondaeng;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -25,6 +26,7 @@ public class ViewHolderPage extends RecyclerView.ViewHolder {
     final TextView tv_breed;
     final Button btn_select;
     final ImageView dogPhoto;
+    final Button btn_corrDogInfo;
 //    final TextView header_tv_name;
 
     dogIdCardData data;
@@ -37,6 +39,7 @@ public class ViewHolderPage extends RecyclerView.ViewHolder {
         dogPhoto = itemView.findViewById(R.id.dogPhotoOnCard);
 
         btn_select = itemView.findViewById(R.id.selectDogBtn);
+        btn_corrDogInfo = itemView.findViewById(R.id.idCardCorrection);
 
 //        header_tv_name = binding.goToMyCorrection;
 
@@ -50,25 +53,20 @@ public class ViewHolderPage extends RecyclerView.ViewHolder {
         tv_birth.setText(data.getBirth());
         tv_regist.setText(data.getRegistNo());
         tv_breed.setText(data.getBreed());
-
-        Bitmap bm = BitmapFactory.decodeFile(data.getImgPath());
-        dogPhoto.setImageBitmap(bm);
+        dogPhoto.setImageBitmap(data.bm);
 
 
         btn_select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 appData.setDogName(data.getDogName());
                 appData.getInstance().header_name_tv.setText(appData.getDogName().toString());
 //              view.getContext().
 //              header_tv_name.setText(appData.getDogName().toString());
                 btn_select.setText("선택된 강아지");
                 btn_select.setBackgroundColor(Color.parseColor("#70004C"));
-
             }
         });
-
 
     }
 

@@ -64,15 +64,16 @@ public class addNewDog extends AppCompatActivity {
                 String dogRegist = binding.dogRegistOnAdd.getText().toString();
                 String dogBreed = binding.dogBreedOnAdd.getText().toString();
 
-                saveBitmapToJpeg(imgBitmap);    // 내부 저장소에 저장
-                String imgpath = getCacheDir() + "/" + dogName;   // 내부 저장소에 저장되어 있는 이미지 경로
-                Bitmap bm = BitmapFactory.decodeFile(imgpath);
-                imageView.setImageBitmap(bm);   // 내부 저장소에 저장된 이미지를 이미지뷰에 셋
+
                 if(dogName.isEmpty()||dogBirthDay.isEmpty()||dogBirthMonth.isEmpty()||dogBirthYear.isEmpty()||dogBreed.isEmpty()||dogRegist.isEmpty()||photoCount==0){
                     easyToast("모두 입력해주세요");
                 } else {
+                    saveBitmapToJpeg(imgBitmap,dogName);    // 내부 저장소에 저장
+                    String imgpath = getCacheDir() + "/" + dogName;   // 내부 저장소에 저장되어 있는 이미지 경로
+                    Bitmap bm = BitmapFactory.decodeFile(imgpath);
+                    imageView.setImageBitmap(bm);   // 내부 저장소에 저장된 이미지를 이미지뷰에 셋
                     String birth = dogBirthYear+"-"+dogBirthMonth+"-"+dogBirthDay;
-                    insertDogInfo(dogName,birth,dogRegist,dogBreed);
+                    insertDogInfo(dogName,birth,dogRegist,dogBreed,"없음");
                 }
             }
         });
@@ -109,8 +110,8 @@ public class addNewDog extends AppCompatActivity {
         }
     }
 
-    public void saveBitmapToJpeg(Bitmap bitmap) {   // 선택한 이미지 내부 저장소에 저장
-        File tempFile = new File(getCacheDir(), imgName);    // 파일 경로와 이름 넣기
+    public void saveBitmapToJpeg(Bitmap bitmap,String dogName) {   // 선택한 이미지 내부 저장소에 저장
+        File tempFile = new File(getCacheDir(), dogName);    // 파일 경로와 이름 넣기
         try {
             tempFile.createNewFile();   // 자동으로 빈 파일을 생성하기
             FileOutputStream out = new FileOutputStream(tempFile);  // 파일을 쓸 수 있는 스트림을 준비하기
@@ -122,7 +123,7 @@ public class addNewDog extends AppCompatActivity {
     }
 
     //    강아지 정보입력
-    public void insertDogInfo(String dogName,String birth,String regist,String breed){
+    public void insertDogInfo(String dogName,String birth,String regist,String breed, String dogPhoto){
         //        easyToast("idCheck 실행됨");
         String url = "http://14.55.65.181/ondaeng/insertDogInfo?";
         //JSON형식으로 데이터 통신을 진행합니다!
@@ -135,6 +136,7 @@ public class addNewDog extends AppCompatActivity {
             url = url +"&birth="+birth;
             url = url +"&regist="+regist;
             url = url +"&breed="+breed;
+            url = url + "&dogPhoto=" +dogPhoto;
             easyToast(url);
             //이제 전송
             final RequestQueue requestQueue = Volley.newRequestQueue(addNewDog.this);

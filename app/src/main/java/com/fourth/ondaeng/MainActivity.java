@@ -140,6 +140,8 @@ public class MainActivity extends AppCompatActivity {
         goToFunc(findViewById(R.id.goToMyPage),myPageIntent);
         goToFunc(findViewById(R.id.goToQuest),questIntent);
 
+
+
     }
 
     private void setDogCard() {
@@ -193,10 +195,12 @@ public class MainActivity extends AppCompatActivity {
                             String dog_birth =data.get("dog_birth").toString();
                             String regist_no =data.get("regist_no").toString();
                             String breed =data.get("breed").toString();
+                            String dogPhoto = data.get("dog_photo").toString();
                             dog_birth = dog_birth.substring(0,10);
+                            String imgPath = getCacheDir()+"/"+name;
+                            Bitmap bm = BitmapFactory.decodeFile(imgPath);
 //                            Toast.makeText(getApplicationContext(), name+dog_birth+regist_no+breed, Toast.LENGTH_SHORT).show();
-                            String imgpath = getCacheDir() + "/" + name;
-                            list2.add(new dogIdCardData(name,dog_birth,regist_no,breed,imgpath));
+                            list2.add(new dogIdCardData(name,dog_birth,regist_no,breed, bm));
 //                            list.add(new dogIdCardData("댕댕이","010-2432-1677","199-500-500","포메라니안"));
                         }
 //                        list2.add(new dogIdCardData("댕댕이1","010-2432-1677","199-500-500","포메라니안"));
@@ -204,6 +208,7 @@ public class MainActivity extends AppCompatActivity {
                         if(list2.size()==0){
                             viewPager2.setVisibility(View.GONE);
                             binding.addNewDog.setVisibility(View.VISIBLE);
+                            binding.textAddNewDog.setVisibility(View.GONE);
                         }
                         viewPager2.setAdapter(new item_viewpager(list2));
 

@@ -1,18 +1,22 @@
 package com.fourth.ondaeng;
 
+import android.graphics.Bitmap;
+
 public class dogIdCardData {
     String dogName;
     String birth;
     String registNo;
     String breed;
     String imgPath;
+
+    Bitmap bm;
     //강아지 등록증을 위한 기초 데이터 구조
-    public dogIdCardData(String dogName, String mobile, String registNo, String breed,String imgPath) {
+    public dogIdCardData(String dogName, String mobile, String registNo, String breed,Bitmap bm) {
         this.dogName = dogName;
         this.birth = mobile;
         this.registNo = registNo;
         this.breed = breed;
-        this.imgPath = imgPath;
+        this.bm = bm;
     }
 
     public String getImgPath() {
