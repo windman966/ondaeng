@@ -19,6 +19,8 @@ public class appData {
     public static Object dogName="";
     public static Object nickName = "";
 
+    public static int point;
+
 
     private static appData me = new appData();
 

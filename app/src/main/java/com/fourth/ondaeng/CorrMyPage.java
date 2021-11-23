@@ -57,10 +57,17 @@ public class CorrMyPage extends AppCompatActivity {
             }
         });
 
-
-
-
         Intent intent = new Intent(this, myPage.class);
+
+        binding.goToSaveMyPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(intent);
+                overridePendingTransition(R.anim.none, R.anim.horizon_exit);
+                finish();
+            }
+        });
+
         //아이디를 통한 정보불러오기 URL
         String url = "http://14.55.65.181/ondaeng/getMemberId?";
         //수정하기 페이지로 넘어가기
