@@ -134,7 +134,7 @@ public class CommunityActivity extends AppCompatActivity {
                             String title =data.get("title").toString();
                             String date =data.get("date").toString();
                             int postNo = (Integer) (data.get("post_no"));
-                            date = date.substring(0,10);
+                            date = date.substring(5,10);
                             postDataList.add(new postData(id,title,date,postNo));
                         }
 
