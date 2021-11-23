@@ -585,9 +585,53 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void insertPDG() {
-
+        questUpdate();
     }
 
+    public void questUpdate(){
+        String id = appData.id.toString();
+        String url = "http://14.55.65.181/ondaeng/updateQuest?";
+        url = url +"id="+id;
+        url = url +"&type="+1;
+        //JSON형식으로 데이터 통신을 진행합니다!
+
+        try {
+            Toast.makeText(getApplicationContext(), url, Toast.LENGTH_SHORT).show();
+            // 전송
+            final RequestQueue requestQueue = Volley.newRequestQueue(WalkActivity.this);
+
+            final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,null, new Response.Listener<JSONObject>() {
+
+                //데이터 전달을 끝내고 이제 그 응답을 받을 차례입니다.
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+//                        Toast.makeText(getApplicationContext(), "응답", Toast.LENGTH_SHORT).show();
+                        //받은 json형식의 응답을 받아
+                        //key값에 따라 value값을 쪼개 받아옵니다.
+                        JSONObject jsonObject = new JSONObject(response.toString());
+                        JSONObject data = new JSONObject(jsonObject.getJSONArray("data").get(0).toString());
+
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                //서버로 데이터 전달 및 응답 받기에 실패한 경우 아래 코드가 실행됩니다.
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                }
+            });
+            jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            requestQueue.add(jsonObjectRequest);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     //DB에 산책시간, 거리 저
     public void insertWalkInfo(String formatted) {
         //Log.i("Info", formatted+","+(SystemClock.elapsedRealtime()-chronometer.getBase())/1000);

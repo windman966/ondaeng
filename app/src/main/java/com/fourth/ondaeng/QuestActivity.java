@@ -224,7 +224,7 @@ public class QuestActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 drawerLayout.closeDrawer(GravityCompat.START);
-                startActivity(hospIntent);
+                startActivity(commIntent);
                 overridePendingTransition(R.anim.horizon_enter,R.anim.none);
                 finish();
             }
@@ -313,7 +313,7 @@ public class QuestActivity extends AppCompatActivity {
     public void addPoint(String qNo,int point) {
 //        http://14.55.65.181/ondaeng/updatePoint?id=1&point=10&type=2
         String id = appData.id.toString();
-        String url = "http://14.55.65.181/ondaeng/updatePoint?";
+        String url = "http://14.55.65.181/ondaeng/doneQuest?";
         url = url +"id="+id;
         url = url +"&point="+point;
         url = url +"&type="+qNo;
@@ -330,7 +330,7 @@ public class QuestActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(JSONObject response) {
                     try {
-                        Toast.makeText(getApplicationContext(), "응답", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getApplicationContext(), "응답", Toast.LENGTH_SHORT).show();
                         //받은 json형식의 응답을 받아
                         //key값에 따라 value값을 쪼개 받아옵니다.
                         JSONObject jsonObject = new JSONObject(response.toString());
@@ -392,7 +392,7 @@ public class QuestActivity extends AppCompatActivity {
                             binding.walkingDogFinishBotton.setVisibility(View.GONE);
                             binding.questProgressd1.setProgress(100*qd1_c/3);
                         }
-                        else{
+                        else if(qd1_c>=3){
                             binding.walkingDogBotton.setVisibility(View.GONE);
                             binding.walkingDogFinishBotton.setVisibility(View.VISIBLE);
                             binding.questProgressd1.setProgress(100);
@@ -404,7 +404,7 @@ public class QuestActivity extends AppCompatActivity {
                             binding.diaryFinishBotton.setVisibility(View.GONE);
                             binding.questProgressd2.setProgress(0);
                         }
-                        else{
+                        else if(qd2_c>=1){
                             binding.diaryBotton.setVisibility(View.GONE);
                             binding.diaryFinishBotton.setVisibility(View.VISIBLE);
                             binding.questProgressd2.setProgress(100);
@@ -415,10 +415,11 @@ public class QuestActivity extends AppCompatActivity {
                             binding.questWritePostFinishButton.setVisibility(View.GONE);
                             binding.questProgressd3.setProgress(0);
                         }
-                        else{
+                        else if(qd3_c>=1){
                             binding.questWritePostButton.setVisibility(View.GONE);
                             binding.questWritePostFinishButton.setVisibility(View.VISIBLE);
                             binding.questProgressd3.setProgress(100);
+
                         }
 
                     } catch (Exception e) {
