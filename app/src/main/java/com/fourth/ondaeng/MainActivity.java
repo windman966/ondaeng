@@ -65,8 +65,11 @@ public class MainActivity extends AppCompatActivity {
         textView.setText(appData.getNickName().toString());
         String imgpath = getCacheDir() + "/profilePic.png";
         Bitmap bm = BitmapFactory.decodeFile(imgpath);
-        ImageView imageView = findViewById(R.id.userPhoto);
-        imageView.setImageBitmap(bm);
+        if(bm!=null){
+            ImageView imageView = findViewById(R.id.userPhoto);
+            imageView.setImageBitmap(bm);
+        }
+
 
 //        Toast.makeText(getApplicationContext(),id+" appData에서 받음",Toast.LENGTH_SHORT).show();
 
