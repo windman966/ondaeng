@@ -53,6 +53,7 @@ import com.naver.maps.map.MapFragment;
 import com.naver.maps.map.NaverMap;
 import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.UiSettings;
+import com.naver.maps.map.overlay.LocationOverlay;
 import com.naver.maps.map.overlay.Marker;
 import com.naver.maps.map.overlay.OverlayImage;
 import com.naver.maps.map.overlay.PathOverlay;
@@ -299,7 +300,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
 
         builder.show();
-    };
+    }
     //펑션이동하기
     public void goToFunc(View view, Intent intent) {
         view.setOnClickListener(new View.OnClickListener() {
@@ -395,8 +396,8 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     rqCode);
         } else {
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 2000, 5, locationListener);
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 5, locationListener);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 2000, 5.0f, locationListener);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 5.0f, locationListener);
 
             //수동으로 위치 구하기
 //            String locationProvider = LocationManager.GPS_PROVIDER;
@@ -435,21 +436,6 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                 // TODO 위도, 경도로 하고 싶은 것
                 Log.d("좌표", "latitude=" + myLatitude + ",longitude=" + myLongitude);
 
-                //카메라 현재위치로 이동
-                CameraUpdate cameraUpdate = CameraUpdate.scrollTo(new LatLng(myLatitude, myLongitude))
-                        .animate(CameraAnimation.Easing);
-                naverMap.moveCamera(cameraUpdate);
-
-                //이동 경로선 생성
-                LatLng temp = new LatLng(myLatitude, myLongitude);
-                latLngList.add(temp);
-
-                if (latLngList.size() > 1) {
-                    path.setCoords(latLngList);
-                    path.setColor(Color.YELLOW);
-                    path.setMap(naverMap);
-                }
-
                 if (ActivityCompat.checkSelfPermission(WalkActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(WalkActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     // TODO: Consider calling
                     //    ActivityCompat#requestPermissions
@@ -474,7 +460,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                 Location loc = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);
 
                 //Request new location
-                locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER, 2000,5, locationListener);
+                locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER, 2000,5.0f, locationListener);
 
                 //Get new location
                 Location loc2 = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);
@@ -503,6 +489,30 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 Log.d("거리", String.valueOf(distanceMeters));
                 Log.d("총거리", Double.toString(totalDistance));
+
+                //카메라 현재위치로 이동
+                CameraUpdate cameraUpdate = CameraUpdate.scrollTo(new LatLng(myLatitude, myLongitude))
+                        .animate(CameraAnimation.Easing);
+                naverMap.moveCamera(cameraUpdate);
+
+                //현재위치 마커 변경
+                LocationOverlay locationOverlay = naverMap.getLocationOverlay();
+                locationOverlay.setVisible(true);
+                locationOverlay.setPosition(new LatLng(myLatitude, myLongitude));
+                locationOverlay.setIcon(OverlayImage.fromResource(R.drawable.dog));
+                locationOverlay.setIconWidth(120);
+                locationOverlay.setIconHeight(120);
+                locationOverlay.setBearing(0);
+
+                //이동 경로선 생성
+                LatLng temp = new LatLng(myLatitude, myLongitude);
+                latLngList.add(temp);
+
+                if (latLngList.size() > 1) {
+                    path.setCoords(latLngList);
+                    path.setColor(Color.YELLOW);
+                    path.setMap(naverMap);
+                }
 
 //                if(lastKnownLocation==null) {
 //                    lastKnownLocation = location;
