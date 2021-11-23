@@ -6,14 +6,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
-import android.app.Activity;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -40,13 +37,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.fourth.ondaeng.databinding.ActivityDrawerBinding;
 import com.fourth.ondaeng.databinding.ActivityWalkBinding;
-import com.google.android.gms.common.internal.Constants;
-import com.google.android.gms.location.Geofence;
-import com.google.android.gms.location.GeofencingClient;
-import com.google.android.gms.location.GeofencingRequest;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.Task;
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.CameraAnimation;
 import com.naver.maps.map.CameraPosition;
@@ -68,7 +58,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 public class WalkActivity extends AppCompatActivity implements OnMapReadyCallback {
     private static String TAG = "WalkActivity";
@@ -109,6 +98,11 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
     DecimalFormat myFormatter = new DecimalFormat("0.00");
     double totalDistance = 0.0;
     String formatted;
+
+    long walkTime;
+    int time;
+    int walkMin;
+    int walkSec;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -284,20 +278,19 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                 binding.finishWalk.setVisibility(View.GONE);
                 //binding.walkInfo.setVisibility(View.GONE);
 
-                //스톱워치, 거리 중지
+                //스톱워치 중지
                 if (running) {
                     chronometer.stop();
                     pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
                     running = false;
                 }
 
-                //위치 좌표 불러오기 중지
+                //위치 좌표 불러오기 중지, 마커, 경로선 삭제
                 stopGPS();
-
-                //뼈다구 마커 없애기
 
 
                 //산책기록 데이터 저장
+                insertWalkInfo(formatted);
 
             }
         });
@@ -311,6 +304,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 spotDis(location);
 
+                insertPDG();
             }
         });
 
@@ -425,8 +419,8 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     rqCode);
         } else {
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 2000, 5, locationListener);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 5, locationListener);
 
             //수동으로 위치 구하기
 //            String locationProvider = LocationManager.GPS_PROVIDER;
@@ -450,7 +444,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
      * LocationListener는 위치가 변할때 마다 또는 상태가 변할 때마다 위치를 가져오는 리스너
      * @return
      */
-    private void settingGPS() {
+    public void settingGPS() {
         // Acquire a reference to the system Location Manager
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
@@ -556,6 +550,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
+    //현재위치와 뼈다구마커 거리 비교
     public void spotDis(Location location) {
         int spotPlag = 0;
         for(int j=1; j<=10;j++){
@@ -607,8 +602,65 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
-    public void distanceToBone() {
-        Log.d("PDG", this.boneLatitude+","+WalkActivity.this.boneLongitude);
+    public void insertPDG() {
+
+    }
+
+    //DB에 산책시간, 거리 저
+    public void insertWalkInfo(String formatted) {
+        //Log.i("Info", formatted+","+(SystemClock.elapsedRealtime()-chronometer.getBase())/1000);
+        walkTime = (SystemClock.elapsedRealtime()-chronometer.getBase());
+        time = (int)(walkTime/1000);
+        int walkMin = time % (60 * 60) / 60;
+        int walkSec = time % 60;
+        Log.i("산책시간", walkMin +"분 "+ walkSec +"초");
+
+        String url = "http://14.55.65.181/ondaeng/insertWalkInfo?";
+        try {
+            url = url +"walk_time="+ walkMin + walkSec;
+            url = url +"walk_dis="+formatted;
+
+            final RequestQueue requestQueue = Volley.newRequestQueue(WalkActivity.this);
+            final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,null, new Response.Listener<JSONObject>() {
+
+                //데이터 전달을 끝내고 이제 그 응답을 받을 차례입니다.
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        //                        easyToast("응답");
+                        //받은 json형식의 응답을 받아
+                        //key값에 따라 value값을 쪼개 받아옵니다.
+//                        easyToast("onResponse내부");
+                        JSONObject jsonObject = new JSONObject(response.toString());
+                        String message = jsonObject.get("message").toString();
+                        //                        easyToast("dbpw : "+dbpw+" , pw : "+pw);
+                        if(message.equals("OK")){
+                            //                        회원가입 성공시
+                            //easyToast("정상적으로 회원가입이 되었습니다.");
+                            onBackPressed();
+
+                        }
+                        else{
+                            //easyToast("회원가입이 되지않았습니다.");
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                //서버로 데이터 전달 및 응답 받기에 실패한 경우 아래 코드가 실행됩니다.
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                }
+            });
+            jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            requestQueue.add(jsonObjectRequest);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     //DB에서 뼈다구 좌표 받아오기
