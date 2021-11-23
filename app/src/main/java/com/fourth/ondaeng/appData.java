@@ -17,6 +17,7 @@ public class appData {
 
     public static Object id="";
     public static Object dogName="";
+    public static Object nickName = "";
 
 
     private static appData me = new appData();
@@ -28,6 +29,14 @@ public class appData {
 
     public static Object getId() {
         return id;
+    }
+
+    public static Object getNickName() {
+        return nickName;
+    }
+
+    public static void setNickName(Object nickName) {
+        appData.nickName = nickName;
     }
 
     public void setId(Object id) {

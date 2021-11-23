@@ -101,15 +101,36 @@
 
                 </LinearLayout>
 
-                <me.relex.circleindicator.CircleIndicator3
-                    android:id="@+id/indicator"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="5pt"
-                    app:ci_drawable="@drawable/black_indicator"
-                    app:ci_height="5pt"
-                    app:ci_width="5pt">
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
-                </me.relex.circleindicator.CircleIndicator3>
+                    <LinearLayout
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"></LinearLayout>
+
+                    <me.relex.circleindicator.CircleIndicator3
+                        android:id="@+id/indicator"
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:layout_weight="1"
+                        app:ci_drawable="@drawable/black_indicator"
+                        app:ci_height="5pt"
+                        app:ci_width="5pt" />
+
+                    <TextView
+                        android:id="@+id/textAddNewDog"
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0"
+                        android:gravity="center"
+                        android:text="강아지 추가등록"
+                        android:textAlignment="center"
+                        android:textSize="10dp" />
+
+                </LinearLayout>
 
                 <ImageView
                     android:id="@+id/imageView17"
