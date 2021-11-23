@@ -24,6 +24,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -110,6 +111,8 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
     int walkMin;
     int walkSec;
 
+    Handler handler = new Handler();
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -194,6 +197,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 //사용자의 위치 수신을 위한 세팅
                 settingGPS();
+
                 // 사용자 현재 위치
                 Location userLocation = getMyLocation();
 
@@ -209,6 +213,13 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                     Log.d("뼈다구", boneLatitude+","+boneLongitude);
                 }
+
+//                handler.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//
+//                    }
+//                }, 2000);
 
             }
         });
@@ -306,22 +317,6 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
     }
 
-    public double getDistance(double lat1, double lng1, double lat2, double lng2) {
-        double distance;
-
-        Location locationA = new Location("point A");
-        locationA.setLatitude(lat1);
-        locationA.setLongitude(lng1);
-
-        Location locationB = new Location("point B");
-        locationB.setLatitude(lat2);
-        locationB.setLongitude(lng2);
-
-        distance = locationA.distanceTo(locationB);
-
-        return distance;
-    }
-
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void requestPermission() {
         locationSource = new FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE);
@@ -363,7 +358,6 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                 return;
             } else {
                 naverMap.setLocationTrackingMode(LocationTrackingMode.Follow);
-                settingGPS();
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -417,7 +411,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
 //            lastLon = currentLon;
 
         }
-        return currentLocation;
+        return null;
     }
 
     /**
@@ -480,7 +474,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                 Location loc = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);
 
                 //Request new location
-                locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER, 0,0, locationListener);
+                locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER, 2000,5, locationListener);
 
                 //Get new location
                 Location loc2 = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);
@@ -488,6 +482,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                 //get the current lat and long
                 currentLat = loc.getLatitude();
                 currentLon = loc.getLongitude();
+                Log.d("현재", currentLat+","+currentLon);
 
                 Location locationA = new Location("point A");
                 locationA.setLatitude(lastLat);
@@ -584,7 +579,38 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
+    // 뼈다구 획득시 디비에 포인트 저장
     public void insertPDG() {
+        int point = 1;
+        String id = appData.id.toString();
+        String url = "http://14.55.65.181/ondaeng/calcPoint?";
+        try {
+            url = url + "point=" + point;
+            url = url + "&id=" + id;
+            final RequestQueue requestQueue = Volley.newRequestQueue(WalkActivity.this);
+            final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                //데이터 전달을 끝내고 이제 그 응답을 받을 차례입니다.
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                //서버로 데이터 전달 및 응답 받기에 실패한 경우 아래 코드가 실행됩니다.
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                }
+            });
+            jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            requestQueue.add(jsonObjectRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         questUpdate();
     }
 
@@ -596,11 +622,11 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
         //JSON형식으로 데이터 통신을 진행합니다!
 
         try {
-            Toast.makeText(getApplicationContext(), url, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), url, Toast.LENGTH_SHORT).show();
             // 전송
             final RequestQueue requestQueue = Volley.newRequestQueue(WalkActivity.this);
 
-            final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,null, new Response.Listener<JSONObject>() {
+            final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
                 //데이터 전달을 끝내고 이제 그 응답을 받을 차례입니다.
                 @Override
@@ -626,25 +652,28 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
             });
             jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             requestQueue.add(jsonObjectRequest);
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    //DB에 산책시간, 거리 저
+
+    //DB에 산책시간, 거리 저장
     public void insertWalkInfo(String formatted) {
         //Log.i("Info", formatted+","+(SystemClock.elapsedRealtime()-chronometer.getBase())/1000);
         walkTime = (SystemClock.elapsedRealtime()-chronometer.getBase());
         time = (int)(walkTime/1000);
         int walkMin = time % (60 * 60) / 60;
         int walkSec = time % 60;
+        String id = appData.id.toString();
         Log.i("산책시간", walkMin +"분 "+ walkSec +"초");
 
         String url = "http://14.55.65.181/ondaeng/insertWalkInfo?";
         try {
-            url = url +"walk_time="+ walkMin + walkSec;
-            url = url +"walk_dis="+formatted;
+            url = url +"id="+id;
+            url = url +"&time="+ walkMin + walkSec;
+            url = url +"&dis="+formatted;
+
+            Log.i("유알엘", url);
 
             final RequestQueue requestQueue = Volley.newRequestQueue(WalkActivity.this);
             final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,null, new Response.Listener<JSONObject>() {
@@ -653,22 +682,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                 @Override
                 public void onResponse(JSONObject response) {
                     try {
-                        //                        easyToast("응답");
-                        //받은 json형식의 응답을 받아
-                        //key값에 따라 value값을 쪼개 받아옵니다.
-//                        easyToast("onResponse내부");
-                        JSONObject jsonObject = new JSONObject(response.toString());
-                        String message = jsonObject.get("message").toString();
-                        //                        easyToast("dbpw : "+dbpw+" , pw : "+pw);
-                        if(message.equals("OK")){
-                            //                        회원가입 성공시
-                            //easyToast("정상적으로 회원가입이 되었습니다.");
-                            onBackPressed();
 
-                        }
-                        else{
-                            //easyToast("회원가입이 되지않았습니다.");
-                        }
 
                     } catch (Exception e) {
                         e.printStackTrace();

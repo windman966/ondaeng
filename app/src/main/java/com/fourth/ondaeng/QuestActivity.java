@@ -1,18 +1,23 @@
 package com.fourth.ondaeng;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -70,88 +75,25 @@ public class QuestActivity extends AppCompatActivity {
         Intent shopIntent = new Intent(this,Shop.class);
         Intent questIntent = new Intent(this, QuestActivity.class);
 
-        //마이페이지 이동
-        findViewById(R.id.goToQuest).setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                drawerLayout.closeDrawer(GravityCompat.START);
-                startActivity(questIntent);
-                overridePendingTransition(R.anim.horizon_enter,R.anim.none);
-                finish();
-            }
-        });
-        findViewById(R.id.goToMyPage).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawerLayout.closeDrawer(GravityCompat.START);
-                startActivity(myPageIntent);
-                overridePendingTransition(R.anim.horizon_enter,R.anim.none);
-                finish();
-            }
-        });
-        findViewById(R.id.goToShop).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                drawerLayout.closeDrawer(GravityCompat.START);
-                startActivity(shopIntent);
-                overridePendingTransition(R.anim.horizon_enter,R.anim.none);
-                finish();
-            }
-        });
-        findViewById(R.id.goToCareVaccin).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawerLayout.closeDrawer(GravityCompat.START);
-                startActivity(careIntent);
-                overridePendingTransition(R.anim.horizon_enter,R.anim.none);
-                finish();
-            }
-        });
-        findViewById(R.id.goToCareDaily).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawerLayout.closeDrawer(GravityCompat.START);
-                startActivity(dailyCareIntent);
-                overridePendingTransition(R.anim.horizon_enter,R.anim.none);
-                finish();
-            }
-        });
-        findViewById(R.id.goToCareHealth).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawerLayout.closeDrawer(GravityCompat.START);
-                startActivity(healthCareIntent);
-                overridePendingTransition(R.anim.horizon_enter,R.anim.none);
-                finish();
-            }
-        });
-        findViewById(R.id.goToComm).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawerLayout.closeDrawer(GravityCompat.START);
-                startActivity(commIntent);
-                overridePendingTransition(R.anim.horizon_enter,R.anim.none);
-                finish();
-            }
-        });
-        findViewById(R.id.goToWalk).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawerLayout.closeDrawer(GravityCompat.START);
-                startActivity(walkIntent);
-                overridePendingTransition(R.anim.horizon_enter,R.anim.none);
-                finish();
-            }
-        });
-        findViewById(R.id.goToHosp).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawerLayout.closeDrawer(GravityCompat.START);
-                startActivity(hospIntent);
-                overridePendingTransition(R.anim.horizon_enter,R.anim.none);
-                finish();
-            }
-        });
+        //드로어 닉네임, 프사 지정.
+
+        TextView textView = findViewById(R.id.nickNameOnNav);
+        textView.setText(appData.getNickName().toString());
+        String imgpath = getCacheDir() + "/profilePic.png";
+        Bitmap bm = BitmapFactory.decodeFile(imgpath);
+        ImageView imageView = findViewById(R.id.userPhoto);
+        imageView.setImageBitmap(bm);
+//액티비티 이동
+        goToFunc(findViewById(R.id.goToHosp),hospIntent);
+        goToFunc(findViewById(R.id.goToWalk),walkIntent);
+        goToFunc(findViewById(R.id.goToComm),commIntent);
+        goToFunc(findViewById(R.id.goToCareHealth),healthCareIntent);
+        goToFunc(findViewById(R.id.goToCareVaccin),careIntent);
+        goToFunc(findViewById(R.id.goToCareDaily),dailyCareIntent);
+        goToFunc(findViewById(R.id.goToShop),shopIntent);
+        goToFunc(findViewById(R.id.goToMyPage),myPageIntent);
+        goToFunc(findViewById(R.id.goToQuest),questIntent);
+
 
 //        상단의 일간,주간,월간버튼
         binding.day.setOnClickListener(new View.OnClickListener() {
@@ -473,4 +415,95 @@ public class QuestActivity extends AppCompatActivity {
 
         }
     };
+    //강아지 선택 안 할 때 알림 띄우기
+    public void checkDog() {
+        Intent addNewDogIntent = new Intent(this,addNewDog.class);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("알림");
+        //타이틀설정
+        String tv_text = "강아지를 선택해주세요.";
+        builder.setMessage(tv_text);
+        //내용설정
+        builder.setNeutralButton("강아지 등록하기", new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog, int which){
+                drawerLayout.closeDrawer(GravityCompat.START);
+                startActivity(addNewDogIntent);
+            }
+        });
+        builder.setPositiveButton("닫기", new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog, int which){
+                drawerLayout.closeDrawer(GravityCompat.START);
+            }
+        });
+
+        builder.show();
+    };
+
+    public void getPointData(){
+//        easyToast("getPwById 실행됨");
+        String url = "http://14.55.65.181/ondaeng/getMemberId?";
+        //JSON형식으로 데이터 통신을 진행합니다!
+        JSONObject testjson = new JSONObject();
+        try {
+            //입력해둔 edittext의 id와 pw값을 받아와 put해줍니다 : 데이터를 json형식으로 바꿔 넣어주었습니다.
+
+            url = url +"id="+appData.id;
+
+            //이제 전송
+            final RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+//            easyToast(url);
+            final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,null, new Response.Listener<JSONObject>() {
+
+                //데이터 전달을 끝내고 이제 그 응답을 받을 차례입니다.
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+//                        easyToast("응답");
+                        //받은 json형식의 응답을 받아
+                        //key값에 따라 value값을 쪼개 받아옵니다.
+                        JSONObject jsonObject = new JSONObject(response.toString());
+//                        easyToast(Integer.valueOf(jsonObject.getJSONArray("data").length()));
+                        JSONObject data = new JSONObject(jsonObject.getJSONArray("data").get(0).toString());
+                        String dbpw =data.get("password").toString();
+//                        easyToast("dbpw : "+dbpw+" , pw : "+pw);
+                        String nick = data.get("nickname").toString();
+
+
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                //서버로 데이터 전달 및 응답 받기에 실패한 경우 아래 코드가 실행됩니다.
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                }
+            });
+            jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            requestQueue.add(jsonObjectRequest);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    //펑션이동하기
+    public void goToFunc(View view, Intent intent) {
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (appData.getDogName() == "") {
+                    checkDog();
+                } else {
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.horizon_enter, R.anim.none);
+                    finish();
+                }
+            }
+        });
+    }
 }

@@ -45,6 +45,8 @@ import com.naver.maps.map.overlay.Overlay;
 import com.naver.maps.map.overlay.OverlayImage;
 import com.naver.maps.map.util.FusedLocationSource;
 
+import org.w3c.dom.Text;
+
 // 여기서 부터 해야할 부분 11.12일 에 마감함
 public class HospitalActivity extends AppCompatActivity implements OnMapReadyCallback, Overlay.OnClickListener {
     private static String TAG = "HospitalActivity";
@@ -71,7 +73,8 @@ public class HospitalActivity extends AppCompatActivity implements OnMapReadyCal
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hospital);
-
+        TextView tv = findViewById(R.id.goToMyCorrection);
+        tv.setText(appData.dogName.toString());
         activityDrawerBinding = ActivityDrawerBinding.inflate(getLayoutInflater());
         //네비게이션 메뉴 코드
         drawerLayout = findViewById(R.id.drawerLayout);
