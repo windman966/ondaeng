@@ -166,6 +166,8 @@ public class QuestActivity extends AppCompatActivity {
                 binding.dayQuestList.setVisibility(View.VISIBLE);
                 binding.weekQuestList.setVisibility(View.GONE);
                 binding.monthQuestList.setVisibility(View.GONE);
+
+                questCheck();
             }
         });
         binding.week.setOnClickListener(new View.OnClickListener() {
@@ -228,43 +230,40 @@ public class QuestActivity extends AppCompatActivity {
             }
         });
 
-        questCheck("day");
+        questCheck();
 
-//TODO        완료버튼 동작 만들기
+
         binding.walkingDogFinishBotton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-//           TODO
-//                qd0_d가 0이면
-//                member테이블의 qd0_d 1로 만들기
-//                member 테이블의 pdg += quest 테이블의 reward
-//                qd0_d가 1이면
-//                이미 완료한 퀘스트입니다 Toast하기
+                checkQuestIsDone("1");
+            }
+        });
+        binding.diaryFinishBotton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkQuestIsDone("2");
+            }
+        });
+        binding.questWritePostFinishButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkQuestIsDone("3");
             }
         });
 
 
     }
 
-    public void questCheck(String division) {
-//TODO
-//        member 테이블에서 qd0_c 받아서 퀘스트 완료 수치와 비교
-//        100*qd0_c*cnt 값으로 progressbar 설정
-//        appdata.id 를 기준으로 select 할것
-//        qd0_c 가 count이상 이면 해당 버튼 완료버튼으로 변경할것
-//
-
-    }
-
-
-//  함수로 만들어서 일반화 하려했으나 안되므로 각각 만들것
-    public JSONObject accessDB(String url){
-        String baseUrl = "http://14.55.65.181/ondaeng/";
-        url=baseUrl+url;
+    public void checkQuestIsDone(String qNo) {
+        String id = appData.id.toString();
+        String url = "http://14.55.65.181/ondaeng/getMemberId?";
+        url = url +"id="+id;
+        //JSON형식으로 데이터 통신을 진행합니다!
         JSONObject testjson = new JSONObject();
-        JSONObject rdata = new JSONObject();
         try {
+//            Toast.makeText(getApplicationContext(), url, Toast.LENGTH_SHORT).show();
+            // 전송
             final RequestQueue requestQueue = Volley.newRequestQueue(QuestActivity.this);
 
             final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,null, new Response.Listener<JSONObject>() {
@@ -273,12 +272,23 @@ public class QuestActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(JSONObject response) {
                     try {
-//                        easyToast("응답");
+//                        Toast.makeText(getApplicationContext(), "응답", Toast.LENGTH_SHORT).show();
                         //받은 json형식의 응답을 받아
                         //key값에 따라 value값을 쪼개 받아옵니다.
                         JSONObject jsonObject = new JSONObject(response.toString());
 //                        easyToast(Integer.valueOf(jsonObject.getJSONArray("data").length()));
                         JSONObject data = new JSONObject(jsonObject.getJSONArray("data").get(0).toString());
+//                        Toast.makeText(getApplicationContext(), data.toString(), Toast.LENGTH_SHORT).show();
+
+                        int qd_d = Integer.parseInt(data.get("qd"+qNo+"_d").toString());
+
+                        if(qd_d==0){
+                            addPoint(qNo,1);
+                            Toast.makeText(getApplicationContext(), "퀘스트를 완료하였습니다.", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            Toast.makeText(getApplicationContext(), "이미 완료한 퀘스트 입니다", Toast.LENGTH_SHORT).show();
+                        }
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -294,13 +304,142 @@ public class QuestActivity extends AppCompatActivity {
             jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             requestQueue.add(jsonObjectRequest);
 
-        }catch (Exception e) {
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        Toast.makeText(getApplicationContext(), rdata.toString(), Toast.LENGTH_SHORT).show();
-        return rdata;
     }
 
+    public void addPoint(String qNo,int point) {
+//        http://14.55.65.181/ondaeng/updatePoint?id=1&point=10&type=2
+        String id = appData.id.toString();
+        String url = "http://14.55.65.181/ondaeng/updatePoint?";
+        url = url +"id="+id;
+        url = url +"&point="+point;
+        url = url +"&type="+qNo;
+        //JSON형식으로 데이터 통신을 진행합니다!
+
+        try {
+            Toast.makeText(getApplicationContext(), url, Toast.LENGTH_SHORT).show();
+            // 전송
+            final RequestQueue requestQueue = Volley.newRequestQueue(QuestActivity.this);
+
+            final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,null, new Response.Listener<JSONObject>() {
+
+                //데이터 전달을 끝내고 이제 그 응답을 받을 차례입니다.
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        Toast.makeText(getApplicationContext(), "응답", Toast.LENGTH_SHORT).show();
+                        //받은 json형식의 응답을 받아
+                        //key값에 따라 value값을 쪼개 받아옵니다.
+                        JSONObject jsonObject = new JSONObject(response.toString());
+                        JSONObject data = new JSONObject(jsonObject.getJSONArray("data").get(0).toString());
+
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                //서버로 데이터 전달 및 응답 받기에 실패한 경우 아래 코드가 실행됩니다.
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                }
+            });
+            jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            requestQueue.add(jsonObjectRequest);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    //    퀘스트 체크, 해당 퀘스트 완료여부및 프로그래스바 설정 버튼 변경
+    public void questCheck(){
+//        easyToast("getPwById 실행됨");
+        String id = appData.id.toString();
+        String url = "http://14.55.65.181/ondaeng/getMemberId?";
+        url = url +"id="+id;
+        //JSON형식으로 데이터 통신을 진행합니다!
+        JSONObject testjson = new JSONObject();
+        try {
+//            Toast.makeText(getApplicationContext(), url, Toast.LENGTH_SHORT).show();
+            // 전송
+            final RequestQueue requestQueue = Volley.newRequestQueue(QuestActivity.this);
+
+            final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,null, new Response.Listener<JSONObject>() {
+
+                //데이터 전달을 끝내고 이제 그 응답을 받을 차례입니다.
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+//                        Toast.makeText(getApplicationContext(), "응답", Toast.LENGTH_SHORT).show();
+                        //받은 json형식의 응답을 받아
+                        //key값에 따라 value값을 쪼개 받아옵니다.
+                        JSONObject jsonObject = new JSONObject(response.toString());
+//                        easyToast(Integer.valueOf(jsonObject.getJSONArray("data").length()));
+                        JSONObject data = new JSONObject(jsonObject.getJSONArray("data").get(0).toString());
+//                        Toast.makeText(getApplicationContext(), data.toString(), Toast.LENGTH_SHORT).show();
+
+                        int qd1_c = Integer.parseInt(data.get("qd1_c").toString());
+                        if(qd1_c<3){
+//                            Toast.makeText(getApplicationContext(), "qd1_c<3", Toast.LENGTH_SHORT).show();
+                            binding.walkingDogBotton.setVisibility(View.VISIBLE);
+                            binding.walkingDogFinishBotton.setVisibility(View.GONE);
+                            binding.questProgressd1.setProgress(100*qd1_c/3);
+                        }
+                        else{
+                            binding.walkingDogBotton.setVisibility(View.GONE);
+                            binding.walkingDogFinishBotton.setVisibility(View.VISIBLE);
+                            binding.questProgressd1.setProgress(100);
+                        }
+
+                        int qd2_c = Integer.parseInt(data.get("qd2_c").toString());
+                        if(qd2_c<1){
+                            binding.diaryBotton.setVisibility(View.VISIBLE);
+                            binding.diaryFinishBotton.setVisibility(View.GONE);
+                            binding.questProgressd2.setProgress(0);
+                        }
+                        else{
+                            binding.diaryBotton.setVisibility(View.GONE);
+                            binding.diaryFinishBotton.setVisibility(View.VISIBLE);
+                            binding.questProgressd2.setProgress(100);
+                        }
+                        int qd3_c = Integer.parseInt(data.get("qd3_c").toString());
+                        if(qd3_c<1){
+                            binding.questWritePostButton.setVisibility(View.VISIBLE);
+                            binding.questWritePostFinishButton.setVisibility(View.GONE);
+                            binding.questProgressd3.setProgress(0);
+                        }
+                        else{
+                            binding.questWritePostButton.setVisibility(View.GONE);
+                            binding.questWritePostFinishButton.setVisibility(View.VISIBLE);
+                            binding.questProgressd3.setProgress(100);
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                //서버로 데이터 전달 및 응답 받기에 실패한 경우 아래 코드가 실행됩니다.
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                }
+            });
+            jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            requestQueue.add(jsonObjectRequest);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
     @Override
