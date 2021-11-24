@@ -434,18 +434,15 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                 myLatitude = location.getLatitude();
                 myLongitude = location.getLongitude();
                 // TODO 위도, 경도로 하고 싶은 것
-                Log.d("좌표", "latitude=" + myLatitude + ",longitude=" + myLongitude);
 
-                if (ActivityCompat.checkSelfPermission(WalkActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(WalkActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    return;
+                if (ActivityCompat.checkSelfPermission(WalkActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) !=
+                        PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                        WalkActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                }else {
+                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 2000, 5.0f, locationListener);
+                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 5.0f, locationListener);
                 }
+
                 String locationProvider = LocationManager.GPS_PROVIDER;
                 if (currentLocation[0] != null) {
                     currentLon = currentLocation[0].getLongitude();
@@ -460,7 +457,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                 Location loc = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);
 
                 //Request new location
-                locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER, 2000,5.0f, locationListener);
+                //locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER, 2000,5.0f, locationListener);
 
                 //Get new location
                 Location loc2 = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);
@@ -487,6 +484,7 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                 formatted = String.format("%.2f",totalDistance);
                 binding.walkLength.setText("산책거리  " + formatted + "m");
 
+                Log.d("좌표", "latitude=" + myLatitude + ",longitude=" + myLongitude);
                 Log.d("거리", String.valueOf(distanceMeters));
                 Log.d("총거리", Double.toString(totalDistance));
 
@@ -597,6 +595,9 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
         try {
             url = url + "point=" + point;
             url = url + "&id=" + id;
+
+            Log.i("포인트 DB", url);
+
             final RequestQueue requestQueue = Volley.newRequestQueue(WalkActivity.this);
             final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
@@ -629,6 +630,8 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
         String url = "http://14.55.65.181/ondaeng/updateQuest?";
         url = url +"id="+id;
         url = url +"&type="+1;
+
+        Log.i("퀘스트 업데이트 DB", url);
         //JSON형식으로 데이터 통신을 진행합니다!
 
         try {
@@ -680,10 +683,10 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
         String url = "http://14.55.65.181/ondaeng/insertWalkInfo?";
         try {
             url = url +"id="+id;
-            url = url +"&time="+ walkMin + walkSec;
+            url = url +"&time="+ walkMin +":"+ walkSec;
             url = url +"&dis="+formatted;
 
-            Log.i("유알엘", url);
+            Log.i("산책시간,거리 DB", url);
 
             final RequestQueue requestQueue = Volley.newRequestQueue(WalkActivity.this);
             final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url,null, new Response.Listener<JSONObject>() {
