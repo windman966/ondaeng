@@ -143,6 +143,7 @@
                             android:layout_height="40dp"
                             android:fontFamily="@font/nanumsquareroundr"
                             android:paddingEnd="5dp"
+                            android:textAlignment="textEnd"
                             android:textColor="#066289"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -183,6 +184,7 @@
                             android:layout_height="40dp"
                             android:fontFamily="@font/nanumsquareroundr"
                             android:paddingEnd="5dp"
+                            android:textAlignment="textEnd"
                             android:textColor="#066289"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -194,7 +196,6 @@
                             android:fontFamily="@font/nanumsquareroundr"
                             android:gravity="center_vertical"
                             android:paddingStart="5dp"
-                            android:text="분"
                             android:textColor="#181818"
                             android:textSize="18sp" />
                     </LinearLayout>
@@ -224,6 +225,7 @@
 
                             android:paddingEnd="5dp"
 
+                            android:textAlignment="textEnd"
                             android:textColor="#066289"
                             android:textSize="18sp"
                             android:textStyle="bold" />

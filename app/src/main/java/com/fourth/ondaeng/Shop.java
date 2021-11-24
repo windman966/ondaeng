@@ -353,7 +353,7 @@ public class Shop extends AppCompatActivity {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.gaeromanjok.com/product/basic_pumkin_duck?nshop=y&gclid=Cj0KCQiAys2MBhDOARIsAFf1D1fp9IFIxukKQ_A4PL6hyLK_EnvjpEOJxHEie-grLmajQ65bqKUIx2UaAhbDEALw_wcB"));
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 startActivity(intent);
             }
         });

@@ -35,6 +35,7 @@ import com.fourth.ondaeng.databinding.ActivityQuestBinding;
 
 import org.json.JSONObject;
 
+import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -104,6 +105,7 @@ public class DailyActivity extends AppCompatActivity {
         //산책정보 보여주기
 
         getWalkInfo(sdf.format(myCalendar.getTime()));
+
         // 상태버튼 하나만 선택되게 하기
 
 
@@ -117,7 +119,7 @@ public class DailyActivity extends AppCompatActivity {
 
         });
 
-        myCalendar.getTime();
+
 
         activityDrawerBinding = ActivityDrawerBinding.inflate(getLayoutInflater());
         //네비게이션 메뉴 코드
@@ -161,6 +163,12 @@ public class DailyActivity extends AppCompatActivity {
         goToFunc(findViewById(R.id.goToShop),shopIntent);
         goToFunc(findViewById(R.id.goToMyPage),myPageIntent);
         goToFunc(findViewById(R.id.goToQuest),questIntent);
+
+//        binding.walkDis.setText("102.30");
+//        binding.walkTime.setText("1");
+//        binding.walkCalorie.setText("11.22");
+
+        getWalkInfo(sdf.format(myCalendar.getTime()));
     }
 
     //강아지 선택 안 할 때 알림 띄우기
@@ -249,6 +257,7 @@ public class DailyActivity extends AppCompatActivity {
     //    강아지 정보입력
     public void getWalkInfo(String date){
         String url = "http://14.55.65.181/ondaeng/getWalkInfo?";
+//        http://14.55.65.181/ondaeng/getWalkInfo?id=lxacademy&date=2021-11-24
         //JSON형식으로 데이터 통신을 진행합니다!
         JSONObject testjson = new JSONObject();
         try {
@@ -256,7 +265,7 @@ public class DailyActivity extends AppCompatActivity {
             String id =(String)appData.id;
             url = url +"id="+id;
             url = url +"&date="+date;
-
+//            Toast.makeText(getApplicationContext(), url, Toast.LENGTH_SHORT).show();
             //이제 전송
             final RequestQueue requestQueue = Volley.newRequestQueue(DailyActivity.this);
             //            easyToast(url);
@@ -271,15 +280,24 @@ public class DailyActivity extends AppCompatActivity {
                         //key값에 따라 value값을 쪼개 받아옵니다.
 //                        easyToast("onResponse내부");
                         JSONObject jsonObject = new JSONObject(response.toString());
-                        String time = jsonObject.get("walk_time").toString();
-                        String dis = jsonObject.get("walk_dis").toString();
-                        binding.walkDis.setText(dis);
-                        binding.walkTime.setText(time);
-                        int walkTime = Integer.parseInt(time);
-                        double cal = walkTime*0.11;
-                        String totalCal = Double.toString(cal);
-                        binding.walkCalorie.setText(totalCal);
+                        int length = Integer.valueOf(jsonObject.getJSONArray("data").length());
 
+
+
+                            JSONObject data = new JSONObject(jsonObject.getJSONArray("data").get(length-1).toString());
+                        String time = data.get("walk_time").toString();
+                        double dis = (double) data.get("walk_dis");
+//                        Toast.makeText(getApplicationContext(), time+","+dis, Toast.LENGTH_SHORT).show();
+
+
+                        binding.walkDis.setText(Double.toString(dis));
+                        binding.walkTime.setText(time);
+//                        int walkTime = Integer.parseInt(time);
+                        double cal = dis*0.11;
+
+                        String cal2 = String.format("%.2f", cal);
+
+                        binding.walkCalorie.setText(cal2);
 
                     } catch (Exception e) {
                         e.printStackTrace();
