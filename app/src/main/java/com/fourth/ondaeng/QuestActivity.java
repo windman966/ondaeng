@@ -227,6 +227,18 @@ public class QuestActivity extends AppCompatActivity {
                         if(qd_d==0){
                             addPoint(qNo,1);
                             Toast.makeText(getApplicationContext(), "퀘스트를 완료하였습니다.", Toast.LENGTH_SHORT).show();
+                            switch (qNo){
+                                case "1":binding.walkingDogFinishBotton.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryDark)));
+                                    binding.walkingDogFinishBotton.setText("완료된 퀘스트");
+                                    break;
+                                case "2":binding.diaryFinishBotton.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryDark)));
+                                    binding.diaryFinishBotton.setText("완료된 퀘스트");
+                                    break;
+                                case "3":binding.questWritePostFinishButton.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryDark)));
+                                    binding.questWritePostFinishButton.setText("완료된 퀘스트");
+                                    break;
+                                default:break;
+                            }
                         }
                         else{
                             Toast.makeText(getApplicationContext(), "이미 완료한 퀘스트 입니다", Toast.LENGTH_SHORT).show();
@@ -262,7 +274,7 @@ public class QuestActivity extends AppCompatActivity {
         //JSON형식으로 데이터 통신을 진행합니다!
 
         try {
-            Toast.makeText(getApplicationContext(), url, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(), url, Toast.LENGTH_SHORT).show();
             // 전송
             final RequestQueue requestQueue = Volley.newRequestQueue(QuestActivity.this);
 
@@ -361,8 +373,25 @@ public class QuestActivity extends AppCompatActivity {
                             binding.questWritePostButton.setVisibility(View.GONE);
                             binding.questWritePostFinishButton.setVisibility(View.VISIBLE);
                             binding.questProgressd3.setProgress(100);
-
                         }
+
+                        int qd1_d = Integer.parseInt(data.get("qd1_c").toString());
+                        int qd2_d = Integer.parseInt(data.get("qd1_c").toString());
+                        int qd3_d = Integer.parseInt(data.get("qd1_c").toString());
+                        if (qd1_d==1){
+                            binding.walkingDogFinishBotton.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryDark)));
+                            binding.walkingDogFinishBotton.setText("완료된 퀘스트");
+                        }
+                        if (qd2_d==1){
+                            binding.diaryFinishBotton.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryDark)));
+                            binding.diaryFinishBotton.setText("완료된 퀘스트");
+                        }
+                        if (qd3_d==1){
+                            binding.questWritePostFinishButton.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryDark)));
+                            binding.questWritePostFinishButton.setText("완료된 퀘스트");
+                        }
+
+
 
                     } catch (Exception e) {
                         e.printStackTrace();
