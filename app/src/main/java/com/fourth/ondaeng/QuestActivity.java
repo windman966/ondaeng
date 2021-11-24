@@ -375,9 +375,9 @@ public class QuestActivity extends AppCompatActivity {
                             binding.questProgressd3.setProgress(100);
                         }
 
-                        int qd1_d = Integer.parseInt(data.get("qd1_c").toString());
-                        int qd2_d = Integer.parseInt(data.get("qd1_c").toString());
-                        int qd3_d = Integer.parseInt(data.get("qd1_c").toString());
+                        int qd1_d = Integer.parseInt(data.get("qd1_d").toString());
+                        int qd2_d = Integer.parseInt(data.get("qd2_d").toString());
+                        int qd3_d = Integer.parseInt(data.get("qd3_d").toString());
                         if (qd1_d==1){
                             binding.walkingDogFinishBotton.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryDark)));
                             binding.walkingDogFinishBotton.setText("완료된 퀘스트");
