@@ -96,7 +96,7 @@ public class CorrMyPage extends AppCompatActivity {
                         binding.nickNameOnNav.setText(data.get("nickname").toString());
                         binding.idOnNav.setText(data.get("id").toString());
                         binding.addrOnNav.setText(data.get("address").toString());
-                        binding.birthOnNav.setText(data.get("birth").toString());
+                        binding.birthOnNav.setText(data.get("birth").toString().substring(0,10));
                         binding.mobileOnNav.setText(data.get("mobile").toString());
 
                     } catch (Exception e) {
