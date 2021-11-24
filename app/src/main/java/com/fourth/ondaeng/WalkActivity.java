@@ -497,9 +497,9 @@ public class WalkActivity extends AppCompatActivity implements OnMapReadyCallbac
                 LocationOverlay locationOverlay = naverMap.getLocationOverlay();
                 locationOverlay.setVisible(true);
                 locationOverlay.setPosition(new LatLng(myLatitude, myLongitude));
-                locationOverlay.setIcon(OverlayImage.fromResource(R.drawable.dog));
-                locationOverlay.setIconWidth(120);
-                locationOverlay.setIconHeight(120);
+                locationOverlay.setIcon(OverlayImage.fromResource(R.drawable.ic_dog));
+                //locationOverlay.setIconWidth(120);
+                //locationOverlay.setIconHeight(120);
                 locationOverlay.setBearing(0);
 
                 //이동 경로선 생성
